@@ -29,15 +29,14 @@ app.use('*', async (req, res) => {
                 break;
             }
             case req.params['0'].slice(0, 6) === '/post/': {
-                console.log('hoge')
-                const id = req.params['0'].slice(7,);
-                const res = await fetch(`ttps://api.takurinton.com/blog/v1/post/${id}`);
+                const id = req.params['0'].slice(6,);
+                const res = await fetch(`https://api.takurinton.com/blog/v1/post/${id}`);
                 const json = await res.json();
                 data = {
                     title: json.title,
                     description: `${json.title} | たくりんとんのブログ`,
                     image: 'https://takurinton.dev/me.jpeg',
-                    props: await res.json(),
+                    props: json,
                 }
                 break;
             }
