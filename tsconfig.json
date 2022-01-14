@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "lib": ["es6", "dom"],
+    "noImplicitReturns": true,
+    "outDir": "./api",
+    "sourceMap": true,
+    "target": "es6",
+    "strict": false,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "resolveJsonModule": true
+  },
+  "compileOnSave": true,
+  "include": ["./**/*"]
+}
