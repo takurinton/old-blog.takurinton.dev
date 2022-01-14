@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Layout } from "../Layout";
 
 // type Props = {
@@ -19,9 +19,15 @@ type Props = {
 };
 
 export const Post: React.FC<{ props: Props }> = Layout(({ props }) => {
+    const [state, setState] = useState<Props>({} as Props);
+    useEffect(() => {
+        const data = JSON.parse(document.getElementById('json').getAttribute('data-json'));
+        setState(data);
+    }, []);
+
     return (
         <div>
-            <h1>{props.title}</h1>
+            <h1>{state.title}</h1>
         </div>
     )
 });

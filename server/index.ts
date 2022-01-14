@@ -11,53 +11,57 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static('dist'));
 
-app.use('*', async (req, res) => {
-    const url = req.originalUrl;
+app.get('/', async (_, res) => {
     try {
-        let data;
-        switch (true) {
-            case url === '/': {
-                const res = await fetch('https://api.takurinton.com/blog/v1');
-                // const page: string = req.query.page === undefined ? '' : req.query.page;
-                // const category: string = req.query.category === undefined ? '' : encodeURI(req.query.category);
-                data = {
-                    title: 'Home | たくりんとんのブログ',
-                    description: 'Home | たくりんとんのブログ',
-                    image: 'https://takurinton.dev/me.jpeg',
-                    props: await res.json(),
-                }
-                break;
-            }
-            case req.params['0'].slice(0, 6) === '/post/': {
-                const id = req.params['0'].slice(6,);
-                const res = await fetch(`https://api.takurinton.com/blog/v1/post/${id}`);
-                const json = await res.json();
-                data = {
-                    title: json.title,
-                    description: `${json.title} | たくりんとんのブログ`,
-                    image: 'https://takurinton.dev/me.jpeg',
-                    props: json,
-                }
-                break;
-            }
-            case url === '/about': {
-                data = {
-                    title: 'このサイトについて',
-                    description: 'about です',
-                    image: 'https://takurinton.dev/me.jpeg',
-                }
-                break;
-            }
-            default: {
-                data = {
-                    title: '404',
-                    description: '存在しないページです',
-                    image: 'https://takurinton.dev/me.jpeg',
-                }
-            }
-        }
+        const response = await fetch(`https://api.takurinton.com/blog/v1`);
+        const _renderd = render({
+            url: '/',
+            title: 'Home | たくりんとんのブログ',
+            description: 'Home | たくりんとんのブログ',
+            image: 'https://takurinton.dev/me.jpeg',
+            props: await response.json(),
+        });
+        res.setHeader('Content-Type', 'text/html')
+        const renderd = '<!DOCTYPE html>' + _renderd;
+        res.send(renderd);
+    } catch (e) {
+        console.log(e)
+        res.setHeader('Content-Type', 'text/html')
+        res.send(e)
+    }
+});
 
-        const _renderd = render({ url, ...data });
+app.get('/about', async (req, res) => {
+    try {
+        const _renderd = render({
+            url: '/about',
+            title: 'about | たくりんとんのブログ',
+            description: `about | たくりんとんのブログ`,
+            image: 'https://takurinton.dev/me.jpeg',
+            props: undefined,
+        });
+        res.setHeader('Content-Type', 'text/html')
+        const renderd = '<!DOCTYPE html>' + _renderd;
+        res.send(renderd);
+    } catch (e) {
+        console.log(e)
+        res.setHeader('Content-Type', 'text/html')
+        res.send(e)
+    }
+});
+
+app.get('/post/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const response = await fetch(`https://api.takurinton.com/blog/v1/post/${id}`);
+        const json = await response.json();
+        const _renderd = render({
+            url: '/about',
+            title: json.title,
+            description: `${json.title} | たくりんとんのブログ`,
+            image: 'https://takurinton.dev/me.jpeg',
+            props: json,
+        });
         res.setHeader('Content-Type', 'text/html')
         const renderd = '<!DOCTYPE html>' + _renderd;
         res.send(renderd);
