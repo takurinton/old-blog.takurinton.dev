@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Layout } from "../Layout";
 
-// type Props = {
-//     current: number;
-//     next: number;
-//     previous: number;
-//     category: string;
-//     results: Post[];
-// };
-
 type Props = {
     __typename: string;
     id: number;

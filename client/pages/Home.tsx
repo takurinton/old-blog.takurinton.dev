@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "../Layout";
 
@@ -20,6 +20,16 @@ type Post = {
 };
 
 export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
+    const [state, setState] = useState<Props>({ results: [] } as Props);
+    useEffect(() => {
+        const data = JSON.parse(document.getElementById('json').getAttribute('data-json'));
+        if (data.results === undefined) {
+            fetch('https://api.takurinton.com/blog/v1/').then(res => res.json()).then(json => setState(json))
+        } else {
+            setState(data);
+        }
+    }, []);
+
     const handleMouseEnter = useCallback((id) => {
         fetch(`https://api.takurinton.com/blog/v1/post/${id}`)
             .then(res => res.json())
@@ -30,7 +40,7 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
         <div>
             <h1>blog</h1>
             {
-                props.results.map(p => (
+                state.results.map(p => (
                     <div key={p.id}>
                         <h2 onMouseEnter={() => handleMouseEnter(p.id)}><Link to={`/post/${p.id}`}>{p.title}</Link></h2>
                         <hr />
