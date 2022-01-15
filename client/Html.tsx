@@ -23,9 +23,12 @@ const Head = (props) => {
             <meta name="twitter:image" content={props.image} />
             <link rel="shortcut icon" href={"https://takurinton.dev/me.jpeg"} />
             <link rel="apple-touch-icon" href={"https://takurinton.dev/me.jpeg"} />
-            {/* <link rel="stylesheet" type="text/css" href={`${STATIC_FILES}/client.css`} /> */}
-            {/* <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/solarized-dark.min.css" /> */}
+            <link
+                rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/atom-one-dark-reasonable.min.css"
+            />
             <meta name="viewport" content="width=device-width,initial-scale=1" />
+            {/* あまりスマートではないので変えたい */}
             <style>
                 {`
                 body {
@@ -36,6 +39,22 @@ const Head = (props) => {
                 }
                 @media (max-width: 414px) {
                     font-size: 80%;
+                }
+
+                pre {
+                    font-size: 16px;
+                    padding: 10px;
+                    overflow: auto;
+                    background-color: #2c2d3a;
+                    border-radius: 5px;
+                    box-shadow: 2px 2px 6px rgb(255 255 255 / 25%);
+                }
+
+                code {
+                    font-weight: 500;
+                    color: #ffffff;
+                    font-family: 'SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', monospace, 'Apple Color Emoji',
+                    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
                 }
             `}
             </style>
