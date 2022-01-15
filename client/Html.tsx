@@ -1,7 +1,4 @@
 import * as React from 'react';
-// import dotenv from 'dotenv';
-
-// dotenv.config();
 
 const STATIC_FILES = process.env.STATIC_FILES ?? 'http://localhost:3001';
 

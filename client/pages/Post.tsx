@@ -1,4 +1,3 @@
-import e from "express";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Layout } from "../Layout";
