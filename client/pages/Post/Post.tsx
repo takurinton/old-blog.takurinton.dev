@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { Layout } from "../Layout";
+import { Layout } from "../../Layout";
 
 type Props = {
     __typename: string;

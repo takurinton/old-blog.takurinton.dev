@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Layout } from "../Layout";
+import { Typography } from "ingred-ui";
+import { Layout } from "../../Layout";
+import { Heading, Container, Category } from "./styled";
+import { Link } from '../../components/utils/styled';
+import { datetimeFormatter } from '../../utils/datetimeFormatter';
 
 type Props = {
     current: number;
@@ -40,16 +43,21 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
 
 
     return (
-        <div>
-            <h1>blog</h1>
+        <Container>
+            <Heading>
+                <Typography weight='bold' size='xxxxxxl' color='#222222'>全ての投稿一覧</Typography>
+            </Heading>
             {
                 p.results.map(p => (
                     <div key={p.id}>
                         <h2 onMouseEnter={() => handleMouseEnter(p.id)}><Link to={`/post/${p.id}`}>{p.title}</Link></h2>
+                        <Category to={`/?category=${p.category}`}>{p.category}</Category>
+                        <Typography weight='bold' size='xl'>{datetimeFormatter(p.pub_date)}</Typography>
+                        <p>{p.contents}</p>
                         <hr />
                     </div>
                 ))
             }
-        </div>
+        </Container>
     )
 });

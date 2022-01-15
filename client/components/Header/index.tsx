@@ -1,6 +1,6 @@
-import { Flex, Spacer } from "ingred-ui";
+import { Flex, Spacer, Typography } from "ingred-ui";
 import React from "react";
-import { HeaderContainer, Nav, Title } from './styled';
+import { HeaderContainer } from './styled';
 import { Link } from "../utils/styled";
 
 export default function Header() {
@@ -12,12 +12,12 @@ export default function Header() {
                 justifyContent="space-between"
             >
                 <Flex display="flex" alignItems="center">
-                    <Spacer pl={3} />
-                    <Title
+                    <Typography
                         weight="bold"
+                        size='xxxxl'
                     >
                         <Link to='/'>blog.takurinton.dev</Link>
-                    </Title>
+                    </Typography>
                 </Flex>
                 <Flex
                     display="flex"
@@ -25,14 +25,14 @@ export default function Header() {
                     justifyContent="flex-end"
                     flexGrow={1}
                 >
-                    <Nav weight='bold'>
+                    <Typography weight='bold' size='xl'>
+                        {/* TODO: a タグにインラインでスタイルを書くようににする */}
                         <Link to='/rss.xml'>RSS</Link>
-                    </Nav>
-                    <Spacer pl={2} />
-                    <Nav weight='bold'>
-                        <Link to='/external'>External</Link>
-                    </Nav>
+                    </Typography>
                     <Spacer pl={3} />
+                    <Typography weight='bold' size='xl'>
+                        <Link to='/external'>External</Link>
+                    </Typography>
                 </Flex>
             </Flex>
         </HeaderContainer>

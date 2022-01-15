@@ -32,7 +32,7 @@ const Head = (props) => {
                     padding: 0; 
                     margin: 0;
                     margin-bottom: 50px;
-                    font-family: Helvetica Neue, Arial, Hiragino Kaku Gothic ProN, Hiragino Sans, Meiryo, sans-serif;
+                    ffont-family: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
                 }
                 @media (max-width: 414px) {
                     font-size: 80%;
