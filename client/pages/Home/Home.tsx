@@ -29,7 +29,7 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
     const isServerSideRenderingComponent = props.results !== undefined;
     const p = isServerSideRenderingComponent ? props : posts;
     useEffect(() => {
-        if (!isServerSideRenderingComponent) {
+        if (props.results === undefined) {
             fetch('https://api.takurinton.com/blog/v1/')
                 .then(res => res.json())
                 .then(json => {
