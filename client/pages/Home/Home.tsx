@@ -4,6 +4,8 @@ import { Layout } from "../../Layout";
 import { Heading, Container, Category } from "./styled";
 import { Link } from '../../components/utils/styled';
 import { datetimeFormatter } from '../../utils/datetimeFormatter';
+import { useRecoilState } from "recoil";
+import { postsState, postState } from '../../utils/recoil/atom';
 
 type Props = {
     current: number;
@@ -14,7 +16,6 @@ type Props = {
 };
 
 type Post = {
-    __typename: string;
     id: number;
     title: string;
     contents: string;
@@ -23,24 +24,30 @@ type Post = {
 };
 
 export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
-    const [state, setState] = useState<Props>({ results: [] } as Props);
+    const [posts, setPosts] = useRecoilState(postsState);
+    const [post, setPost] = useRecoilState(postState);
     const isServerSideRenderingComponent = props.results !== undefined;
-    const p = isServerSideRenderingComponent ? props : state;
+    const p = isServerSideRenderingComponent ? props : posts;
     useEffect(() => {
-        const data = JSON.parse(document.getElementById('json').getAttribute('data-json'));
-        if (data.results === undefined) {
-            fetch('https://api.takurinton.com/blog/v1/').then(res => res.json()).then(json => setState(json))
-        } else {
-            setState(data);
+        if (props.results === undefined) {
+            fetch('https://api.takurinton.com/blog/v1/')
+                .then(res => res.json())
+                .then(json => {
+                    setPosts(json);
+                })
         }
     }, []);
 
     const handleMouseEnter = useCallback((id) => {
-        fetch(`https://api.takurinton.com/blog/v1/post/${id}`)
-            .then(res => res.json())
-            .then(json => document.getElementById('json').setAttribute('data-json', JSON.stringify(json)))
-    }, []);
-
+        if (post.filter(p => p.id === id).length === 0) {
+            fetch(`https://api.takurinton.com/blog/v1/post/${id}`)
+                .then(res => res.json())
+                .then(json => {
+                    setPost([...post, json]);
+                    document.getElementById('json').setAttribute('data-json', JSON.stringify(json))
+                })
+        }
+    }, [post]);
 
     return (
         <Container>
