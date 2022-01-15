@@ -21,7 +21,8 @@ type Post = {
 
 export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
     const [state, setState] = useState<Props>({ results: [] } as Props);
-    const p = props.results ? props : state; // もう少しいい方法考える
+    const isServerSideRenderingComponent = props.results !== undefined;
+    const p = isServerSideRenderingComponent ? props : state;
     useEffect(() => {
         const data = JSON.parse(document.getElementById('json').getAttribute('data-json'));
         if (data.results === undefined) {
