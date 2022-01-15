@@ -1,9 +1,23 @@
 import { Flex, Spacer, Typography } from "ingred-ui";
-import React from "react";
-import { HeaderContainer } from './styled';
+import React, { useCallback } from "react";
+import { HeaderContainer, HeaderTitle } from './styled';
 import { A, Link } from "../utils/styled";
+import { useRecoilState } from "recoil";
+import { postsState } from "../../utils/recoil/atom";
 
-export default function Header() {
+export default function Header(props: any) {
+    const [posts, setPosts] = useRecoilState(postsState);
+    const handleMouseEnter = useCallback(() => {
+        const isServerSideRenderingComponent = props.results !== undefined;
+        if (!isServerSideRenderingComponent && posts.results.length !== 5) {
+            fetch('https://api.takurinton.com/blog/v1/')
+                .then(res => res.json())
+                .then(json => {
+                    setPosts(json);
+                })
+        }
+    }, []);
+
     return (
         <HeaderContainer>
             <Flex
@@ -12,12 +26,11 @@ export default function Header() {
                 justifyContent="space-between"
             >
                 <Flex display="flex" alignItems="center">
-                    <Typography
-                        weight="bold"
-                        size='xxxxl'
+                    <HeaderTitle
+                        onMouseEnter={handleMouseEnter}
                     >
                         <Link to='/'>blog.takurinton.dev</Link>
-                    </Typography>
+                    </HeaderTitle>
                 </Flex>
                 <Flex
                     display="flex"

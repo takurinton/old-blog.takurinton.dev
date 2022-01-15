@@ -8,3 +8,8 @@ export const HeaderContainer = styled.div`
   z-index: ${({ theme }) => theme.depth.appBar};
   width: 70%;
 `;
+
+export const HeaderTitle = styled.h1`
+  font-size: 1.6rem;
+  font-weight: 800;
+`;

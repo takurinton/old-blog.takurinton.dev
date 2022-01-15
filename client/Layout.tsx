@@ -6,7 +6,7 @@ import Header from "./components/Header";
 export const Layout = (Component: (props?: any) => JSX.Element) => {
     return (props: any) => (
         <div>
-            <Header />
+            <Header {...props} />
             <Component {...props} />
         </div>
     );
