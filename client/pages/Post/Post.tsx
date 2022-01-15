@@ -1,12 +1,14 @@
 import { Typography } from "ingred-ui";
 import { marked } from 'marked';
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router";
 import highlightjs from 'highlight.js';
 import { Layout } from "../../Layout";
 import { datetimeFormatter } from "../../utils/datetimeFormatter";
 import { Container, Category } from "./styled";
 import { markdownStyle } from "./syntaxHighlight";
+import { useRecoilState } from "recoil";
+import { postState } from "../../utils/recoil/atom";
 
 type Props = {
     __typename: string;
@@ -18,21 +20,11 @@ type Props = {
 };
 
 export const Post: React.FC<{ props: Props }> = Layout(({ props }) => {
-    const [state, setState] = useState<Props>({ pub_date: 'yyyy-mm-dd-xxxxxxx', contents: '' } as Props);
-
+    const [post, _] = useRecoilState(postState);
     const { id } = useParams();
+    const _post = post.find(p => p.id === Number(id));
     const isServerSideRenderingComponent = props.id !== undefined && props.id === Number(id);
-    const p = isServerSideRenderingComponent ? props : state;
-    useEffect(() => {
-        if (!isServerSideRenderingComponent) {
-            fetch(`https://api.takurinton.com/blog/v1/post/${id}`)
-                .then(res => res.json())
-                .then(data => setState(data));
-        } else {
-            const data = JSON.parse(document.getElementById('json').getAttribute('data-json'));
-            setState(data);
-        }
-    }, []);
+    const p = isServerSideRenderingComponent ? props : _post;
 
     return (
         <Container>
