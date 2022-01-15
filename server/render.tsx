@@ -20,13 +20,14 @@ export function render({
     return ReactDOMServer.renderToString(
         <React.StrictMode>
             <StaticRouter location={url}>
-                {createElement(Html({
-                    children: () => <App props={props} />,
-                    title,
-                    description,
-                    image,
-                    props,
-                }))}
+                {createElement(
+                    Html({
+                        children: () => <App props={props} />,
+                        title,
+                        description,
+                        image,
+                        props,
+                    }))}
             </StaticRouter>
         </React.StrictMode>
     );
