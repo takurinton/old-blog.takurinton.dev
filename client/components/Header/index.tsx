@@ -1,7 +1,7 @@
 import { Flex, Spacer, Typography } from "ingred-ui";
 import React from "react";
 import { HeaderContainer } from './styled';
-import { Link } from "../utils/styled";
+import { A, Link } from "../utils/styled";
 
 export default function Header() {
     return (
@@ -26,8 +26,7 @@ export default function Header() {
                     flexGrow={1}
                 >
                     <Typography weight='bold' size='xl'>
-                        {/* TODO: a タグにインラインでスタイルを書くようににする */}
-                        <Link to='/rss.xml'>RSS</Link>
+                        <A href='/rss.xml'>RSS</A>
                     </Typography>
                     <Spacer pl={3} />
                     <Typography weight='bold' size='xl'>
