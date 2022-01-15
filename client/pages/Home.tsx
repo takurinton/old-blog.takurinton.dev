@@ -21,6 +21,7 @@ type Post = {
 
 export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
     const [state, setState] = useState<Props>({ results: [] } as Props);
+    const p = props.results ? props : state; // もう少しいい方法考える
     useEffect(() => {
         const data = JSON.parse(document.getElementById('json').getAttribute('data-json'));
         if (data.results === undefined) {
@@ -36,11 +37,12 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
             .then(json => document.getElementById('json').setAttribute('data-json', JSON.stringify(json)))
     }, []);
 
+
     return (
         <div>
             <h1>blog</h1>
             {
-                state.results.map(p => (
+                p.results.map(p => (
                     <div key={p.id}>
                         <h2 onMouseEnter={() => handleMouseEnter(p.id)}><Link to={`/post/${p.id}`}>{p.title}</Link></h2>
                         <hr />

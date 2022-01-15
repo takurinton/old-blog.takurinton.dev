@@ -31,14 +31,17 @@ app.get('/', async (_, res) => {
     }
 });
 
-app.get('/about', async (req, res) => {
+app.get('/post/:id', async (req, res) => {
     try {
+        const id = req.params.id;
+        const response = await fetch(`https://api.takurinton.com/blog/v1/post/${id}`);
+        const json = await response.json();
         const _renderd = render({
-            url: '/about',
-            title: 'about | たくりんとんのブログ',
-            description: `about | たくりんとんのブログ`,
+            url: `/post/${id}`,
+            title: json.title,
+            description: `${json.title} | たくりんとんのブログ`,
             image: 'https://takurinton.dev/me.jpeg',
-            props: undefined,
+            props: json,
         });
         res.setHeader('Content-Type', 'text/html')
         const renderd = '<!DOCTYPE html>' + _renderd;
@@ -50,17 +53,14 @@ app.get('/about', async (req, res) => {
     }
 });
 
-app.get('/post/:id', async (req, res) => {
+app.get('/about', async (req, res) => {
     try {
-        const id = req.params.id;
-        const response = await fetch(`https://api.takurinton.com/blog/v1/post/${id}`);
-        const json = await response.json();
         const _renderd = render({
             url: '/about',
-            title: json.title,
-            description: `${json.title} | たくりんとんのブログ`,
+            title: 'about | たくりんとんのブログ',
+            description: `about | たくりんとんのブログ`,
             image: 'https://takurinton.dev/me.jpeg',
-            props: json,
+            props: undefined,
         });
         res.setHeader('Content-Type', 'text/html')
         const renderd = '<!DOCTYPE html>' + _renderd;

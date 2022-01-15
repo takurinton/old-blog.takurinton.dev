@@ -1,4 +1,6 @@
+import e from "express";
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import { Layout } from "../Layout";
 
 type Props = {
@@ -12,14 +14,24 @@ type Props = {
 
 export const Post: React.FC<{ props: Props }> = Layout(({ props }) => {
     const [state, setState] = useState<Props>({} as Props);
+
+    const { id } = useParams();
+    const isServerSideRenderingComponent = props.id !== undefined && props.id === Number(id);
+    const p = isServerSideRenderingComponent ? props : state;
     useEffect(() => {
-        const data = JSON.parse(document.getElementById('json').getAttribute('data-json'));
-        setState(data);
+        if (!isServerSideRenderingComponent) {
+            fetch(`https://api.takurinton.com/blog/v1/post/${id}`)
+                .then(res => res.json())
+                .then(data => setState(data));
+        } else {
+            const data = JSON.parse(document.getElementById('json').getAttribute('data-json'));
+            setState(data);
+        }
     }, []);
 
     return (
         <div>
-            <h1>{state.title}</h1>
+            <h1>{p.title}</h1>
         </div>
     )
 });
