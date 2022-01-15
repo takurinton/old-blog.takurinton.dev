@@ -29,7 +29,7 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
     const isServerSideRenderingComponent = props.results !== undefined;
     const p = isServerSideRenderingComponent ? props : posts;
     useEffect(() => {
-        if (props.results === undefined) {
+        if (!isServerSideRenderingComponent) {
             fetch('https://api.takurinton.com/blog/v1/')
                 .then(res => res.json())
                 .then(json => {
@@ -44,7 +44,6 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
                 .then(res => res.json())
                 .then(json => {
                     setPost([...post, json]);
-                    document.getElementById('json').setAttribute('data-json', JSON.stringify(json))
                 })
         }
     }, [post]);
