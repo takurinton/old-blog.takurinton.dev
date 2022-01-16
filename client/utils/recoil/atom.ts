@@ -20,6 +20,16 @@ const initialPostState = [
 
 ]
 
+const initialExternalLinksState = [
+    {
+        icon: '',
+        title: '',
+        url: '',
+        content: '',
+        date: ''
+    }
+]
+
 export const postsState = atom({
     key: 'posts',
     default: initialPostsState
@@ -28,4 +38,9 @@ export const postsState = atom({
 export const postState = atom({
     key: 'post',
     default: initialPostState
+})
+
+export const externalLinksState = atom({
+    key: 'external',
+    default: []
 })

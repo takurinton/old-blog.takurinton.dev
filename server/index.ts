@@ -54,6 +54,8 @@ app.get('/post/:id', async (req, res) => {
     }
 });
 
+// /external.json からデータを取ってこようとしたら ssl のエラーが出たので、ローカルだとしんどそう。
+// /external.json と同じ処理をしてるけど、こっちは SSR 用、/external.json は prefetch 用として扱う
 app.get('/external', async (req, res) => {
     try {
         const parser = new Parser();
@@ -118,6 +120,61 @@ app.get('/external', async (req, res) => {
     }
 });
 
+app.get('/external.json', async (req, res) => {
+    try {
+        const parser = new Parser();
+
+        type ExternalType = {
+            icon: string;
+            title: string;
+            url: string;
+            content: string;
+            date: string;
+        }[];
+
+        const rssLinks = {
+            zenn: {
+                link: 'https://zenn.dev/takurinton/feed',
+                icon: 'https://simpleicons.org/icons/zenn.svg'
+            },
+            plaid: {
+                link: 'https://tech.plaid.co.jp/author/takurinton/rss/',
+                icon: 'https://takurinton.dev/me.jpeg',
+            },
+        };
+
+        const parseRss = async () => {
+            const external: ExternalType = [];
+            for (const [_, link] of Object.entries(rssLinks)) {
+                const feed = await parser.parseURL(link.link);
+                feed.items.forEach(el => {
+                    external.push({
+                        icon: link.icon,
+                        title: el.title,
+                        url: el.link,
+                        content: el.content,
+                        date: el.pubDate
+                    })
+                });
+            }
+
+            external.sort((a, b) => {
+                const _a = new Date(a.date);
+                const _b = new Date(b.date);
+                return (_a < _b) ? 1 : -1;
+            });
+            return external;
+        };
+
+        res.setHeader('Content-Type', 'application/json')
+        const response = await parseRss();
+        res.json(response);
+    } catch (e) {
+        console.log(e)
+        res.setHeader('Content-Type', 'text/html')
+        res.send(e)
+    }
+});
 
 app.get('/about', async (req, res) => {
     try {
@@ -137,7 +194,6 @@ app.get('/about', async (req, res) => {
         res.send(e)
     }
 });
-
 
 app.get('/rss.xml', async (req, res) => {
     try {
