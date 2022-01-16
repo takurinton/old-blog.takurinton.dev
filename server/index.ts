@@ -41,7 +41,7 @@ app.get('/post/:id', async (req, res) => {
             url: `/post/${id}`,
             title: json.title,
             description: `${json.title} | たくりんとんのブログ`,
-            image: 'https://takurinton.dev/me.jpeg',
+            image: `https://res.cloudinary.com/dtapptgdd/image/upload/w_1000/l_text:Sawarabi Gothic_70_bold:${json.title}/v1624689828/blog.takurinton.com_r14tz5.png`,
             props: json,
         });
         res.setHeader('Content-Type', 'text/html')
