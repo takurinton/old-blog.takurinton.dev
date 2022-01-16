@@ -6,8 +6,10 @@
   "devDependencies": {},
   "scripts": {
     "dev": "yarn dev/client && yarn dev/server",
+    "build": "rm -rf ./dist && yarn build/server && yarn build/client",
     "dev/server": "ts-node-dev ./server/index.ts",
     "dev/client": "esbuild --bundle ./client/main.tsx --outfile=./dist/main.js --watch",
+    "build/server": "esbuild --bundle ./server/index.ts --outfile=./dist/server.js --platform=node",
     "build/client": "esbuild --bundle ./client/main.tsx --outfile=./dist/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
