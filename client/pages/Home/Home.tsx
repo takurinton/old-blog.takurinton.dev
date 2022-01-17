@@ -58,7 +58,9 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
                     <div key={p.id}>
                         <h2 onMouseEnter={() => handleMouseEnter(p.id)}><Link to={`/post/${p.id}`}>{p.title}</Link></h2>
                         <Link to={`/?category=${p.category}`}>
-                            <category-content text={p.category}></category-content>
+                            <category-content text={p.category}>
+                                <span slot="catepory-content">{p.category}</span>
+                            </category-content>
                         </Link>
                         <Typography weight='bold' size='xl'>{datetimeFormatter(p.pub_date)}</Typography>
                         <p>{p.contents}</p>
