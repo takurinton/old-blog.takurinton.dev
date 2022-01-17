@@ -51,7 +51,9 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
     return (
         <Container>
             <Heading>
-                <Typography weight='bold' size='xxxxxxl' color='#222222'>全ての投稿一覧</Typography>
+                <typography-text weight='bold' tag='h1' text='全ての投稿一覧'>
+                    <h1 slot='typography-text'>全ての投稿一覧</h1>
+                </typography-text>
             </Heading>
             {
                 p.results.map(p => (
