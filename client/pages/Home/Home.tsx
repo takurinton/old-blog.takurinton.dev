@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import { Typography } from "ingred-ui";
 import { Layout } from "../../Layout";
-import { Heading, Container, Category } from "./styled";
+import { Heading, Container } from "./styled";
 import { Link } from '../../components/utils/styled';
 import { datetimeFormatter } from '../../utils/datetimeFormatter';
 import { useRecoilState } from "recoil";
