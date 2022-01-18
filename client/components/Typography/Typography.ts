@@ -1,15 +1,17 @@
+import { useEffect } from "react";
+
 const fontSize = {
     h1: '2rem',
     h2: '1.6rem',
     h3: '1.2rem',
     p: '1rem',
 }
+
 export class Typography extends HTMLElement {
-    constructor() {
+    constructor(props) {
         super();
         const tag = this.getAttribute('tag');
         const shadow = document.createElement(tag);
-        this.attachShadow({ mode: 'open' }).appendChild(shadow);
         const weight = this.getAttribute('weight');
         const text = this.getAttribute('text');
 
@@ -24,5 +26,7 @@ export class Typography extends HTMLElement {
 
             <span>${text}</span>
         `;
+
+        this.attachShadow({ mode: 'open' }).appendChild(shadow);
     }
 }
