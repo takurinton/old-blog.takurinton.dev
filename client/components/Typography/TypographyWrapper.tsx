@@ -9,7 +9,7 @@ const fontSize = {
 
 type TypographyProps = {
     tag: 'h1' | 'h2' | 'h3' | 'p';
-    weight?: 'bold' | 'nomal',
+    weight?: 'bold' | 'normal',
     text: string;
     hover?: boolean;
     style?: { [key: string]: string }
@@ -18,7 +18,7 @@ type TypographyProps = {
 // 一応 forwardRef
 export const TypographyWrapper = forwardRef<HTMLSpanElement, TypographyProps>(({
     tag,
-    weight = 'nomal',
+    weight = 'normal',
     text,
     hover,
     // style
