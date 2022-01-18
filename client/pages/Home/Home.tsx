@@ -57,14 +57,14 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
 
         shadow.innerHTML = `
             <style>
-                span {
+                ${tag} {
                     font-size: ${fontSize[tag]};
                     color: #222222;
                     font-weight: ${weight === 'bold' ? 800 : 200};
                 }
             </style>
 
-            <span>${text}</span>
+            ${text}
         `;
         titleRef.current?.attachShadow({ mode: 'open' }).appendChild(shadow);
     }, []);
