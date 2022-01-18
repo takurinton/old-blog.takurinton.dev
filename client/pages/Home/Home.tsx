@@ -1,5 +1,4 @@
-import React, { forwardRef, useCallback, useEffect, useRef } from "react";
-import { Typography } from "ingred-ui";
+import React, { useCallback, useEffect } from "react";
 import { Layout } from "../../Layout";
 import { Heading, Container } from "./styled";
 import { Link } from '../../components/utils/styled';
@@ -61,11 +60,8 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
                         <h2 onMouseEnter={() => handleMouseEnter(p.id)}><Link to={`/post/${p.id}`}>{p.title}</Link></h2>
                         <Link to={`/?category=${p.category}`}>
                             <CategoryWrapper text={p.category} />
-                            {/* <category-content text={p.category}>
-                                <span slot="catepory-content">{p.category}</span>
-                            </category-content> */}
                         </Link>
-                        <Typography weight='bold' size='xl'>{datetimeFormatter(p.pub_date)}</Typography>
+                        <TypographyWrapper weight='bold' tag="p" text={datetimeFormatter(p.pub_date)}></TypographyWrapper>
                         <p>{p.contents}</p>
                         <hr />
                     </div>

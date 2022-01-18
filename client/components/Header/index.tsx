@@ -1,4 +1,4 @@
-import { Flex, Spacer, Typography } from "ingred-ui";
+import { Flex, Spacer } from "ingred-ui";
 import React, { useCallback } from "react";
 import { HeaderContainer, HeaderNav, HeaderTitle } from './styled';
 import { A, Link } from "../utils/styled";
@@ -7,7 +7,7 @@ import { externalLinksState, postsState } from "../../utils/recoil/atom";
 
 export default function Header(props: any) {
     const [posts, setPosts] = useRecoilState(postsState);
-    const [externalLinks, setExternalLinks] = useRecoilState(externalLinksState);
+    const [, setExternalLinks] = useRecoilState(externalLinksState);
 
     const handleMouseEnterHome = useCallback(() => {
         const isServerSideRenderingComponent = props.results !== undefined;

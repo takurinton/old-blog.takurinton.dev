@@ -11,10 +11,18 @@ type TypographyProps = {
     tag: 'h1' | 'h2' | 'h3' | 'p';
     weight?: 'bold' | 'nomal',
     text: string;
+    hover?: boolean;
+    style?: { [key: string]: string }
 }
 
 // 一応 forwardRef
-export const TypographyWrapper = forwardRef<HTMLSpanElement, TypographyProps>(({ tag, weight, text }, ref) => {
+export const TypographyWrapper = forwardRef<HTMLSpanElement, TypographyProps>(({
+    tag,
+    weight = 'nomal',
+    text,
+    hover,
+    // style
+}, ref) => {
     const typographyRef = useRef<HTMLHeadingElement>(null);
 
     useEffect(() => {
@@ -26,6 +34,7 @@ export const TypographyWrapper = forwardRef<HTMLSpanElement, TypographyProps>(({
                     color: #222222;
                     font-weight: ${weight === 'bold' ? 800 : 200};
                 }
+                
             </style>
 
             ${text}
