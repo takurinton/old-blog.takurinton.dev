@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Typography } from "ingred-ui";
+import React, { useCallback, useEffect } from "react";
 import { Layout } from "../../Layout";
-import { Heading, Container, Category } from "./styled";
+import { Heading, Container } from "./styled";
 import { Link } from '../../components/utils/styled';
 import { datetimeFormatter } from '../../utils/datetimeFormatter';
 import { useRecoilState } from "recoil";
 import { postsState, postState } from '../../utils/recoil/atom';
+import { TypographyWrapper } from '../../components/Typography';
+import { CategoryWrapper } from "../../components/Button/Category";
 
 type Props = {
     current: number;
@@ -51,19 +52,21 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
     return (
         <Container>
             <Heading>
-                <Typography weight='bold' size='xxxxxxl' color='#222222'>全ての投稿一覧</Typography>
+                <TypographyWrapper text="全ての投稿一覧" weight="bold" tag="h1" />
             </Heading>
             {
                 p.results.map(p => (
                     <div key={p.id}>
                         <h2 onMouseEnter={() => handleMouseEnter(p.id)}><Link to={`/post/${p.id}`}>{p.title}</Link></h2>
-                        <Category to={`/?category=${p.category}`}>{p.category}</Category>
-                        <Typography weight='bold' size='xl'>{datetimeFormatter(p.pub_date)}</Typography>
+                        <Link to={`/?category=${p.category}`}>
+                            <CategoryWrapper text={p.category} />
+                        </Link>
+                        <TypographyWrapper weight='bold' tag="p" text={datetimeFormatter(p.pub_date)}></TypographyWrapper>
                         <p>{p.contents}</p>
                         <hr />
                     </div>
                 ))
             }
-        </Container>
+        </Container >
     )
 });
