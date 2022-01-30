@@ -1,0 +1,22 @@
+[package]
+name = "functions"
+version = "0.0.1"
+edition = "2018"
+
+[lib]
+name = "lib"
+path = "src/lib.rs"
+
+[[bin]]
+name = "bootstrap"
+path = "src/bin/bootstrap.rs"
+
+[dependencies]
+lambda = { package = "netlify_lambda", version = "0.2.0" }
+tokio = "1.5.0"
+serde = "1.0.125"
+serde_derive = "1.0.125"
+serde_json = "1.0.64"
+
+[dev-dependencies]
+pretty_assertions = "0.7.2"
