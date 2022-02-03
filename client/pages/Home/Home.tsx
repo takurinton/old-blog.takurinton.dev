@@ -8,6 +8,7 @@ import { CategoryWrapper } from "../../components/Button/Category";
 import { getPosts } from "./internal/getPosts";
 import { getState } from "./internal/getState";
 import { getHashByData } from "../../utils/recoil/getHashByData";
+import { useQuery } from "./internal/useQuery";
 
 type Props = {
     current: number;
@@ -26,9 +27,12 @@ type Post = {
 };
 
 export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
+    const query = useQuery();
+    const page = query.get('page') ?? 1;
+    const category = query.get('category') ?? '';
     const data = getHashByData(props);
-    const d = getPosts(data);
-    const p = getState(data, d);
+    const p = getPosts(data, { page, category });
+    // const p = getState(data, d);
 
     return (
         <Container>

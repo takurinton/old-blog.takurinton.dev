@@ -47,11 +47,13 @@ const ssrMiddleware = async ({
     return ssr.extractData();
 }
 
-app.get('/', async (_, res) => {
+app.get('/', async (req, res) => {
     try {
+        const page = req.query.page ?? 1;
+        const category = req.query.category ?? '';
         const props = await ssrMiddleware({
             query: POSTS_QUERY,
-            variables: { page: 1, category: '' }
+            variables: { page, category }
         });
 
         const _renderd = await render({
