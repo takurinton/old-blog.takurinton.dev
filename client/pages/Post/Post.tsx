@@ -4,7 +4,7 @@ import React from "react";
 import { useParams } from "react-router";
 import highlightjs from 'highlight.js';
 import { Layout } from "../../Layout";
-import { datetimeFormatter } from "../../utils/datetimeFormatter";
+import { datetimeFormatter } from "../../../shared/utils/datetimeFormatter";
 import { Container, Category } from "./styled";
 import { markdownStyle } from "./syntaxHighlight";
 import { useRecoilState } from "recoil";

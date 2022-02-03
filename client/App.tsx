@@ -13,7 +13,7 @@ import {
     ssrExchange,
     Provider,
 } from "urql";
-import { initUrqlClient } from "../shared/initUrqlClient";
+import { initUrqlClient } from "../shared/graphql/initUrqlClient";
 
 export const App: React.FC<{
     props: any;

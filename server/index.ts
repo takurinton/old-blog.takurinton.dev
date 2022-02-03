@@ -9,10 +9,9 @@ import {
     dedupExchange,
     cacheExchange,
     fetchExchange,
-    gql,
-    Client,
 } from 'urql';
-import { initUrqlClient } from '../shared/initUrqlClient';
+import { initUrqlClient } from '../shared/graphql/initUrqlClient';
+import { POSTS_QUERY } from '../shared/graphql/query/posts';
 
 const app = express();
 app.listen(3001);
@@ -25,40 +24,6 @@ const SERVER_ENDPOINT = 'https://api.takurinton.com';
 
 app.get('/', async (_, res) => {
     try {
-        const POSTS_QUERY = gql`
-            query postsQuery($pages: Int, $category: String) {
-                getPosts(page: $pages, category: $category) {
-                current
-                next
-                previous
-                category
-                results {
-                    id
-                    title
-                    contents
-                    category
-                    pub_date
-                }
-                }
-            }
-            `;
-
-        // TODO: separate middleware
-        // const ssr = ssrExchange({
-        //     isClient: false,
-        // });
-
-        // const client = new Client({
-        //     fetch,
-        //     url: 'https://api.takurinton.com/graphql',
-        //     exchanges: [dedupExchange, cacheExchange, ssr, fetchExchange]
-        // });
-
-        // await client.query(
-        //     POSTS_QUERY,
-        //     { page: 1, category: '' }
-        // ).toPromise();
-
         const ssr = ssrExchange({ isClient: false });
         const client = initUrqlClient(
             {
@@ -75,14 +40,12 @@ app.get('/', async (_, res) => {
             }
         ).toPromise();
 
-        const response = await fetch(`https://api.takurinton.com/blog/v1`);
         const _renderd = await render({
             url: '/',
             title: 'Home | たくりんとんのブログ',
             description: 'Home | たくりんとんのブログ',
             image: 'https://takurinton.dev/me.jpeg',
             props: ssr.extractData(),
-            data: ssr.extractData(),
         });
 
         res.setHeader('Content-Type', 'text/html')

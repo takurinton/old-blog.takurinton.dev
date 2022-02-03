@@ -10,14 +10,12 @@ export async function render({
     description,
     image,
     props,
-    data,
 }: {
     url: string;
     title: string;
     description: string;
     image: string;
     props?: any;
-    data?: any;
 }) {
     return ReactDOMServer.renderToString(
         <React.StrictMode>
@@ -30,7 +28,6 @@ export async function render({
                             description,
                             image,
                             props,
-                            data,
                         })
                     )}
             </StaticRouter>

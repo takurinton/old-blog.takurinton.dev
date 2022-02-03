@@ -2,12 +2,13 @@ import React, { useCallback, useEffect } from "react";
 import { Layout } from "../../Layout";
 import { Heading, Container } from "./styled";
 import { Link } from '../../components/utils/styled';
-import { datetimeFormatter } from '../../utils/datetimeFormatter';
+import { datetimeFormatter } from '../../../shared/utils/datetimeFormatter';
 import { useRecoilState } from "recoil";
 import { postsState, postState } from '../../utils/recoil/atom';
 import { TypographyWrapper } from '../../components/Typography';
 import { CategoryWrapper } from "../../components/Button/Category";
-import { useQuery, gql } from "urql";
+import { useQuery } from "urql";
+import { POSTS_QUERY } from "../../../shared/graphql/query/posts";
 
 type Props = {
     current: number;
@@ -24,25 +25,6 @@ type Post = {
     category: string;
     pub_date: string;
 };
-
-const POSTS_QUERY = gql`
-query postsQuery($pages: Int, $category: String) {
-    getPosts(page: $pages, category: $category) {
-    current
-    next
-    previous
-    category
-    results {
-        id
-        title
-        contents
-        category
-        pub_date
-    }
-    }
-}
-`;
-
 
 export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
     const [res] = useQuery({
