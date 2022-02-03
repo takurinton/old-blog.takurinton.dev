@@ -5,24 +5,11 @@ import { A, Link } from "../utils/styled";
 import { useRecoilState } from "recoil";
 import { externalLinksState, postsState } from "../../utils/recoil/atom";
 
-export default function Header(props: any) {
-    const [posts, setPosts] = useRecoilState(postsState);
-    const [, setExternalLinks] = useRecoilState(externalLinksState);
-
-    const handleMouseEnterHome = useCallback(() => {
-        const isServerSideRenderingComponent = props.results !== undefined;
-        if (!isServerSideRenderingComponent && posts.results.length !== 5) {
-            fetch('https://api.takurinton.com/blog/v1/')
-                .then(res => res.json())
-                .then(json => {
-                    setPosts(json);
-                })
-        }
-    }, []);
+export default function Header() {
+    const [externalLinks, setExternalLinks] = useRecoilState(externalLinksState);
 
     const handleMouseEnterExternalLinks = useCallback(() => {
-        const isServerSideRenderingComponent = props.results !== undefined;
-        if (!isServerSideRenderingComponent && posts.results.length !== 5) {
+        if (externalLinks.length === 0) {
             fetch('http://localhost:3001/external.json')
                 .then(res => res.json())
                 .then(json => {
@@ -39,9 +26,7 @@ export default function Header(props: any) {
                 justifyContent="space-between"
             >
                 <Flex display="flex" alignItems="center">
-                    <HeaderTitle
-                        onMouseEnter={handleMouseEnterHome}
-                    >
+                    <HeaderTitle>
                         <Link to='/'>blog.takurinton.dev</Link>
                     </HeaderTitle>
                 </Flex>

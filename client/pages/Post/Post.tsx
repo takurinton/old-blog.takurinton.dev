@@ -4,11 +4,12 @@ import React from "react";
 import { useParams } from "react-router";
 import highlightjs from 'highlight.js';
 import { Layout } from "../../Layout";
-import { datetimeFormatter } from "../../utils/datetimeFormatter";
+import { datetimeFormatter } from "../../../shared/utils/datetimeFormatter";
 import { Container, Category } from "./styled";
-import { markdownStyle } from "./syntaxHighlight";
-import { useRecoilState } from "recoil";
-import { postState } from "../../utils/recoil/atom";
+import { markdownStyle } from "./internal/syntaxHighlight";
+import { getPost } from "./internal/getPost";
+import { getState } from "./internal/getState";
+import { getHashByData } from "../../utils/recoil/getHashByData";
 
 type Props = {
     __typename: string;
@@ -19,12 +20,12 @@ type Props = {
     pub_date: string;
 };
 
+
 export const Post: React.FC<{ props: Props }> = Layout(({ props }) => {
-    const [post, _] = useRecoilState(postState);
     const { id } = useParams();
-    const _post = post.find(p => p.id === Number(id));
-    const isServerSideRenderingComponent = props.id !== undefined && props.id === Number(id);
-    const p = isServerSideRenderingComponent ? props : _post;
+    const data = getHashByData(props);
+    const d = getPost(data, id);
+    const p = getState(data, d, id);
 
     return (
         <Container>
