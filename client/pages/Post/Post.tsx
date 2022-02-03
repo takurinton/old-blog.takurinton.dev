@@ -7,8 +7,8 @@ import { Layout } from "../../Layout";
 import { datetimeFormatter } from "../../../shared/utils/datetimeFormatter";
 import { Container, Category } from "./styled";
 import { markdownStyle } from "./syntaxHighlight";
-import { useRecoilState } from "recoil";
-import { postState } from "../../utils/recoil/atom";
+import { useQuery } from "urql";
+import { POST_QUERY } from "../../../shared/graphql/query/post";
 
 type Props = {
     __typename: string;
@@ -19,12 +19,29 @@ type Props = {
     pub_date: string;
 };
 
+const initialState = {
+    id: 0,
+    title: '',
+    contents: '',
+    category: '',
+    pub_date: '',
+}
+
 export const Post: React.FC<{ props: Props }> = Layout(({ props }) => {
-    const [post, _] = useRecoilState(postState);
     const { id } = useParams();
-    const _post = post.find(p => p.id === Number(id));
-    const isServerSideRenderingComponent = props.id !== undefined && props.id === Number(id);
-    const p = isServerSideRenderingComponent ? props : _post;
+    const [res] = useQuery({
+        query: POST_QUERY,
+        variables: { id },
+    });
+
+    // @ts-ignore
+    const data = JSON.parse(Object.values(props)[0].data);
+
+    const p = typeof window === 'undefined' ?
+        data.getPost :
+        res.fetching ?
+            initialState :
+            res.data.getPost;
 
     return (
         <Container>

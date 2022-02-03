@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { App } from './App';
 
 (() => {
-    const json = JSON.parse(document.getElementById('data').getAttribute('data-json'));
+    const json = JSON.parse(document.getElementById('json').getAttribute('data-json'));
     ReactDOM.hydrate(
         <BrowserRouter>
             <App props={json} />

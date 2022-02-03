@@ -10,8 +10,10 @@ import {
     cacheExchange,
     fetchExchange,
 } from 'urql';
+import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { initUrqlClient } from '../shared/graphql/initUrqlClient';
 import { POSTS_QUERY } from '../shared/graphql/query/posts';
+import { POST_QUERY } from '../shared/graphql/query/post';
 
 const app = express();
 app.listen(3001);
@@ -22,30 +24,42 @@ app.use(express.static('dist'));
 
 const SERVER_ENDPOINT = 'https://api.takurinton.com';
 
+const ssrMiddleware = async ({
+    query,
+    variables
+}: {
+    query: TypedDocumentNode<any, object>;
+    variables?: any;
+}) => {
+    const ssr = ssrExchange({ isClient: false });
+    const client = initUrqlClient(
+        {
+            url: `${SERVER_ENDPOINT}/graphql`,
+            exchanges: [dedupExchange, cacheExchange, ssr, fetchExchange],
+        },
+    );
+
+    await client.query(
+        query,
+        variables
+    ).toPromise();
+
+    return ssr.extractData();
+}
+
 app.get('/', async (_, res) => {
     try {
-        const ssr = ssrExchange({ isClient: false });
-        const client = initUrqlClient(
-            {
-                url: `${SERVER_ENDPOINT}/graphql`,
-                exchanges: [dedupExchange, cacheExchange, ssr, fetchExchange],
-            },
-        );
-
-        await client.query(
-            POSTS_QUERY,
-            {
-                page: 1,
-                category: ''
-            }
-        ).toPromise();
+        const props = await ssrMiddleware({
+            query: POSTS_QUERY,
+            variables: { page: 1, category: '' }
+        });
 
         const _renderd = await render({
             url: '/',
             title: 'Home | たくりんとんのブログ',
             description: 'Home | たくりんとんのブログ',
             image: 'https://takurinton.dev/me.jpeg',
-            props: ssr.extractData(),
+            props: props,
         });
 
         res.setHeader('Content-Type', 'text/html')
@@ -61,14 +75,20 @@ app.get('/', async (_, res) => {
 app.get('/post/:id', async (req, res) => {
     try {
         const id = req.params.id;
+
+        const props = await ssrMiddleware({
+            query: POST_QUERY,
+            variables: { id },
+        });
+
         const response = await fetch(`https://api.takurinton.com/blog/v1/post/${id}`);
         const json = await response.json();
-        const _renderd = render({
+        const _renderd = await render({
             url: `/post/${id}`,
             title: json.title,
             description: `${json.title} | たくりんとんのブログ`,
             image: `https://res.cloudinary.com/dtapptgdd/image/upload/w_1000/l_text:Sawarabi Gothic_70_bold:${json.title}/v1624689828/blog.takurinton.com_r14tz5.png`,
-            props: json,
+            props,
         });
         res.setHeader('Content-Type', 'text/html')
         const renderd = '<!DOCTYPE html>' + _renderd;
