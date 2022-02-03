@@ -7,6 +7,7 @@ import { TypographyWrapper } from '../../components/Typography';
 import { CategoryWrapper } from "../../components/Button/Category";
 import { getPosts } from "./internal/getPosts";
 import { getState } from "./internal/getState";
+import { getHashByData } from "../../utils/recoil/getHashByData";
 
 type Props = {
     current: number;
@@ -25,8 +26,7 @@ type Post = {
 };
 
 export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
-    // @ts-ignore
-    const data = JSON.parse(Object.values(props)[0].data);
+    const data = getHashByData(props);
     const d = getPosts(data);
     const p = getState(data, d);
 

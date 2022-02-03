@@ -9,6 +9,7 @@ import { Container, Category } from "./styled";
 import { markdownStyle } from "./internal/syntaxHighlight";
 import { getPost } from "./internal/getPost";
 import { getState } from "./internal/getState";
+import { getHashByData } from "../../utils/recoil/getHashByData";
 
 type Props = {
     __typename: string;
@@ -22,8 +23,7 @@ type Props = {
 
 export const Post: React.FC<{ props: Props }> = Layout(({ props }) => {
     const { id } = useParams();
-    // @ts-ignore
-    const data = JSON.parse(Object.values(props)[0].data);
+    const data = getHashByData(props);
     const d = getPost(data, id);
     const p = getState(data, d, id);
 
