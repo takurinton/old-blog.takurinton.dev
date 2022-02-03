@@ -1,4 +1,13 @@
 import * as React from 'react';
+import {
+    createClient,
+    dedupExchange,
+    cacheExchange,
+    fetchExchange,
+    ssrExchange,
+    Provider,
+    useQuery,
+} from 'urql';
 
 const STATIC_FILES = process.env.STATIC_FILES ?? 'http://localhost:3001';
 
@@ -68,6 +77,7 @@ type Props = {
     image: string;
     description?: string,
     props?: any;
+    data?: any;
 }
 
 const Html = (props: Props) => {
@@ -78,6 +88,8 @@ const Html = (props: Props) => {
                 <div id="main">
                     <props.children {...props.props} />
                 </div>
+                {/* for gql */}
+                <script id="data" type="text/plain" data-json={JSON.stringify(props.data)}></script>
                 <script id="json" type="text/plain" data-json={JSON.stringify(props.props)}></script>
                 <script async defer src={`${STATIC_FILES}/main.js`} />
             </body>

@@ -38,19 +38,23 @@
     "cors": "^2.8.5",
     "esbuild": "^0.14.11",
     "express": "^4.17.2",
+    "graphql": "^16.3.0",
     "highlight.js": "^11.4.0",
     "ingred-ui": "^9.3.2",
     "marked": "^4.0.10",
     "node-fetch": "^2.6.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-is": "^17.0.2",
     "react-router-dom": "^6.2.1",
+    "react-ssr-prepass": "^1.5.0",
     "recoil": "^0.5.2",
     "rss-parser": "^3.12.0",
     "styled-components": "^5.3.3",
     "ts-node": "^10.4.0",
     "ts-node-dev": "^1.1.8",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.4",
+    "urql": "^2.1.3"
   },
   "type": "module"
 }

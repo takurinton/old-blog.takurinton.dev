@@ -4,6 +4,14 @@ import cors from 'cors';
 import fetch from 'node-fetch';
 import Parser from 'rss-parser';
 import { render } from './render';
+import {
+    ssrExchange,
+    dedupExchange,
+    cacheExchange,
+    fetchExchange,
+    gql,
+    Client,
+} from 'urql';
 
 const app = express();
 app.listen(3001);
@@ -14,6 +22,38 @@ app.use(express.static('dist'));
 
 app.get('/', async (_, res) => {
     try {
+        const POSTS_QUERY = gql`
+            query postsQuery($pages: Int, $category: String) {
+                getPosts(page: $pages, category: $category) {
+                current
+                next
+                previous
+                category
+                results {
+                    id
+                    title
+                    contents
+                    category
+                    pub_date
+                }
+                }
+            }
+            `;
+        const ssr = ssrExchange({
+            isClient: false,
+        });
+
+        const client = new Client({
+            fetch,
+            url: 'https://api.takurinton.com/graphql',
+            exchanges: [dedupExchange, cacheExchange, ssr, fetchExchange]
+        });
+
+        await client.query(
+            POSTS_QUERY,
+            { page: 1, category: '' }
+        ).toPromise();
+
         const response = await fetch(`https://api.takurinton.com/blog/v1`);
         const _renderd = render({
             url: '/',
@@ -21,6 +61,7 @@ app.get('/', async (_, res) => {
             description: 'Home | たくりんとんのブログ',
             image: 'https://takurinton.dev/me.jpeg',
             props: await response.json(),
+            data: ssr.extractData(),
         });
         res.setHeader('Content-Type', 'text/html')
         const renderd = '<!DOCTYPE html>' + _renderd;

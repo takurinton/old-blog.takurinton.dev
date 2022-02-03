@@ -7,8 +7,11 @@ import { Home } from "./pages/Home";
 import { Post } from "./pages/Post";
 import { External } from "./pages/External";
 
-export const App: React.FC<{ props: any }> = ({ props }): JSX.Element => {
+export const App: React.FC<{
+    props: any;
+}> = ({ props }): JSX.Element => {
     const theme = createTheme();
+
     return (
         <>
             <RecoilRoot>

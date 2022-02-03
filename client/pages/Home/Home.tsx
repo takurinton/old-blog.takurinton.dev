@@ -7,6 +7,7 @@ import { useRecoilState } from "recoil";
 import { postsState, postState } from '../../utils/recoil/atom';
 import { TypographyWrapper } from '../../components/Typography';
 import { CategoryWrapper } from "../../components/Button/Category";
+import { useQuery, gql } from "urql";
 
 type Props = {
     current: number;
@@ -24,7 +25,31 @@ type Post = {
     pub_date: string;
 };
 
+const POSTS_QUERY = gql`
+query postsQuery($pages: Int, $category: String) {
+    getPosts(page: $pages, category: $category) {
+    current
+    next
+    previous
+    category
+    results {
+        id
+        title
+        contents
+        category
+        pub_date
+    }
+    }
+}
+`;
+
+
 export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
+    const [res] = useQuery({
+        query: POSTS_QUERY,
+        variables: { page: 1, category: '' },
+    });
+
     const [posts, setPosts] = useRecoilState(postsState);
     const [post, setPost] = useRecoilState(postState);
     const isServerSideRenderingComponent = props.results !== undefined;

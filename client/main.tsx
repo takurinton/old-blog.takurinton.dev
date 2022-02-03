@@ -1,18 +1,45 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import { ThemeProvider, createTheme } from "ingred-ui";
 import { App } from './App';
-// import { Category } from "./components/Button/Category";
-// import { Typography } from "./components/Typography";
+import {
+    createClient,
+    dedupExchange,
+    cacheExchange,
+    fetchExchange,
+    ssrExchange,
+    Provider,
+} from "urql";
 
-// customElements.define('category-content', Category);
-// customElements.define('typography-text', Typography);
+(() => {
+    const isServerSide = typeof window === 'undefined';
 
-const json = JSON.parse(document.getElementById('json').getAttribute('data-json'));
-ReactDOM.hydrate(
-    <BrowserRouter>
-        <App props={json} />
-    </BrowserRouter>,
-    document.getElementById("main")
-);
+    if (!isServerSide) {
+        console.log(JSON.parse(document.getElementById('data').getAttribute('data-json')));
+    }
+
+    const ssr = ssrExchange({
+        isClient: !isServerSide,
+        initialState: !isServerSide ? JSON.parse(document.getElementById('data').getAttribute('data-json')) : undefined,
+    });
+
+    const client = createClient({
+        url: 'https://api.takurinton.com/graphql',
+        exchanges: [
+            dedupExchange,
+            cacheExchange,
+            ssr,
+            fetchExchange,
+        ],
+    });
+
+    const json = JSON.parse(document.getElementById('json').getAttribute('data-json'));
+    ReactDOM.hydrate(
+        <BrowserRouter>
+            <Provider value={client}>
+                <App props={json} />
+            </Provider>
+        </BrowserRouter>,
+        document.getElementById("main")
+    );
+})();
