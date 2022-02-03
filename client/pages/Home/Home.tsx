@@ -53,7 +53,7 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
     const [posts, setPosts] = useRecoilState(postsState);
     const [post, setPost] = useRecoilState(postState);
     const isServerSideRenderingComponent = props.results !== undefined;
-    const p = isServerSideRenderingComponent ? props : posts;
+    const p = isServerSideRenderingComponent ? props : res;
     useEffect(() => {
         if (!isServerSideRenderingComponent && posts.results.length !== 5) {
             fetch('https://api.takurinton.com/blog/v1/')
@@ -80,7 +80,7 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
                 <TypographyWrapper text="全ての投稿一覧" weight="bold" tag="h1" />
             </Heading>
             {
-                p.results.map(p => (
+                res.fetching ? '' : res.data.getPosts.results.map(p => (
                     <div key={p.id}>
                         <h2 onMouseEnter={() => handleMouseEnter(p.id)}><Link to={`/post/${p.id}`}>{p.title}</Link></h2>
                         <Link to={`/?category=${p.category}`}>

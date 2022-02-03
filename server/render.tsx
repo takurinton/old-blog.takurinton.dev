@@ -4,7 +4,7 @@ import { StaticRouter } from "react-router-dom/server";
 import { App } from "../client/App";
 import Html from "./Html";
 
-export function render({
+export async function render({
     url,
     title,
     description,

@@ -92,6 +92,9 @@ const Html = (props: Props) => {
                 <script id="data" type="text/plain" data-json={JSON.stringify(props.data)}></script>
                 <script id="json" type="text/plain" data-json={JSON.stringify(props.props)}></script>
                 <script async defer src={`${STATIC_FILES}/main.js`} />
+                <script>
+                    {/* window.__URQL_DATA__ = ${props.data} */}
+                </script>
             </body>
         </html>
     );

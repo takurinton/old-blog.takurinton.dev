@@ -12,6 +12,7 @@ import {
     gql,
     Client,
 } from 'urql';
+import { initUrqlClient } from '../shared/initUrqlClient';
 
 const app = express();
 app.listen(3001);
@@ -19,6 +20,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static('dist'));
+
+const SERVER_ENDPOINT = 'https://api.takurinton.com';
 
 app.get('/', async (_, res) => {
     try {
@@ -39,30 +42,49 @@ app.get('/', async (_, res) => {
                 }
             }
             `;
-        const ssr = ssrExchange({
-            isClient: false,
-        });
 
-        const client = new Client({
-            fetch,
-            url: 'https://api.takurinton.com/graphql',
-            exchanges: [dedupExchange, cacheExchange, ssr, fetchExchange]
-        });
+        // TODO: separate middleware
+        // const ssr = ssrExchange({
+        //     isClient: false,
+        // });
+
+        // const client = new Client({
+        //     fetch,
+        //     url: 'https://api.takurinton.com/graphql',
+        //     exchanges: [dedupExchange, cacheExchange, ssr, fetchExchange]
+        // });
+
+        // await client.query(
+        //     POSTS_QUERY,
+        //     { page: 1, category: '' }
+        // ).toPromise();
+
+        const ssr = ssrExchange({ isClient: false });
+        const client = initUrqlClient(
+            {
+                url: `${SERVER_ENDPOINT}/graphql`,
+                exchanges: [dedupExchange, cacheExchange, ssr, fetchExchange],
+            },
+        );
 
         await client.query(
             POSTS_QUERY,
-            { page: 1, category: '' }
+            {
+                page: 1,
+                category: ''
+            }
         ).toPromise();
 
         const response = await fetch(`https://api.takurinton.com/blog/v1`);
-        const _renderd = render({
+        const _renderd = await render({
             url: '/',
             title: 'Home | たくりんとんのブログ',
             description: 'Home | たくりんとんのブログ',
             image: 'https://takurinton.dev/me.jpeg',
-            props: await response.json(),
+            props: ssr.extractData(),
             data: ssr.extractData(),
         });
+
         res.setHeader('Content-Type', 'text/html')
         const renderd = '<!DOCTYPE html>' + _renderd;
         res.send(renderd);
