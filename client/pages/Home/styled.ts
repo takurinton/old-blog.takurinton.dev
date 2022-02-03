@@ -12,3 +12,17 @@ export const Heading = styled.div`
   width: 100%;
 `;
 
+export const PageContainer = styled.div`
+  margin: 20px auto 10%;
+	position: relative;
+`;
+
+export const PrevButton = styled.span`
+  position: absolute;
+  left: 10px;
+`;
+
+export const NextButton = styled.span`
+  position: absolute;
+  right: 10px;
+`;

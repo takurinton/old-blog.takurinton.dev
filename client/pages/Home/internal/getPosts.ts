@@ -25,14 +25,15 @@ export const getPosts = (data, variables) => {
 
     if (data.getPosts) {
         if (
-            variables.category !== data.getPosts.category
+            variables.category !== data.getPosts.category ||
+            variables.pages !== data.getPosts.current
         ) {
-            return res.data === undefined ? initialState.results : res.data.getPosts.results;
+            return res.data === undefined ? initialState : res.data.getPosts;
         }
-        return data.getPosts.results;
+        return data.getPosts;
     }
 
     return res.data === undefined ?
-        initialState.results :
-        res.data.getPosts.results;
+        initialState :
+        res.data.getPosts;
 }

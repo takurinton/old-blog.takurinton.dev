@@ -49,11 +49,11 @@ const ssrMiddleware = async ({
 
 app.get('/', async (req, res) => {
     try {
-        const page = req.query.page ?? 1;
+        const pages = req.query.page ?? 1;
         const category = req.query.category ?? '';
         const props = await ssrMiddleware({
             query: POSTS_QUERY,
-            variables: { page, category }
+            variables: { pages, category }
         });
 
         const _renderd = await render({
