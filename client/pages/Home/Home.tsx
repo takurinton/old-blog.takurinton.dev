@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Layout } from "../../Layout";
 import { Heading, Container } from "./styled";
 import { Link } from '../../components/utils/styled';
@@ -40,18 +40,26 @@ const initialState = {
     ]
 }
 
-export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
-    const [res] = useQuery({
-        query: POSTS_QUERY,
-        variables: { page: 1, category: '' },
-    });
+const getPosts = (data) => {
+    if (!data.getPosts) {
+        const [res] = useQuery({
+            query: POSTS_QUERY,
+            variables: { page: 1, category: '' },
+        });
 
+        const { data, fetching } = res;
+        if (!fetching) return data.getPosts;
+    }
+}
+
+export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
     // @ts-ignore
     const data = JSON.parse(Object.values(props)[0].data);
-    const p = typeof window === 'undefined' ?
-        data.getPosts.results : res.fetching ?
+    const d = getPosts(data);
+    const p = data.getPosts ?
+        data.getPosts.results : d === undefined ?
             initialState.results :
-            res.data.getPosts.results;
+            d.results
 
     return (
         <Container>

@@ -149,7 +149,7 @@ app.get('/external', async (req, res) => {
         };
 
         const response = await parseRss();
-        const _renderd = render({
+        const _renderd = await render({
             url: '/external',
             title: '外部に投稿した記事一覧 | たくりんとんのブログ',
             description: `外部に投稿した記事一覧 | たくりんとんのブログ`,
@@ -224,7 +224,7 @@ app.get('/external.json', async (req, res) => {
 
 app.get('/about', async (req, res) => {
     try {
-        const _renderd = render({
+        const _renderd = await render({
             url: '/about',
             title: 'about | たくりんとんのブログ',
             description: `about | たくりんとんのブログ`,
