@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Layout } from "../../Layout";
 import { Heading, Container } from "./styled";
 import { Link } from '../../components/utils/styled';
 import { datetimeFormatter } from '../../../shared/utils/datetimeFormatter';
 import { TypographyWrapper } from '../../components/Typography';
 import { CategoryWrapper } from "../../components/Button/Category";
-import { useQuery } from "urql";
-import { POSTS_QUERY } from "../../../shared/graphql/query/posts";
+import { getPosts } from "./internal/getPosts";
+import { getState } from "./internal/getState";
 
 type Props = {
     current: number;
@@ -24,42 +24,11 @@ type Post = {
     pub_date: string;
 };
 
-const initialState = {
-    current: 0,
-    next: 0,
-    preview: 0,
-    category: '',
-    results: [
-        {
-            id: 0,
-            title: '',
-            contents: '',
-            category: '',
-            pub_date: '',
-        }
-    ]
-}
-
-const getPosts = (data) => {
-    if (!data.getPosts) {
-        const [res] = useQuery({
-            query: POSTS_QUERY,
-            variables: { page: 1, category: '' },
-        });
-
-        const { data, fetching } = res;
-        if (!fetching) return data.getPosts;
-    }
-}
-
 export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
     // @ts-ignore
     const data = JSON.parse(Object.values(props)[0].data);
     const d = getPosts(data);
-    const p = data.getPosts ?
-        data.getPosts.results : d === undefined ?
-            initialState.results :
-            d.results
+    const p = getState(data, d);
 
     return (
         <Container>

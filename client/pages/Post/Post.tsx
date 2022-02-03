@@ -6,9 +6,9 @@ import highlightjs from 'highlight.js';
 import { Layout } from "../../Layout";
 import { datetimeFormatter } from "../../../shared/utils/datetimeFormatter";
 import { Container, Category } from "./styled";
-import { markdownStyle } from "./syntaxHighlight";
-import { useQuery } from "urql";
-import { POST_QUERY } from "../../../shared/graphql/query/post";
+import { markdownStyle } from "./internal/syntaxHighlight";
+import { getPost } from "./internal/getPost";
+import { getState } from "./internal/getState";
 
 type Props = {
     __typename: string;
@@ -19,46 +19,6 @@ type Props = {
     pub_date: string;
 };
 
-const initialState = {
-    id: 0,
-    title: '',
-    contents: '',
-    category: '',
-    pub_date: '',
-}
-
-const getPost = (data, id) => {
-    const _data = data.getPost;
-    if (!_data) {
-        // client side routing
-        const [res] = useQuery({
-            query: POST_QUERY,
-            variables: { id },
-        });
-        const { data, fetching } = res;
-        if (!fetching) return data.getPost;
-    } else if (_data.id !== Number(id)) {
-        // rerender
-        const [res] = useQuery({
-            query: POST_QUERY,
-            variables: { id },
-        });
-        const { data, fetching } = res;
-        if (!fetching) return data.getPost;
-    }
-}
-
-const getState = (data, d, id) => {
-    if (data.getPost) {
-        if (data.getPost.id === Number(id)) {
-            return data.getPost;
-        }
-    }
-    if (d === undefined) {
-        return initialState;
-    }
-    return d;
-}
 
 export const Post: React.FC<{ props: Props }> = Layout(({ props }) => {
     const { id } = useParams();
