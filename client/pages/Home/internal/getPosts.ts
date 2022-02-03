@@ -23,8 +23,16 @@ export const getPosts = (data, variables) => {
         variables,
     });
 
-    return data.getPosts ?
-        data.getPosts.results : res.data === undefined ?
-            initialState.results :
-            res.data.getPosts.results
+    if (data.getPosts) {
+        if (
+            variables.category !== data.getPosts.category
+        ) {
+            return res.data === undefined ? initialState.results : res.data.getPosts.results;
+        }
+        return data.getPosts.results;
+    }
+
+    return res.data === undefined ?
+        initialState.results :
+        res.data.getPosts.results;
 }

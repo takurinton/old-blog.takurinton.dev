@@ -6,7 +6,6 @@ import { datetimeFormatter } from '../../../shared/utils/datetimeFormatter';
 import { TypographyWrapper } from '../../components/Typography';
 import { CategoryWrapper } from "../../components/Button/Category";
 import { getPosts } from "./internal/getPosts";
-import { getState } from "./internal/getState";
 import { getHashByData } from "../../utils/recoil/getHashByData";
 import { useQuery } from "./internal/useQuery";
 
@@ -32,7 +31,6 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
     const category = query.get('category') ?? '';
     const data = getHashByData(props);
     const p = getPosts(data, { page, category });
-    // const p = getState(data, d);
 
     return (
         <Container>
