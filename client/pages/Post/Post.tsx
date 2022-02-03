@@ -27,21 +27,45 @@ const initialState = {
     pub_date: '',
 }
 
+const getPost = (data, id) => {
+    const _data = data.getPost;
+    if (!_data) {
+        // client side routing
+        const [res] = useQuery({
+            query: POST_QUERY,
+            variables: { id },
+        });
+        const { data, fetching } = res;
+        if (!fetching) return data.getPost;
+    } else if (_data.id !== Number(id)) {
+        // rerender
+        const [res] = useQuery({
+            query: POST_QUERY,
+            variables: { id },
+        });
+        const { data, fetching } = res;
+        if (!fetching) return data.getPost;
+    }
+}
+
+const getState = (data, d, id) => {
+    if (data.getPost) {
+        if (data.getPost.id === Number(id)) {
+            return data.getPost;
+        }
+    }
+    if (d === undefined) {
+        return initialState;
+    }
+    return d;
+}
+
 export const Post: React.FC<{ props: Props }> = Layout(({ props }) => {
     const { id } = useParams();
-    const [res] = useQuery({
-        query: POST_QUERY,
-        variables: { id },
-    });
-
     // @ts-ignore
     const data = JSON.parse(Object.values(props)[0].data);
-
-    const p = typeof window === 'undefined' ?
-        data.getPost :
-        res.fetching ?
-            initialState :
-            res.data.getPost;
+    const d = getPost(data, id);
+    const p = getState(data, d, id);
 
     return (
         <Container>
