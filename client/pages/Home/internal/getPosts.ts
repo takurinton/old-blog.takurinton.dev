@@ -18,26 +18,16 @@ const initialState = {
 }
 
 export const getPosts = (data, variables) => {
-    let res = undefined
-    if (!data.getPosts) {
-        const [response] = useQuery({
-            query: POSTS_QUERY,
-            variables,
-        });
-        res = response;
-    }
+    const [res] = useQuery({
+        query: POSTS_QUERY,
+        variables,
+    });
 
-    if (data.getPosts) {
-        if (
-            variables.category !== data.getPosts.category ||
-            variables.pages !== data.getPosts.current
-        ) {
-            return res.data === undefined ? initialState : res.data.getPosts;
-        }
-        return data.getPosts;
+    if (
+        variables.category !== data.getPosts.category ||
+        variables.pages !== data.getPosts.current
+    ) {
+        return res.data === undefined ? initialState : res.data.getPosts;
     }
-
-    return res.data === undefined ?
-        initialState :
-        res.data.getPosts;
+    return data.getPosts
 }

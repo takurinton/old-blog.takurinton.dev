@@ -29,11 +29,13 @@ type Post = {
 export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
     const query = useQuery();
     const { pathname } = useLocation();
+    const isServer = typeof window === 'undefined';
 
     const pages = query.get('page') ?? 1;
     const category = query.get('category') ?? '';
     const data = getHashByData(props);
-    const p = getPosts(data, { pages, category });
+    const posts = isServer ? data.getPosts : getPosts(data, { pages, category });
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [pathname, query]);
@@ -44,7 +46,7 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
                 <TypographyWrapper text="全ての投稿一覧" weight="bold" tag="h1" />
             </Heading>
             {
-                p.results.map(p => (
+                posts.results.map(p => (
                     <div key={p.id}>
                         <h2><Link to={`/post/${p.id}`}>{p.title}</Link></h2>
                         <Link to={`/?category=${p.category}`}>
@@ -58,8 +60,8 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
             }
             <PageContainer>
                 {
-                    p.previous === p.current ? <></> : (
-                        <Link to={p.category === '' ? `/?page=${p.previous}` : `/?page=${p.previous}&category=${p.category}`}>
+                    posts.previous === posts.current ? <></> : (
+                        <Link to={posts.category === '' ? `/?page=${posts.previous}` : `/?page=${posts.previous}&category=${posts.category}`}>
                             <PrevButton>
                                 <CategoryWrapper text={'prev'} />
                             </PrevButton>
@@ -67,8 +69,8 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
                     )
                 }
                 {
-                    p.next === p.current ? <></> : (
-                        <Link to={p.category === '' ? `/?page=${p.next}` : `/?page=${p.next}&category=${p.category}`}>
+                    posts.next === posts.current ? <></> : (
+                        <Link to={posts.category === '' ? `/?page=${posts.next}` : `/?page=${posts.next}&category=${posts.category}`}>
                             <NextButton>
                                 <CategoryWrapper text={'next'} />
                             </NextButton>
