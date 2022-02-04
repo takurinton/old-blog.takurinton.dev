@@ -38,6 +38,7 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        if (!isServer) document.querySelector('title').innerText = 'Home | たくりんとんのブログ';
     }, [pathname, query]);
 
     return (

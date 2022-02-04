@@ -1,6 +1,6 @@
 import { Typography } from "ingred-ui";
 import { marked } from 'marked';
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import highlightjs from 'highlight.js';
 import { Layout } from "../../Layout";
@@ -20,13 +20,16 @@ type Props = {
     pub_date: string;
 };
 
-
 export const Post: React.FC<{ props: Props }> = Layout(({ props }) => {
     const { id } = useParams();
     const isServer = typeof window === 'undefined';
     const data = getHashByData(props);
     const d = isServer ? data.getPost : getPost(data, id);
     const p = getState(data, d, id);
+
+    useEffect(() => {
+        if (!isServer) document.querySelector('title').innerText = p.title;
+    }, [p]);
 
     return (
         <Container>
