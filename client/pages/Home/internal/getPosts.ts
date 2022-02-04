@@ -23,11 +23,17 @@ export const getPosts = (data, variables) => {
         variables,
     });
 
-    if (
-        variables.category !== data.getPosts.category ||
-        variables.pages !== data.getPosts.current
-    ) {
-        return res.data === undefined ? initialState : res.data.getPosts;
+    if (data.getPosts) {
+        if (
+            variables.category !== data.getPosts.category ||
+            Number(variables.pages) !== Number(data.getPosts.current)
+        ) {
+            return res.data === undefined ? initialState : res.data.getPosts;
+        }
+        return data.getPosts;
     }
-    return data.getPosts
+
+    return res.data === undefined ?
+        initialState :
+        res.data.getPosts;
 }
