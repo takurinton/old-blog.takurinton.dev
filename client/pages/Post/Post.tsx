@@ -9,7 +9,7 @@ import { Container, Category } from "./styled";
 import { markdownStyle } from "./internal/syntaxHighlight";
 import { getPost } from "./internal/getPost";
 import { getState } from "./internal/getState";
-import { getHashByData } from "../../utils/recoil/getHashByData";
+import { getHashByData } from "../../utils/getHashByData";
 
 type Props = {
     __typename: string;

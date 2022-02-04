@@ -6,7 +6,7 @@ import { datetimeFormatter } from '../../../shared/utils/datetimeFormatter';
 import { TypographyWrapper } from '../../components/Typography';
 import { CategoryWrapper } from "../../components/Button/Category";
 import { getPosts } from "./internal/getPosts";
-import { getHashByData } from "../../utils/recoil/getHashByData";
+import { getHashByData } from "../../utils/getHashByData";
 import { useQuery } from "./internal/useQuery";
 import { useLocation } from "react-router";
 
