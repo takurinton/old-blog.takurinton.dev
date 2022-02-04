@@ -18,10 +18,14 @@ const initialState = {
 }
 
 export const getPosts = (data, variables) => {
-    const [res] = useQuery({
-        query: POSTS_QUERY,
-        variables,
-    });
+    let res = undefined;
+    if (!data.getPosts) {
+        const [response] = useQuery({
+            query: POSTS_QUERY,
+            variables,
+        });
+        res = response;
+    }
 
     if (data.getPosts) {
         if (
