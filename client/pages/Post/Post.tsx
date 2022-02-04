@@ -23,8 +23,9 @@ type Props = {
 
 export const Post: React.FC<{ props: Props }> = Layout(({ props }) => {
     const { id } = useParams();
+    const isServer = typeof window === 'undefined';
     const data = getHashByData(props);
-    const d = getPost(data, id);
+    const d = isServer ? data.getPost : getPost(data, id);
     const p = getState(data, d, id);
 
     return (
