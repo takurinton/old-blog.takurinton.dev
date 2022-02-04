@@ -26,7 +26,7 @@ export const getPosts = (data, variables) => {
     if (data.getPosts) {
         if (
             variables.category !== data.getPosts.category ||
-            Number(variables.pages) !== Number(data.getPosts.current)
+            Number(variables.pages) !== data.getPosts.current
         ) {
             return res.data === undefined ? initialState : res.data.getPosts;
         }
