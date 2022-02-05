@@ -3,14 +3,16 @@
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "@linaria/esbuild": "^3.0.0-beta.17"
+  },
   "scripts": {
     "dev": "yarn dev/client && yarn dev/server",
     "build": "rm -rf ./dist && yarn build/server && yarn build/client",
     "dev/server": "ts-node-dev ./server/index.ts",
-    "dev/client": "esbuild --bundle ./client/main.tsx --outfile=./dist/main.js --watch",
+    "dev/client": "node esbuild.client.js",
     "build/server": "esbuild --bundle ./server/index.ts --outfile=./dist/server.js --platform=node",
-    "build/client": "esbuild --bundle ./client/main.tsx --outfile=./dist/main.js",
+    "build/client": "NODE_ENV=production node esbuild.client.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,6 +26,11 @@
   },
   "homepage": "https://github.com/takurinton/photo.takurinton.dev#readme",
   "dependencies": {
+    "@babel/core": "^7.17.0",
+    "@linaria/babel-preset": "^3.0.0-beta.15",
+    "@linaria/core": "^3.0.0-beta.15",
+    "@linaria/react": "^3.0.0-beta.15",
+    "@linaria/shaker": "^3.0.0-beta.15",
     "@types/body-parser": "^1.19.2",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
