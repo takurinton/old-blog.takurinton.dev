@@ -11,35 +11,35 @@ import {
 
 const STATIC_FILES = process.env.STATIC_FILES ?? 'http://localhost:3001';
 
-const Head = (props) => {
+export const createTemplate = (props, styleTags) => {
+    const json = JSON.stringify(props.props);
     if (props.description == undefined) props.description = 'たくりんとんのポートフォリオです';
     if (props.image == undefined) props.image = 'https://takurinton.dev/me.jpeg';
-    return (
+    return (`
+        <html>
         <head>
             <link rel="preconnect" href="https://ssr-test.takurinton.vercel.app/" />
-            <title>{props.title}</title>
-            <meta name="description" content={props.description} />
-            <meta property="og:title" content={props.title} />
-            <meta property="og:description" content={props.description} />
+            <title>${props.title}</title>
+            <meta name="description" content=${props.description} />
+            <meta property="og:title" content=${props.title} />
+            <meta property="og:description" content=${props.description} />
             <meta property="og:type" content="blog" />
             <meta property="og:url" content="https://photo.takurinton.dev" />
-            <meta property="og:image" content={props.image} />
-            <meta property="og:site_name" content={props.title} />
+            <meta property="og:image" content=${props.image} />
+            <meta property="og:site_name" content=${props.title} />
             <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:url" content={''} />
-            <meta name="twitter:title" content={props.title} />
-            <meta name="twitter:description" content={props.description} />
-            <meta name="twitter:image" content={props.image} />
-            <link rel="shortcut icon" href={"https://takurinton.dev/me.jpeg"} />
-            <link rel="apple-touch-icon" href={"https://takurinton.dev/me.jpeg"} />
+            <meta name="twitter:url" content=${''} />
+            <meta name="twitter:title" content=${props.title} />
+            <meta name="twitter:description" content=${props.description} />
+            <meta name="twitter:image" content=${props.image} />
+            <link rel="shortcut icon" href=${"https://takurinton.dev/me.jpeg"} />
+            <link rel="apple-touch-icon" href=${"https://takurinton.dev/me.jpeg"} />
             <link
                 rel="stylesheet"
                 href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/atom-one-dark-reasonable.min.css"
             />
             <meta name="viewport" content="width=device-width,initial-scale=1" />
-            {/* あまりスマートではないので変えたい */}
             <style>
-                {`
                 body {
                     padding: 0; 
                     margin: 0;
@@ -65,9 +65,12 @@ const Head = (props) => {
                     font-family: 'SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', monospace, 'Apple Color Emoji',
                     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
                 }
-            `}
             </style>
-        </head>
+            ${styleTags}
+            <script id="__RINTON_DATA__" type="application/json">${json}</script>
+            <script async defer src="${STATIC_FILES}/main.js"></script>
+        </head >
+    `
     )
 }
 
@@ -83,15 +86,14 @@ type Props = {
 const Html = (props: Props) => {
     return () => (
         <html lang="ja">
-            <Head {...props} />
             <body>
                 <div id="main">
                     <props.children {...props.props} />
                 </div>
                 <script id="json" type="text/plain" data-json={JSON.stringify(props.props)}></script>
-                <script async defer src={`${STATIC_FILES}/main.js`} />
-            </body>
-        </html>
+                <script async defer src={`${STATIC_FILES} /main.js`} />
+            </body >
+        </html >
     );
 };
 

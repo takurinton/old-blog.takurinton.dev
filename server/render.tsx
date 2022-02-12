@@ -1,6 +1,7 @@
 import React, { createElement } from "react";
 import ReactDOMServer from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
+import { ServerStyleSheet } from "styled-components";
 import { App } from "../client/App";
 import Html from "./Html";
 
@@ -17,10 +18,13 @@ export async function render({
     image: string;
     props?: any;
 }) {
-    return ReactDOMServer.renderToString(
-        <React.StrictMode>
-            <StaticRouter location={url}>
-                {
+    const sheet = new ServerStyleSheet()
+    const html = ReactDOMServer.renderToString(
+        sheet.collectStyles(
+            <React.StrictMode>
+                <StaticRouter location={url}>
+                    <App props={props} />
+                    {/* {
                     createElement(
                         Html({
                             children: () => <App props={props} />,
@@ -29,8 +33,11 @@ export async function render({
                             image,
                             props,
                         })
-                    )}
-            </StaticRouter>
-        </React.StrictMode>
+                    )} */}
+                </StaticRouter>
+            </React.StrictMode>
+        )
     );
+    const styleTags = sheet.getStyleTags();
+    return { html, styleTags }
 }

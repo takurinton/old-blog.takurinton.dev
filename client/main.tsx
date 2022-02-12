@@ -4,10 +4,10 @@ import { BrowserRouter } from "react-router-dom";
 import { App } from './App';
 
 (() => {
-    const json = JSON.parse(document.getElementById('json').getAttribute('data-json'));
+    const props = document.getElementById('__RINTON_DATA__').textContent;
     ReactDOM.hydrate(
         <BrowserRouter>
-            <App props={json} />
+            <App props={props} />
         </BrowserRouter>,
         document.getElementById("main")
     );

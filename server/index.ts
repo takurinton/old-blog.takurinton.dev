@@ -14,6 +14,7 @@ import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { initUrqlClient } from '../shared/graphql/initUrqlClient';
 import { POSTS_QUERY } from '../shared/graphql/query/posts';
 import { POST_QUERY } from '../shared/graphql/query/post';
+import { createTemplate } from './Html';
 
 const app = express();
 app.listen(3001);
@@ -56,7 +57,7 @@ app.get('/', async (req, res) => {
             variables: { pages, category }
         });
 
-        const _renderd = await render({
+        const { html, styleTags } = await render({
             url: '/',
             title: 'Home | たくりんとんのブログ',
             description: 'Home | たくりんとんのブログ',
@@ -65,7 +66,13 @@ app.get('/', async (req, res) => {
         });
 
         res.setHeader('Content-Type', 'text/html')
-        const renderd = '<!DOCTYPE html>' + _renderd;
+        const renderd = '<!DOCTYPE html>' + createTemplate({
+            url: '/',
+            title: 'Home | たくりんとんのブログ',
+            description: 'Home | たくりんとんのブログ',
+            image: 'https://takurinton.dev/me.jpeg',
+            props: props,
+        }, styleTags) + '<body>' + html + '</body></html>';
         res.send(renderd);
     } catch (e) {
         console.log(e)
@@ -85,7 +92,7 @@ app.get('/post/:id', async (req, res) => {
 
         const response = await fetch(`https://api.takurinton.com/blog/v1/post/${id}`);
         const json = await response.json();
-        const _renderd = await render({
+        const { html, styleTags } = await render({
             url: `/post/${id}`,
             title: json.title,
             description: `${json.title} | たくりんとんのブログ`,
@@ -93,7 +100,13 @@ app.get('/post/:id', async (req, res) => {
             props,
         });
         res.setHeader('Content-Type', 'text/html')
-        const renderd = '<!DOCTYPE html>' + _renderd;
+        const renderd = '<!DOCTYPE html>' + createTemplate({
+            url: `/post/${id}`,
+            title: json.title,
+            description: `${json.title} | たくりんとんのブログ`,
+            image: `https://res.cloudinary.com/dtapptgdd/image/upload/w_1000/l_text:Sawarabi Gothic_70_bold:${json.title}/v1624689828/blog.takurinton.com_r14tz5.png`,
+            props,
+        }, styleTags) + '<body>' + html + '</body></html>';
         res.send(renderd);
     } catch (e) {
         console.log(e)
