@@ -10,6 +10,21 @@ export const Container = styled.div`
 export const Heading = styled.div`
   text-align: center;
   width: 100%;
+  font-size: 2rem;
+  color: #222222;
+  font-weight: 800;
+`;
+
+export const Label = styled.span`
+  padding: 5px 10px 6px;
+  background: #707070;
+  color: white;
+  text-decoration: none;
+  border-radius: 2px;
+  font-weight: 800;
+  &:hover {
+    background: #ff69b4;
+  }
 `;
 
 export const PageContainer = styled.div`

@@ -1,8 +1,9 @@
 import React, { createElement } from "react";
 import ReactDOMServer from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
+import { ServerStyleSheet } from "styled-components";
 import { App } from "../client/App";
-import Html from "./Html";
+import { createTemplate } from "./Html";
 
 export async function render({
     url,
@@ -17,20 +18,27 @@ export async function render({
     image: string;
     props?: any;
 }) {
-    return ReactDOMServer.renderToString(
-        <React.StrictMode>
-            <StaticRouter location={url}>
-                {
-                    createElement(
-                        Html({
-                            children: () => <App props={props} />,
-                            title,
-                            description,
-                            image,
-                            props,
-                        })
-                    )}
-            </StaticRouter>
-        </React.StrictMode>
+    const sheet = new ServerStyleSheet();
+    const htmlString = ReactDOMServer.renderToString(
+        sheet.collectStyles(
+            <React.StrictMode>
+                <StaticRouter location={url}>
+                    <App props={props} />
+                </StaticRouter>
+            </React.StrictMode>
+        )
     );
+
+    const styleTags = sheet.getStyleTags();
+    const html = createTemplate({
+        url,
+        title,
+        description,
+        image,
+        props,
+        styleTags,
+        htmlString,
+    });
+
+    return html;
 }
