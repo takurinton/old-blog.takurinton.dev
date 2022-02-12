@@ -9,6 +9,7 @@ import { getPosts } from "./internal/getPosts";
 import { getHashByData } from "../../utils/getHashByData";
 import { useQuery } from "./internal/useQuery";
 import { useLocation } from "react-router";
+import { exampleStyle } from "./styled.css";
 
 type Props = {
     current: number;
@@ -43,6 +44,7 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
 
     return (
         <Container>
+            <div className={exampleStyle}>hogehoge</div>
             <Heading>
                 <TypographyWrapper text="全ての投稿一覧" weight="bold" tag="h1" />
             </Heading>

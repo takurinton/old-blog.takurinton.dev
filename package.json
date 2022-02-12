@@ -3,14 +3,13 @@
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "dev": "yarn dev/client && yarn dev/server",
     "build": "rm -rf ./dist && yarn build/server && yarn build/client",
-    "dev/server": "ts-node-dev ./server/index.ts",
-    "dev/client": "esbuild --bundle ./client/main.tsx --outfile=./dist/main.js --watch",
-    "build/server": "esbuild --bundle ./server/index.ts --outfile=./dist/server.js --platform=node",
-    "build/client": "esbuild --minify --bundle ./client/main.tsx --outfile=./dist/main.js",
+    "dev/server": "webpack serve --config ./server/webpack.config.js",
+    "dev/client": "node ./client/esbuild.js",
+    "build/server": "NODE_ENV=production node ./server/esbuild.js",
+    "build/client": "NODE_ENV=production node ./client/esbuild.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -34,14 +33,19 @@
     "@types/react-router-dom": "^5.3.2",
     "@types/recoil": "^0.0.9",
     "@types/styled-components": "^5.1.20",
+    "@vanilla-extract/css": "^1.6.8",
+    "@vanilla-extract/esbuild-plugin": "^2.0.2",
+    "@vanilla-extract/webpack-plugin": "^2.1.5",
     "body-parser": "^1.19.1",
     "cors": "^2.8.5",
+    "css-loader": "^6.6.0",
     "esbuild": "^0.14.11",
     "express": "^4.17.2",
     "graphql": "^16.3.0",
     "highlight.js": "^11.4.0",
     "ingred-ui": "^9.3.2",
     "marked": "^4.0.10",
+    "mini-css-extract-plugin": "^2.5.3",
     "node-fetch": "^2.6.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -51,10 +55,16 @@
     "recoil": "^0.5.2",
     "rss-parser": "^3.12.0",
     "styled-components": "^5.3.3",
+    "ts-loader": "^9.2.6",
     "ts-node": "^10.4.0",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.5.4",
-    "urql": "^2.1.3"
+    "urql": "^2.1.3",
+    "webpack": "^5.68.0",
+    "webpack-dev-server": "^4.7.4"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "webpack-cli": "^4.9.2"
+  }
 }
