@@ -150,7 +150,7 @@ app.get('/external', async (req, res) => {
         };
 
         const response = await parseRss();
-        const _renderd = await render({
+        const html = await render({
             url: '/external',
             title: '外部に投稿した記事一覧 | たくりんとんのブログ',
             description: `外部に投稿した記事一覧 | たくりんとんのブログ`,
@@ -158,8 +158,7 @@ app.get('/external', async (req, res) => {
             props: response,
         });
         res.setHeader('Content-Type', 'text/html')
-        const renderd = '<!DOCTYPE html>' + _renderd;
-        res.send(renderd);
+        res.send(html);
     } catch (e) {
         console.log(e)
         res.setHeader('Content-Type', 'text/html')

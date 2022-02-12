@@ -7,9 +7,10 @@ import { externalLinksState } from "../../utils/recoil/atom";
 
 export const External: React.FC<any> = Layout(({ props }) => {
     const [externalLinks, _] = useRecoilState(externalLinksState);
-    const isServerSideRenderingComponent = props[0] !== undefined;
-    const external = isServerSideRenderingComponent ? props : externalLinks;
     const isServer = typeof window === 'undefined';
+    const external = isServer ? props :
+        externalLinks.length === 0 ?
+            JSON.parse(props) : externalLinks;
 
     useEffect(() => {
         document.querySelector('title').innerText = '外部に投稿した記事一覧 | たくりんとんのブログ';
