@@ -57,7 +57,7 @@ app.get('/', async (req, res) => {
             variables: { pages, category }
         });
 
-        const { html, styleTags } = await render({
+        const html = await render({
             url: '/',
             title: 'Home | たくりんとんのブログ',
             description: 'Home | たくりんとんのブログ',
@@ -66,14 +66,7 @@ app.get('/', async (req, res) => {
         });
 
         res.setHeader('Content-Type', 'text/html')
-        const renderd = '<!DOCTYPE html>' + createTemplate({
-            url: '/',
-            title: 'Home | たくりんとんのブログ',
-            description: 'Home | たくりんとんのブログ',
-            image: 'https://takurinton.dev/me.jpeg',
-            props: props,
-        }, styleTags) + '<body>' + html + '</body></html>';
-        res.send(renderd);
+        res.send(html);
     } catch (e) {
         console.log(e)
         res.setHeader('Content-Type', 'text/html')
@@ -92,7 +85,7 @@ app.get('/post/:id', async (req, res) => {
 
         const response = await fetch(`https://api.takurinton.com/blog/v1/post/${id}`);
         const json = await response.json();
-        const { html, styleTags } = await render({
+        const html = await render({
             url: `/post/${id}`,
             title: json.title,
             description: `${json.title} | たくりんとんのブログ`,
@@ -100,14 +93,7 @@ app.get('/post/:id', async (req, res) => {
             props,
         });
         res.setHeader('Content-Type', 'text/html')
-        const renderd = '<!DOCTYPE html>' + createTemplate({
-            url: `/post/${id}`,
-            title: json.title,
-            description: `${json.title} | たくりんとんのブログ`,
-            image: `https://res.cloudinary.com/dtapptgdd/image/upload/w_1000/l_text:Sawarabi Gothic_70_bold:${json.title}/v1624689828/blog.takurinton.com_r14tz5.png`,
-            props,
-        }, styleTags) + '<body>' + html + '</body></html>';
-        res.send(renderd);
+        res.send(html);
     } catch (e) {
         console.log(e)
         res.setHeader('Content-Type', 'text/html')

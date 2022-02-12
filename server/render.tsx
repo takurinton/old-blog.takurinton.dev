@@ -3,7 +3,7 @@ import ReactDOMServer from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
 import { ServerStyleSheet } from "styled-components";
 import { App } from "../client/App";
-import Html from "./Html";
+import { createTemplate } from "./Html";
 
 export async function render({
     url,
@@ -18,26 +18,27 @@ export async function render({
     image: string;
     props?: any;
 }) {
-    const sheet = new ServerStyleSheet()
-    const html = ReactDOMServer.renderToString(
+    const sheet = new ServerStyleSheet();
+    const htmlString = ReactDOMServer.renderToString(
         sheet.collectStyles(
             <React.StrictMode>
                 <StaticRouter location={url}>
                     <App props={props} />
-                    {/* {
-                    createElement(
-                        Html({
-                            children: () => <App props={props} />,
-                            title,
-                            description,
-                            image,
-                            props,
-                        })
-                    )} */}
                 </StaticRouter>
             </React.StrictMode>
         )
     );
+
     const styleTags = sheet.getStyleTags();
-    return { html, styleTags }
+    const html = createTemplate({
+        url,
+        title,
+        description,
+        image,
+        props,
+        styleTags,
+        htmlString,
+    });
+
+    return html;
 }

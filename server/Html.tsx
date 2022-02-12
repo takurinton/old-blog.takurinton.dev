@@ -1,22 +1,13 @@
 import * as React from 'react';
-import {
-    createClient,
-    dedupExchange,
-    cacheExchange,
-    fetchExchange,
-    ssrExchange,
-    Provider,
-    useQuery,
-} from 'urql';
 
 const STATIC_FILES = process.env.STATIC_FILES ?? 'http://localhost:3001';
 
-export const createTemplate = (props, styleTags) => {
+export const createTemplate = (props) => {
     const json = JSON.stringify(props.props);
     if (props.description == undefined) props.description = 'たくりんとんのポートフォリオです';
     if (props.image == undefined) props.image = 'https://takurinton.dev/me.jpeg';
-    return (`
-        <html>
+    return (`<!DOCTYPE html>
+    <html lang="ja">
         <head>
             <link rel="preconnect" href="https://ssr-test.takurinton.vercel.app/" />
             <title>${props.title}</title>
@@ -66,35 +57,13 @@ export const createTemplate = (props, styleTags) => {
                     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
                 }
             </style>
-            ${styleTags}
+            ${props.styleTags}
+        </head >
+        <body>
+            <div id="main">${props.htmlString}</div>
             <script id="__RINTON_DATA__" type="application/json">${json}</script>
             <script async defer src="${STATIC_FILES}/main.js"></script>
-        </head >
-    `
-    )
+        </body>
+    </html>
+    `)
 }
-
-type Props = {
-    children: () => JSX.Element;
-    title: string;
-    image: string;
-    description?: string,
-    props?: any;
-    data?: any;
-}
-
-const Html = (props: Props) => {
-    return () => (
-        <html lang="ja">
-            <body>
-                <div id="main">
-                    <props.children {...props.props} />
-                </div>
-                <script id="json" type="text/plain" data-json={JSON.stringify(props.props)}></script>
-                <script async defer src={`${STATIC_FILES} /main.js`} />
-            </body >
-        </html >
-    );
-};
-
-export default Html;
