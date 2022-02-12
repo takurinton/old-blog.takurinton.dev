@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Layout } from "../../Layout";
-import { Heading, Container, PageContainer, PrevButton, NextButton, Category } from "./styled";
+import { Heading, Container, PageContainer, PrevButton, NextButton, Label } from "./styled";
 import { Link } from '../../components/utils/styled';
 import { datetimeFormatter } from '../../../shared/utils/datetimeFormatter';
 import { getPosts } from "./internal/getPosts";
@@ -48,7 +48,7 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
                     <div key={p.id}>
                         <h2><Link to={`/post/${p.id}`}>{p.title}</Link></h2>
                         <Link to={`/?category=${p.category}`}>
-                            <Category>{p.category}</Category>
+                            <Label>{p.category}</Label>
                         </Link>
                         <Typography weight='bold' component="p">{datetimeFormatter(p.pub_date)}</Typography>
                         <p>{p.contents}</p>
@@ -61,7 +61,7 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
                     posts.previous === posts.current ? <></> : (
                         <Link to={posts.category === '' ? `/?page=${posts.previous}` : `/?page=${posts.previous}&category=${posts.category}`}>
                             <PrevButton>
-                                <Typography>preview</Typography>
+                                <Label>prev</Label>
                             </PrevButton>
                         </Link>
                     )
@@ -70,7 +70,7 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
                     posts.next === posts.current ? <></> : (
                         <Link to={posts.category === '' ? `/?page=${posts.next}` : `/?page=${posts.next}&category=${posts.category}`}>
                             <NextButton>
-                                <Typography>next</Typography>
+                                <Label>next</Label>
                             </NextButton>
                         </Link>
                     )

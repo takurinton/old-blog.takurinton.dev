@@ -15,7 +15,7 @@ export const Heading = styled.div`
   font-weight: 800;
 `;
 
-export const Category = styled.span`
+export const Label = styled.span`
   padding: 5px 10px 6px;
   background: #707070;
   color: white;
