@@ -1,4 +1,5 @@
 import { marked } from 'marked';
+import * as rintonwc from 'rintonwc';
 
 export const markdownStyle = () => {
     const r = new marked.Renderer();
@@ -32,37 +33,13 @@ export const markdownStyle = () => {
                 `;
     };
     r.link = (href: string, title: string, text: string) => {
-        // if (window !== undefined) {
-        //     const html = (async () => {
-        //         try {
-        //             const res = await fetch(href, {
-        //                 headers: {
-        //                     'Content-Type': 'text/html',
-        //                 },
-        //                 mode: 'no-cors',
-        //             });
-        //             const text = await res.text();
-        //             return new DOMParser().parseFromString(text, "text/html");
-        //         } catch {
-        //             return new DOMParser().parseFromString('', "text/html");
-        //         }
-        //     })();
-
-        //     const getMetaTags = (html, m) => {
-        //         const metas = html.getElementsByTagName('meta');
-        //         for (let i = 0; i < metas.length; i++) {
-        //             if (metas[i].getAttribute('name') === m) {
-        //                 return metas[i].getAttribute('content');
-        //             }
-        //         }
-        //     }
-
-        //     html.then(h => console.log(getMetaTags(h, 'description')));
-        // }
-
         return `
             <a href="${href}" target="_blank">${text}</a>
+            <x-link link="${href}"></x-link>
         `
+    }
+    r.blockquote = (quote: string) => {
+        return `<blockquote style="border-left:3px solid gray;margin:0 0 0 10px;padding-left:20px;color:gray;">${quote}</blockquote>`
     }
     return r;
 };
