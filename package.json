@@ -5,7 +5,7 @@
   "main": "index.js",
   "devDependencies": {},
   "scripts": {
-    "dev": "yarn dev/client && yarn dev/server",
+    "dev": "yarn dev/client & yarn dev/server",
     "build": "rm -rf ./dist && yarn build/server && yarn build/client",
     "dev/server": "ts-node-dev ./server/index.ts",
     "dev/client": "esbuild --bundle ./client/main.tsx --outfile=./dist/main.js --watch",
