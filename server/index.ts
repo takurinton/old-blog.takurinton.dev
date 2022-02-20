@@ -9,9 +9,9 @@ import {
     dedupExchange,
     cacheExchange,
     fetchExchange,
-    initUrqlClient,
 } from '@takurinton/urql';
 import { TypedDocumentNode } from '@graphql-typed-document-node/core';
+import { initUrqlClient } from '../shared/graphql/initUrqlClient';
 import { POSTS_QUERY } from '../shared/graphql/query/posts';
 import { POST_QUERY } from '../shared/graphql/query/post';
 
