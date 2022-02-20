@@ -1,5 +1,5 @@
 import { pipe, subscribe } from 'wonka';
-import { Client, OperationResult } from '../../';
+import { Client, OperationResult } from '@takurinton/urql';
 
 type CacheEntry = OperationResult | Promise<unknown> | undefined;
 

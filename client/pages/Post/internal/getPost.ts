@@ -1,4 +1,4 @@
-import { useQuery } from "@takurinton/urql";
+import { useQuery } from "../../../../shared/graphql/hooks";
 import { POST_QUERY } from "../../../../shared/graphql/query/post";
 
 export const getPost = (data, id) => {

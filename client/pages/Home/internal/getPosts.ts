@@ -1,4 +1,4 @@
-import { useQuery } from "@takurinton/urql";
+import { useQuery } from "../../../../shared/graphql/hooks";
 import { POSTS_QUERY } from "../../../../shared/graphql/query/posts";
 
 const initialState = {

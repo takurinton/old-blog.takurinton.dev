@@ -11,7 +11,7 @@ import {
   RequestPolicy,
   OperationResult,
   Operation,
-} from '../../';
+} from '@takurinton/urql';
 
 import { useClient } from '../context';
 import { useRequest } from './useRequest';

@@ -6,7 +6,7 @@ import { About } from "./pages/About";
 import { Home } from "./pages/Home";
 import { Post } from "./pages/Post";
 import { External } from "./pages/External";
-import { Provider } from "@takurinton/urql";
+import { Provider } from "../shared/graphql/context";
 import { initUrqlClient } from "../shared/graphql/initUrqlClient";
 
 export const App: React.FC<{

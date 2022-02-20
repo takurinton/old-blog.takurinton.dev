@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": ["src", "../context.ts"],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "types": ["node", "react"],
+    "jsx": "react"
+  }
+}
