@@ -11,7 +11,7 @@ import {
   RequestPolicy,
   OperationResult,
   Operation,
-} from '@takurinton/urql';
+} from '../../';
 
 import { useClient } from '../context';
 import { useRequest } from './useRequest';
@@ -70,9 +70,9 @@ export function useQuery<Data = any, Variables = object>(
     source: args.pause
       ? null
       : client.executeQuery(request, {
-          requestPolicy: args.requestPolicy,
-          ...args.context,
-        }),
+        requestPolicy: args.requestPolicy,
+        ...args.context,
+      }),
     prevValue: notFetching,
     deps: currDeps,
     suspense: isSuspense(client, args.context),
@@ -187,9 +187,9 @@ export function useQuery<Data = any, Variables = object>(
       source: args.pause
         ? null
         : client.executeQuery(request, {
-            requestPolicy: args.requestPolicy,
-            ...args.context,
-          }),
+          requestPolicy: args.requestPolicy,
+          ...args.context,
+        }),
       deps: currDeps,
       suspense: isSuspense(client, args.context),
     });

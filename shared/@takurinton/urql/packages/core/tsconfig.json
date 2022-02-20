@@ -4,7 +4,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@takurinton/urql/*": ["../../node_modules/@urql/core/src/*"]
+      "@takurinton/urql/*": ["../../node_modules/@takurinton/urql/core/src/*"]
     }
   }
 }

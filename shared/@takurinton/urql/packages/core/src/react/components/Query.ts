@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { OperationContext } from '@takurinton/urql';
+import { OperationContext } from '../../';
 import { useQuery, UseQueryArgs, UseQueryState } from '../hooks';
 
 export interface QueryProps<Data = any, Variables = object>

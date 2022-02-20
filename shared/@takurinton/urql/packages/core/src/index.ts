@@ -16,9 +16,8 @@ export {
   maskTypename,
   makeOperation,
   getOperationName,
-  initUrqlClient,
 } from './utils';
 
-export * from './react/src/context';
-export * from './react/src/components';
-export * from './react/src/hooks';
+export * from './react/context';
+export * from './react/components';
+export * from './react/hooks';

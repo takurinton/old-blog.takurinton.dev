@@ -1,15 +1,12 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["src"],
+  "include": ["src", "context.ts"],
   "compilerOptions": {
     "baseUrl": "./",
     "types": ["node", "jest", "react"],
     "jsx": "react",
     "paths": {
-      "urql": ["../../node_modules/urql/src"],
-      "*-urql": ["../../node_modules/*-urql/src"],
-      "@urql/core/*": ["../../node_modules/@urql/core/src/*"],
-      "@urql/*": ["../../node_modules/@urql/*/src"]
+      "@takurinton/urql/*": ["../../node_modules/@takurinton/urql/core/src/*"]
     }
   }
 }

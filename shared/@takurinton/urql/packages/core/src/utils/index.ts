@@ -6,7 +6,6 @@ export * from './stringifyVariables';
 export * from './maskTypename';
 export * from './streamUtils';
 export * from './operation';
-export * from './initUrqlClient';
 
 export const noop = () => {
   /* noop */
