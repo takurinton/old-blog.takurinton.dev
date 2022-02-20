@@ -1,4 +1,4 @@
-import { createClient, Client, ClientOptions } from 'urql';
+import { Client, ClientOptions } from '@takurinton/urql';
 import fetch from 'node-fetch';
 
 let urqlClient: Client | null = null;

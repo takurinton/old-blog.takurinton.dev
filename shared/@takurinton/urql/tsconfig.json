@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@takurinton/urql/*": ["packages/core/src/*"]
+    },
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": true,
+    "noEmit": true,
+    "lib": ["dom", "esnext"],
+    "jsx": "preserve",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "target": "esnext",
+    "strict": true,
+    "noImplicitAny": false,
+    "noUnusedParameters": true,
+    "skipLibCheck": true
+  },
+  "include": ["packages", "exchanges", "scripts"],
+  "exclude": [
+    "packages/core/scripts",
+    "examples",
+    "packages/*/examples",
+    "packages/*/dist",
+    "exchanges/*/examples",
+    "exchanges/*/dist",
+    "node_modules"
+  ]
+}
