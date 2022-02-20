@@ -6,21 +6,21 @@ import { CombinedError } from './utils/error';
 
 export type ExecutionResult =
   | {
-    errors?:
-    | Array<Partial<GraphQLError> | string | Error>
-    | readonly GraphQLError[];
-    data?: null | Record<string, any>;
-    extensions?: Record<string, any>;
-    hasNext?: boolean;
-  }
+      errors?:
+        | Array<Partial<GraphQLError> | string | Error>
+        | readonly GraphQLError[];
+      data?: null | Record<string, any>;
+      extensions?: Record<string, any>;
+      hasNext?: boolean;
+    }
   | {
-    errors?:
-    | Array<Partial<GraphQLError> | string | Error>
-    | readonly GraphQLError[];
-    data: any;
-    path: (string | number)[];
-    hasNext?: boolean;
-  };
+      errors?:
+        | Array<Partial<GraphQLError> | string | Error>
+        | readonly GraphQLError[];
+      data: any;
+      path: (string | number)[];
+      hasNext?: boolean;
+    };
 
 export type PromisifiedSource<T = any> = Source<T> & {
   toPromise: () => Promise<T>;
@@ -146,7 +146,7 @@ export type DebugEventArg<T extends keyof DebugEventTypes | string> = {
 
 export type DebugEvent<
   T extends keyof DebugEventTypes | string = string
-  > = DebugEventArg<T> & {
-    timestamp: number;
-    source: string;
-  };
+> = DebugEventArg<T> & {
+  timestamp: number;
+  source: string;
+};

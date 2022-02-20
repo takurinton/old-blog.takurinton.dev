@@ -70,7 +70,7 @@ export interface ClientOptions {
 }
 
 export interface Client {
-  new(options: ClientOptions): Client;
+  new (options: ClientOptions): Client;
 
   operations$: Source<Operation>;
 
