@@ -1,4 +1,4 @@
-import { gql } from "@urql/core";
+import { gql } from "@takurinton/urql";
 
 export const POSTS_QUERY = gql`
 query postsQuery($pages: Int, $category: String) {

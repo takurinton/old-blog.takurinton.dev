@@ -1,5 +1,4 @@
 import { marked } from 'marked';
-import * as rintonwc from 'rintonwc';
 
 export const markdownStyle = () => {
     const r = new marked.Renderer();

@@ -1,0 +1,26 @@
+/.idea
+/.vscode
+**/node_modules
+*.log
+.rts2_cache*
+.husky
+dist/
+build/
+coverage/
+package-lock.json
+.DS_Store
+.next
+
+packages/*/LICENSE
+exchanges/*/LICENSE
+
+# TODO: Figure out how to remove these:
+tmp/
+dist/
+examples/*/public
+examples/*/yarn.lock
+examples/*/ios/
+examples/*/android/
+examples/*/.watchmanconfig
+examples/*/metro.config.js
+examples/*/babel.config.js

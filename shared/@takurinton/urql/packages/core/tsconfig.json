@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@takurinton/urql/*": ["../../node_modules/@urql/core/src/*"]
+    }
+  }
+}
