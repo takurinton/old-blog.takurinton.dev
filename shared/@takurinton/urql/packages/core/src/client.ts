@@ -70,7 +70,7 @@ export interface ClientOptions {
 }
 
 export interface Client {
-  new (options: ClientOptions): Client;
+  new(options: ClientOptions): Client;
 
   operations$: Source<Operation>;
 
@@ -116,28 +116,6 @@ export interface Client {
   ): OperationResult<Data, Variables> | null;
 
   executeQuery<Data = any, Variables = object>(
-    query: GraphQLRequest<Data, Variables>,
-    opts?: Partial<OperationContext> | undefined
-  ): Source<OperationResult<Data, Variables>>;
-
-  subscription<Data = any, Variables extends object = {}>(
-    query: DocumentNode | TypedDocumentNode<Data, Variables> | string,
-    variables?: Variables,
-    context?: Partial<OperationContext>
-  ): Source<OperationResult<Data, Variables>>;
-
-  executeSubscription<Data = any, Variables = object>(
-    query: GraphQLRequest<Data, Variables>,
-    opts?: Partial<OperationContext> | undefined
-  ): Source<OperationResult<Data, Variables>>;
-
-  mutation<Data = any, Variables extends object = {}>(
-    query: DocumentNode | TypedDocumentNode<Data, Variables> | string,
-    variables?: Variables,
-    context?: Partial<OperationContext>
-  ): PromisifiedSource<OperationResult<Data, Variables>>;
-
-  executeMutation<Data = any, Variables = object>(
     query: GraphQLRequest<Data, Variables>,
     opts?: Partial<OperationContext> | undefined
   ): Source<OperationResult<Data, Variables>>;
@@ -188,15 +166,6 @@ export const Client: new (opts: ClientOptions) => Client = function Client(
       result$ = pipe(
         result$,
         map(res => ({ ...res, data: maskTypename(res.data) }))
-      );
-    }
-
-    // A mutation is always limited to just a single result and is never shared
-    if (operation.kind === 'mutation') {
-      return pipe(
-        result$,
-        onStart(() => dispatchOperation(operation)),
-        take(1)
       );
     }
 
@@ -267,7 +236,7 @@ export const Client: new (opts: ClientOptions) => Client = function Client(
     reexecuteOperation(operation: Operation) {
       // Reexecute operation only if any subscribers are still subscribed to the
       // operation's exchange results
-      if (operation.kind === 'mutation' || active.has(operation.key)) {
+      if (active.has(operation.key)) {
         queue.push(operation);
         if (!isOperationBatchActive) {
           Promise.resolve().then(dispatchOperation);
@@ -302,15 +271,10 @@ export const Client: new (opts: ClientOptions) => Client = function Client(
         );
       }
       const context = client.createOperationContext(opts);
-      if (kind === 'mutation') (context as any)._instance = [];
       return makeOperation(kind, request, context);
     },
 
     executeRequestOperation(operation) {
-      if (operation.kind === 'mutation') {
-        return makeResultSource(operation);
-      }
-
       return make(observer => {
         let source = active.get(operation.key);
 
@@ -327,9 +291,7 @@ export const Client: new (opts: ClientOptions) => Client = function Client(
           onStart(() => {
             const prevReplay = replays.get(operation.key);
 
-            if (operation.kind === 'subscription') {
-              return dispatchOperation(operation);
-            } else if (isNetworkOperation) {
+            if (isNetworkOperation) {
               dispatchOperation(operation);
             }
 
@@ -355,20 +317,6 @@ export const Client: new (opts: ClientOptions) => Client = function Client(
       return client.executeRequestOperation(operation);
     },
 
-    executeSubscription(query, opts) {
-      const operation = client.createRequestOperation(
-        'subscription',
-        query,
-        opts
-      );
-      return client.executeRequestOperation(operation);
-    },
-
-    executeMutation(query, opts) {
-      const operation = client.createRequestOperation('mutation', query, opts);
-      return client.executeRequestOperation(operation);
-    },
-
     query(query, variables, context) {
       if (!context || typeof context.suspense !== 'boolean') {
         context = { ...context, suspense: false };
@@ -390,19 +338,6 @@ export const Client: new (opts: ClientOptions) => Client = function Client(
       ).unsubscribe();
 
       return result;
-    },
-
-    subscription(query, variables, context) {
-      return client.executeSubscription(
-        createRequest(query, variables),
-        context
-      );
-    },
-
-    mutation(query, variables, context) {
-      return withPromise(
-        client.executeMutation(createRequest(query, variables), context)
-      );
     },
   } as Client);
 

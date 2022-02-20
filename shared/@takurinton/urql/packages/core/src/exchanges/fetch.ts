@@ -16,7 +16,7 @@ export const fetchExchange: Exchange = ({ forward, dispatchDebug }) => {
     const fetchResults$ = pipe(
       sharedOps$,
       filter(operation => {
-        return operation.kind === 'query' || operation.kind === 'mutation';
+        return operation.kind === 'query';
       }),
       mergeMap(operation => {
         const { key } = operation;
@@ -65,7 +65,7 @@ export const fetchExchange: Exchange = ({ forward, dispatchDebug }) => {
     const forward$ = pipe(
       sharedOps$,
       filter(operation => {
-        return operation.kind !== 'query' && operation.kind !== 'mutation';
+        return operation.kind !== 'query';
       }),
       forward
     );
