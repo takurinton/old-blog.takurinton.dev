@@ -6,15 +6,16 @@ import { About } from "./pages/About";
 import { Home } from "./pages/Home";
 import { Post } from "./pages/Post";
 import { External } from "./pages/External";
-import { Provider } from "../shared/graphql/context";
+import { Provider } from "../shared/graphql/hooks/context";
 import { initUrqlClient } from "../shared/graphql/initUrqlClient";
+import { ENDPOINT } from "../shared/constants/constants";
 
 export const App: React.FC<{
     props: any;
 }> = ({ props }): JSX.Element => {
     const theme = createTheme();
     const client = initUrqlClient({
-        url: 'https://api.takurinton.com/graphql',
+        url: ENDPOINT,
     });
 
     return (

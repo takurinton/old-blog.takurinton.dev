@@ -1,9 +1,8 @@
 import { createContext, useContext } from 'react';
 import { Client, createClient } from '@takurinton/urql';
+import { ENDPOINT } from '../../constants/constants';
 
-// We assume some default options here; mainly not to actually be used
-// but not to error catastrophically if someone is just playing around
-const defaultClient = createClient({ url: '/graphql' });
+const defaultClient = createClient({ url: ENDPOINT });
 
 export const Context = createContext<Client>(defaultClient);
 export const Provider = Context.Provider;

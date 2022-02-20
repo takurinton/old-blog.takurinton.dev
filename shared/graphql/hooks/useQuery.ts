@@ -13,10 +13,11 @@ import {
   Operation,
 } from '@takurinton/urql';
 
-import { useClient } from '../context';
+import { useClient } from './context';
 import { useRequest } from './useRequest';
 import { hasDepsChanged, computeNextState, initialState } from './state';
 import { getCacheForClient } from './cache';
+
 
 export interface UseQueryArgs<Variables = object, Data = any> {
   query: string | DocumentNode | TypedDocumentNode<Data, Variables>;
