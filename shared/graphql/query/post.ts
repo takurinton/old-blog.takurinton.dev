@@ -1,4 +1,4 @@
-import { gql } from "@urql/core";
+import { gql } from "@takurinton/urql";
 
 export const POST_QUERY = gql`
 	query postQuery($id: Int) {
