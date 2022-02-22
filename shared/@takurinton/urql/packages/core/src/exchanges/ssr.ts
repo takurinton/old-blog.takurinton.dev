@@ -79,11 +79,11 @@ const deserializeResult = (
       : undefined,
   error: result.error
     ? new CombinedError({
-        networkError: result.error.networkError
-          ? new Error(result.error.networkError)
-          : undefined,
-        graphQLErrors: result.error.graphQLErrors,
-      })
+      networkError: result.error.networkError
+        ? new Error(result.error.networkError)
+        : undefined,
+      graphQLErrors: result.error.graphQLErrors,
+    })
     : undefined,
   hasNext: result.hasNext,
 });
@@ -153,20 +153,7 @@ export const ssrExchange = (params?: SSRExchangeParams): SSRExchange => {
       })
     );
 
-    if (!isClient) {
-      // On the server we cache results in the cache as they're resolved
-      forwardedOps$ = pipe(
-        forwardedOps$,
-        tap((result: OperationResult) => {
-          const { operation } = result;
-          if (operation.kind !== 'mutation') {
-            const serialized = serializeResult(result, includeExtensions);
-            data[operation.key] = serialized;
-          }
-        })
-      );
-    } else {
-      // On the client we delete results from the cache as they're resolved
+    if (isClient) {
       cachedOps$ = pipe(cachedOps$, tap(invalidate));
     }
 
