@@ -32,39 +32,6 @@ export interface SSRExchange extends Exchange {
   extractData(): SSRData;
 }
 
-/** Serialize an OperationResult to plain JSON */
-const serializeResult = (
-  { hasNext, data, extensions, error }: OperationResult,
-  includeExtensions: boolean
-): SerializedResult => {
-  const result: SerializedResult = {};
-  if (data !== undefined) result.data = JSON.stringify(data);
-  if (includeExtensions && extensions !== undefined) {
-    result.extensions = JSON.stringify(extensions);
-  }
-  if (hasNext) result.hasNext = true;
-
-  if (error) {
-    result.error = {
-      graphQLErrors: error.graphQLErrors.map(error => {
-        if (!error.path && !error.extensions) return error.message;
-
-        return {
-          message: error.message,
-          path: error.path,
-          extensions: error.extensions,
-        };
-      }),
-    };
-
-    if (error.networkError) {
-      result.error.networkError = '' + error.networkError;
-    }
-  }
-
-  return result;
-};
-
 /** Deserialize plain JSON to an OperationResult */
 const deserializeResult = (
   operation: Operation,
@@ -79,11 +46,11 @@ const deserializeResult = (
       : undefined,
   error: result.error
     ? new CombinedError({
-      networkError: result.error.networkError
-        ? new Error(result.error.networkError)
-        : undefined,
-      graphQLErrors: result.error.graphQLErrors,
-    })
+        networkError: result.error.networkError
+          ? new Error(result.error.networkError)
+          : undefined,
+        graphQLErrors: result.error.graphQLErrors,
+      })
     : undefined,
   hasNext: result.hasNext,
 });
@@ -123,7 +90,7 @@ export const ssrExchange = (params?: SSRExchangeParams): SSRExchange => {
 
     const sharedOps$ = share(ops$);
 
-    let forwardedOps$ = pipe(
+    const forwardedOps$ = pipe(
       sharedOps$,
       filter(
         operation => !data[operation.key] || !!data[operation.key]!.hasNext
