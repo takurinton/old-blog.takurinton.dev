@@ -69,7 +69,7 @@ export interface ClientOptions {
 }
 
 export interface Client {
-  new(options: ClientOptions): Client;
+  new (options: ClientOptions): Client;
 
   operations$: Source<Operation>;
 
@@ -321,8 +321,6 @@ export const Client: new (opts: ClientOptions) => Client = function Client(
     },
 
     query(query, variables, context) {
-      // eslint-disable-next-line no-console
-      console.log(query, variables);
       if (!context || typeof context.suspense !== 'boolean') {
         context = { ...context, suspense: false };
       }

@@ -64,9 +64,7 @@ export const fetchExchange: Exchange = ({ forward, dispatchDebug }) => {
 
     const forward$ = pipe(
       sharedOps$,
-      filter(operation => {
-        return operation.kind !== 'query';
-      }),
+      filter(_ => false),
       forward
     );
 

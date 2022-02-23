@@ -32,6 +32,39 @@ export interface SSRExchange extends Exchange {
   extractData(): SSRData;
 }
 
+/** Serialize an OperationResult to plain JSON */
+const serializeResult = (
+  { hasNext, data, extensions, error }: OperationResult,
+  includeExtensions: boolean
+): SerializedResult => {
+  const result: SerializedResult = {};
+  if (data !== undefined) result.data = JSON.stringify(data);
+  if (includeExtensions && extensions !== undefined) {
+    result.extensions = JSON.stringify(extensions);
+  }
+  if (hasNext) result.hasNext = true;
+
+  if (error) {
+    result.error = {
+      graphQLErrors: error.graphQLErrors.map(error => {
+        if (!error.path && !error.extensions) return error.message;
+
+        return {
+          message: error.message,
+          path: error.path,
+          extensions: error.extensions,
+        };
+      }),
+    };
+
+    if (error.networkError) {
+      result.error.networkError = '' + error.networkError;
+    }
+  }
+
+  return result;
+};
+
 /** Deserialize plain JSON to an OperationResult */
 const deserializeResult = (
   operation: Operation,
@@ -90,7 +123,7 @@ export const ssrExchange = (params?: SSRExchangeParams): SSRExchange => {
 
     const sharedOps$ = share(ops$);
 
-    const forwardedOps$ = pipe(
+    let forwardedOps$ = pipe(
       sharedOps$,
       filter(
         operation => !data[operation.key] || !!data[operation.key]!.hasNext
@@ -120,7 +153,20 @@ export const ssrExchange = (params?: SSRExchangeParams): SSRExchange => {
       })
     );
 
-    if (isClient) {
+    if (!isClient) {
+      // On the server we cache results in the cache as they're resolved
+      forwardedOps$ = pipe(
+        forwardedOps$,
+        tap((result: OperationResult) => {
+          const { operation } = result;
+          if (operation.kind === 'query') {
+            const serialized = serializeResult(result, includeExtensions);
+            data[operation.key] = serialized;
+          }
+        })
+      );
+    } else {
+      // On the client we delete results from the cache as they're resolved
       cachedOps$ = pipe(cachedOps$, tap(invalidate));
     }
 
