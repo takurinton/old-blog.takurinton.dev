@@ -92,26 +92,6 @@ export function useQuery<Data = any, Variables = object>(
           | ((result: OperationResult<Data, Variables>) => void)
           | undefined;
 
-        const subscription = pipe(
-          source,
-          takeWhile(
-            () =>
-              (suspense && (!resolve || (result && (result as any).then))) ||
-              !result
-          ),
-          subscribe(_result => {
-            result = _result;
-            if (suspense) {
-              cache.set(request.key, result);
-            }
-
-            if (resolve) {
-              resolve(result);
-              resolve = undefined;
-            }
-          })
-        );
-
         if (result == null && suspense) {
           const promise = (result = new Promise(_resolve => {
             resolve = _resolve;
@@ -119,7 +99,7 @@ export function useQuery<Data = any, Variables = object>(
           cache.set(request.key, promise);
           throw promise;
         } else {
-          subscription.unsubscribe();
+          // 何もしない
         }
       } else if (suspense && result != null && 'then' in result) {
         throw result;

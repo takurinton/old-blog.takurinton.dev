@@ -12,7 +12,7 @@ export const dedupExchange: Exchange = ({ forward, dispatchDebug }) => {
       return true;
     }
 
-    if (kind !== 'query' && kind !== 'subscription') {
+    if (kind !== 'query') {
       return true;
     }
 

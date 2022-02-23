@@ -17,8 +17,7 @@ interface OperationCache {
   [key: string]: Set<number>;
 }
 
-const shouldSkip = ({ kind }: Operation) =>
-  kind !== 'mutation' && kind !== 'query';
+const shouldSkip = ({ kind }: Operation) => kind !== 'query';
 
 export const cacheExchange: Exchange = ({ forward, client, dispatchDebug }) => {
   const resultCache = new Map() as ResultCache;
@@ -100,44 +99,14 @@ export const cacheExchange: Exchange = ({ forward, client, dispatchDebug }) => {
       ),
       forward,
       tap(response => {
-        let { operation } = response;
+        const { operation } = response;
         if (!operation) return;
 
         const typenames = collectTypesFromResponse(response.data).concat(
           operation.context.additionalTypenames || []
         );
 
-        // Invalidates the cache given a mutation's response
-        if (response.operation.kind === 'mutation') {
-          const pendingOperations = new Set<number>();
-
-          dispatchDebug({
-            type: 'cacheInvalidation',
-            message: `The following typenames have been invalidated: ${typenames}`,
-            operation,
-            data: { typenames, response },
-          });
-
-          for (let i = 0; i < typenames.length; i++) {
-            const typeName = typenames[i];
-            const operations =
-              operationCache[typeName] ||
-              (operationCache[typeName] = new Set());
-            operations.forEach(key => {
-              pendingOperations.add(key);
-            });
-            operations.clear();
-          }
-
-          pendingOperations.forEach(key => {
-            if (resultCache.has(key)) {
-              operation = (resultCache.get(key) as OperationResult).operation;
-              resultCache.delete(key);
-              reexecuteOperation(client, operation);
-            }
-          });
-          // Mark typenames on typenameInvalidate for early invalidation
-        } else if (operation.kind === 'query' && response.data) {
+        if (operation.kind === 'query' && response.data) {
           resultCache.set(operation.key, response);
           for (let i = 0; i < typenames.length; i++) {
             const typeName = typenames[i];

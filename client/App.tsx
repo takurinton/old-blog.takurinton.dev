@@ -8,15 +8,12 @@ import { Post } from "./pages/Post";
 import { External } from "./pages/External";
 import { Provider } from "../shared/graphql/hooks/context";
 import { initUrqlClient } from "../shared/graphql/initUrqlClient";
-import { ENDPOINT } from "../shared/constants/constants";
 
 export const App: React.FC<{
     props: any;
 }> = ({ props }): JSX.Element => {
     const theme = createTheme();
-    const client = initUrqlClient({
-        url: ENDPOINT,
-    });
+    const client = initUrqlClient({});
 
     return (
         <>

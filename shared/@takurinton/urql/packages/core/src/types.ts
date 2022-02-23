@@ -27,7 +27,7 @@ export type PromisifiedSource<T = any> = Source<T> & {
 };
 
 /** The type of GraphQL operation being executed. */
-export type OperationType = 'subscription' | 'query' | 'mutation' | 'teardown';
+export type OperationType = 'query' | 'teardown';
 
 /** The strategy that is used to request results from network and/or the cache. */
 export type RequestPolicy =
@@ -39,7 +39,7 @@ export type RequestPolicy =
 /** How the operation has */
 export type CacheOutcome = 'miss' | 'partial' | 'hit';
 
-/** A Graphql query, mutation, or subscription. */
+/** A Graphql query. */
 export interface GraphQLRequest<Data = any, Variables = object> {
   /** Unique identifier of the request. */
   key: number;
@@ -69,7 +69,7 @@ export interface OperationContext {
   preferGetMethod?: boolean;
 }
 
-/** A [query]{@link Query} or [mutation]{@link Mutation} with additional metadata for use during transmission. */
+/** A [query]{@link Query} with additional metadata for use during transmission. */
 export interface Operation<Data = any, Variables = any>
   extends GraphQLRequest<Data, Variables> {
   readonly kind: OperationType;

@@ -159,7 +159,7 @@ export const ssrExchange = (params?: SSRExchangeParams): SSRExchange => {
         forwardedOps$,
         tap((result: OperationResult) => {
           const { operation } = result;
-          if (operation.kind !== 'mutation') {
+          if (operation.kind === 'query') {
             const serialized = serializeResult(result, includeExtensions);
             data[operation.key] = serialized;
           }

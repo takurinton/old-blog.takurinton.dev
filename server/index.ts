@@ -16,13 +16,14 @@ import { POSTS_QUERY } from '../shared/graphql/query/posts';
 import { POST_QUERY } from '../shared/graphql/query/post';
 
 const app = express();
-app.listen(3001);
+app.listen(3001, () => {
+    console.log('starting server...');
+    console.log('listen http://localhost:3001');
+});
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static('dist'));
-
-const SERVER_ENDPOINT = 'https://api.takurinton.com';
 
 const ssrMiddleware = async ({
     query,
@@ -34,7 +35,6 @@ const ssrMiddleware = async ({
     const ssr = ssrExchange({ isClient: false });
     const client = initUrqlClient(
         {
-            url: `${SERVER_ENDPOINT}/graphql`,
             exchanges: [dedupExchange, cacheExchange, ssr, fetchExchange],
         },
     );
