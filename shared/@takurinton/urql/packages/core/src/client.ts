@@ -51,8 +51,6 @@ import {
 
 /** Options for configuring the URQL [client]{@link Client}. */
 export interface ClientOptions {
-  /** Target endpoint URL such as `https://my-target:8080/graphql`. */
-  url: string;
   /** Any additional options to pass to fetch. */
   fetchOptions?: RequestInit | (() => RequestInit);
   /** An alternative fetch implementation. */
@@ -121,11 +119,14 @@ export interface Client {
   ): Source<OperationResult<Data, Variables>>;
 }
 
+export const ENDPOINT = 'https://api.takurinton.com/graphql';
+
 export const Client: new (opts: ClientOptions) => Client = function Client(
   this: Client | {},
   opts: ClientOptions
 ) {
-  if (process.env.NODE_ENV !== 'production' && !opts.url) {
+  const url = ENDPOINT;
+  if (process.env.NODE_ENV !== 'production' && !url) {
     throw new Error('You are creating an urql-client without a url.');
   }
 
@@ -223,7 +224,7 @@ export const Client: new (opts: ClientOptions) => Client = function Client(
   const instance: Client =
     this instanceof Client ? this : Object.create(Client.prototype);
   const client: Client = Object.assign(instance, {
-    url: opts.url,
+    url,
     fetchOptions: opts.fetchOptions,
     fetch: opts.fetch,
     suspense: !!opts.suspense,

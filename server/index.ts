@@ -22,8 +22,6 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static('dist'));
 
-const SERVER_ENDPOINT = 'https://api.takurinton.com';
-
 const ssrMiddleware = async ({
     query,
     variables
@@ -34,7 +32,6 @@ const ssrMiddleware = async ({
     const ssr = ssrExchange({ isClient: false });
     const client = initUrqlClient(
         {
-            url: `${SERVER_ENDPOINT}/graphql`,
             exchanges: [dedupExchange, cacheExchange, ssr, fetchExchange],
         },
     );

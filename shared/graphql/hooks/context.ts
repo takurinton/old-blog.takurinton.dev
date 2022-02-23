@@ -1,8 +1,7 @@
 import { createContext, useContext } from 'react';
 import { Client, createClient } from '@takurinton/urql';
-import { ENDPOINT } from '../../constants/constants';
 
-const defaultClient = createClient({ url: ENDPOINT });
+const defaultClient = createClient({});
 
 export const Context = createContext<Client>(defaultClient);
 export const Provider = Context.Provider;
