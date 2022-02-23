@@ -51,6 +51,7 @@ import {
 
 /** Options for configuring the URQL [client]{@link Client}. */
 export interface ClientOptions {
+  url?: string;
   /** Any additional options to pass to fetch. */
   fetchOptions?: RequestInit | (() => RequestInit);
   /** An alternative fetch implementation. */
@@ -125,7 +126,7 @@ export const Client: new (opts: ClientOptions) => Client = function Client(
   this: Client | {},
   opts: ClientOptions
 ) {
-  const url = ENDPOINT;
+  const url = opts.url ?? ENDPOINT;
   if (process.env.NODE_ENV !== 'production' && !url) {
     throw new Error('You are creating an urql-client without a url.');
   }
