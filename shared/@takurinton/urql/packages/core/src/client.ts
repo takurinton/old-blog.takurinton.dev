@@ -69,7 +69,7 @@ export interface ClientOptions {
 }
 
 export interface Client {
-  new (options: ClientOptions): Client;
+  new(options: ClientOptions): Client;
 
   operations$: Source<Operation>;
 
@@ -126,7 +126,8 @@ export const Client: new (opts: ClientOptions) => Client = function Client(
   this: Client | {},
   opts: ClientOptions
 ) {
-  const url = opts.url ?? ENDPOINT;
+  // const url = opts.url ?? ENDPOINT is syntax error😱
+  const url = opts.url === undefined ? ENDPOINT : opts.url;
   if (process.env.NODE_ENV !== 'production' && !url) {
     throw new Error('You are creating an urql-client without a url.');
   }
@@ -320,6 +321,8 @@ export const Client: new (opts: ClientOptions) => Client = function Client(
     },
 
     query(query, variables, context) {
+      // eslint-disable-next-line no-console
+      console.log(query, variables);
       if (!context || typeof context.suspense !== 'boolean') {
         context = { ...context, suspense: false };
       }
