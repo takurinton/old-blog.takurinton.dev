@@ -5,6 +5,8 @@
   "main": "index.js",
   "devDependencies": {},
   "scripts": {
+    "reinstall": "rm -rf node_modules && yarn",
+    "urql/debug": "cd shared/@takurinton/urql && yarn fix && yarn build && cd - && yarn reinstall && yarn dev",
     "dev": "yarn dev/client & yarn dev/server",
     "build": "rm -rf ./dist && yarn build/server && yarn build/client",
     "dev/server": "ts-node-dev ./server/index.ts",
