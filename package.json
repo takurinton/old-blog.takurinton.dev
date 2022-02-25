@@ -10,9 +10,9 @@
     "dev": "yarn dev/client & yarn dev/server",
     "build": "rm -rf ./dist && yarn build/server && yarn build/client",
     "dev/server": "ts-node-dev ./server/index.ts",
-    "dev/client": "esbuild --bundle ./client/main.tsx --outfile=./dist/main.js --watch",
+    "dev/client": "node ./client/esbuild.js",
     "build/server": "esbuild --bundle ./server/index.ts --outfile=./dist/server.js --platform=node",
-    "build/client": "esbuild --minify --bundle ./client/main.tsx --outfile=./dist/main.js",
+    "build/client": "NODE_ENV=production node ./client/esbuild.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
