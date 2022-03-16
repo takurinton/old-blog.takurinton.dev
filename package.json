@@ -11,7 +11,7 @@
     "build": "rm -rf ./dist && yarn build/server && yarn build/client",
     "dev/server": "ts-node-dev ./server/index.ts",
     "dev/client": "esbuild --bundle ./client/main.tsx --outfile=./dist/main.js --watch",
-    "build/server": "esbuild --bundle ./server/index.ts --outfile=./dist/server.js --platform=node",
+    "build/server": "esbuild --bundle ./server/index.ts --outfile=./dist/server.js --platform=node ",
     "build/client": "esbuild --minify --bundle ./client/main.tsx --outfile=./dist/main.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "vercel": "yarn build/client && yarn build/server && vercel --prod"
@@ -60,5 +60,6 @@
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.5.4",
     "use-sync-external-store": "^1.0.0-rc.0"
-  }
+  },
+  "type": "module"
 }

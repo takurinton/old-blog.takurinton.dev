@@ -37,9 +37,9 @@ export default function Header() {
           </HeaderNav>
           <Spacer pl={3} />
           {/* 一旦なし */}
-          {/* <HeaderNav onMouseEnter={handleMouseEnterExternalLinks}>
+          <HeaderNav onMouseEnter={handleMouseEnterExternalLinks}>
             <Link to="/external">External</Link>
-          </HeaderNav> */}
+          </HeaderNav>
         </Flex>
       </Flex>
     </HeaderContainer>

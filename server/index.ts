@@ -1,250 +1,248 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import fetch from 'node-fetch';
-import Parser from 'rss-parser';
-import { render } from './render';
+import express from "express";
+import bodyParser from "body-parser";
+import cors from "cors";
+import fetch from "node-fetch";
+import Parser from "rss-parser";
+import { render } from "./render";
 import {
-    ssrExchange,
-    dedupExchange,
-    cacheExchange,
-    fetchExchange,
-} from '@takurinton/urql';
-import { TypedDocumentNode } from '@graphql-typed-document-node/core';
-import { initUrqlClient } from '../shared/graphql/initUrqlClient';
-import { POSTS_QUERY } from '../shared/graphql/query/posts';
-import { POST_QUERY } from '../shared/graphql/query/post';
+  ssrExchange,
+  dedupExchange,
+  cacheExchange,
+  fetchExchange,
+} from "@takurinton/urql";
+import { TypedDocumentNode } from "@graphql-typed-document-node/core";
+import { initUrqlClient } from "../shared/graphql/initUrqlClient";
+import { POSTS_QUERY } from "../shared/graphql/query/posts";
+import { POST_QUERY } from "../shared/graphql/query/post";
 
 const app = express();
 app.listen(3001, () => {
-    console.log('starting server...');
-    console.log('listen http://localhost:3001');
+  console.log("starting server...");
+  console.log("listen http://localhost:3001");
 });
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-app.use(express.static('dist'));
+app.use(express.static("dist"));
 
 const ssrMiddleware = async ({
-    query,
-    variables
+  query,
+  variables,
 }: {
-    query: TypedDocumentNode<any, object>;
-    variables?: any;
+  query: TypedDocumentNode<any, object>;
+  variables?: any;
 }) => {
-    const ssr = ssrExchange({ isClient: false });
-    const client = initUrqlClient(
-        {
-            exchanges: [dedupExchange, cacheExchange, ssr, fetchExchange],
-        },
-    );
+  const ssr = ssrExchange({ isClient: false });
+  const client = initUrqlClient({
+    exchanges: [dedupExchange, cacheExchange, ssr, fetchExchange],
+  });
 
-    await client.query(
-        query,
-        variables
-    ).toPromise();
+  await client.query(query, variables).toPromise();
 
-    return ssr.extractData();
-}
+  return ssr.extractData();
+};
 
-app.get('/', async (req, res) => {
-    try {
-        const pages = req.query.page ?? 1;
-        const category = req.query.category ?? '';
-        const props = await ssrMiddleware({
-            query: POSTS_QUERY,
-            variables: { pages, category }
-        });
+app.get("/", async (req, res) => {
+  try {
+    const pages = req.query.page ?? 1;
+    const category = req.query.category ?? "";
+    const props = await ssrMiddleware({
+      query: POSTS_QUERY,
+      variables: { pages, category },
+    });
 
-        const html = await render({
-            url: '/',
-            title: 'Home | たくりんとんのブログ',
-            description: 'Home | たくりんとんのブログ',
-            image: 'https://takurinton.dev/me.jpeg',
-            props: props,
-        });
+    const html = await render({
+      url: "/",
+      title: "Home | たくりんとんのブログ",
+      description: "Home | たくりんとんのブログ",
+      image: "https://takurinton.dev/me.jpeg",
+      props: props,
+    });
 
-        res.setHeader('Content-Type', 'text/html')
-        res.send(html);
-    } catch (e) {
-        console.log(e)
-        res.setHeader('Content-Type', 'text/html')
-        res.send(e)
-    }
+    res.setHeader("Content-Type", "text/html");
+    res.send(html);
+  } catch (e) {
+    console.log(e);
+    res.setHeader("Content-Type", "text/html");
+    res.send(e);
+  }
 });
 
-app.get('/post/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
+app.get("/post/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
 
-        const props = await ssrMiddleware({
-            query: POST_QUERY,
-            variables: { id },
-        });
+    const props = await ssrMiddleware({
+      query: POST_QUERY,
+      variables: { id },
+    });
 
-        const response = await fetch(`https://api.takurinton.com/blog/v1/post/${id}`);
-        const json = await response.json();
-        const html = await render({
-            url: `/post/${id}`,
-            title: json.title,
-            description: `${json.title} | たくりんとんのブログ`,
-            image: `https://res.cloudinary.com/dtapptgdd/image/upload/w_1000/l_text:Sawarabi Gothic_70_bold:${json.title}/v1624689828/blog.takurinton.com_r14tz5.png`,
-            props,
-        });
-        res.setHeader('Content-Type', 'text/html')
-        res.send(html);
-    } catch (e) {
-        console.log(e)
-        res.setHeader('Content-Type', 'text/html')
-        res.send(e)
-    }
+    const response = await fetch(
+      `https://api.takurinton.com/blog/v1/post/${id}`
+    );
+    const json = await response.json();
+    const html = await render({
+      url: `/post/${id}`,
+      title: json.title,
+      description: `${json.title} | たくりんとんのブログ`,
+      image: `https://res.cloudinary.com/dtapptgdd/image/upload/w_1000/l_text:Sawarabi Gothic_70_bold:${json.title}/v1624689828/blog.takurinton.com_r14tz5.png`,
+      props,
+    });
+    res.setHeader("Content-Type", "text/html");
+    res.send(html);
+  } catch (e) {
+    console.log(e);
+    res.setHeader("Content-Type", "text/html");
+    res.send(e);
+  }
 });
 
 // /external.json からデータを取ってこようとしたら ssl のエラーが出たので、ローカルだとしんどそう。
 // /external.json と同じ処理をしてるけど、こっちは SSR 用、/external.json は prefetch 用として扱う
-app.get('/external', async (req, res) => {
-    try {
-        const parser = new Parser();
+app.get("/external", async (req, res) => {
+  try {
+    const parser = new Parser();
 
-        type ExternalType = {
-            icon: string;
-            title: string;
-            url: string;
-            content: string;
-            date: string;
-        }[];
+    type ExternalType = {
+      icon: string;
+      title: string;
+      url: string;
+      content: string;
+      date: string;
+    }[];
 
-        const rssLinks = {
-            zenn: {
-                link: 'https://zenn.dev/takurinton/feed',
-                icon: 'https://simpleicons.org/icons/zenn.svg'
-            },
-            plaid: {
-                link: 'https://tech.plaid.co.jp/author/takurinton/rss/',
-                icon: 'https://takurinton.dev/me.jpeg',
-            },
-        };
+    const rssLinks = {
+      zenn: {
+        link: "https://zenn.dev/takurinton/feed",
+        icon: "https://simpleicons.org/icons/zenn.svg",
+      },
+      plaid: {
+        link: "https://tech.plaid.co.jp/author/takurinton/rss/",
+        icon: "https://takurinton.dev/me.jpeg",
+      },
+    };
 
-        const parseRss = async () => {
-            const external: ExternalType = [];
-            for (const [_, link] of Object.entries(rssLinks)) {
-                const feed = await parser.parseURL(link.link);
-                feed.items.forEach(el => {
-                    external.push({
-                        icon: link.icon,
-                        title: el.title,
-                        url: el.link,
-                        content: el.content,
-                        date: el.pubDate
-                    })
-                });
-            }
-
-            external.sort((a, b) => {
-                const _a = new Date(a.date);
-                const _b = new Date(b.date);
-                return (_a < _b) ? 1 : -1;
-            });
-            return external;
-        };
-
-        const response = await parseRss();
-        const html = await render({
-            url: '/external',
-            title: '外部に投稿した記事一覧 | たくりんとんのブログ',
-            description: `外部に投稿した記事一覧 | たくりんとんのブログ`,
-            image: 'https://takurinton.dev/me.jpeg',
-            props: response,
+    const parseRss = async () => {
+      const external: ExternalType = [];
+      for (const [_, link] of Object.entries(rssLinks)) {
+        const feed = await parser.parseURL(link.link);
+        feed.items.forEach((el) => {
+          external.push({
+            icon: link.icon,
+            title: el.title,
+            url: el.link,
+            content: el.content,
+            date: el.pubDate,
+          });
         });
-        res.setHeader('Content-Type', 'text/html')
-        res.send(html);
-    } catch (e) {
-        console.log(e)
-        res.setHeader('Content-Type', 'text/html')
-        res.send(e)
-    }
+      }
+
+      external.sort((a, b) => {
+        const _a = new Date(a.date);
+        const _b = new Date(b.date);
+        return _a < _b ? 1 : -1;
+      });
+      return external;
+    };
+
+    const response = await parseRss();
+    const html = await render({
+      url: "/external",
+      title: "外部に投稿した記事一覧 | たくりんとんのブログ",
+      description: `外部に投稿した記事一覧 | たくりんとんのブログ`,
+      image: "https://takurinton.dev/me.jpeg",
+      props: response,
+    });
+    res.setHeader("Content-Type", "text/html");
+    res.send(html);
+  } catch (e) {
+    console.log(e);
+    res.setHeader("Content-Type", "text/html");
+    res.send(e);
+  }
 });
 
-app.get('/external.json', async (req, res) => {
-    try {
-        const parser = new Parser();
+app.get("/external.json", async (req, res) => {
+  try {
+    const parser = new Parser();
 
-        type ExternalType = {
-            icon: string;
-            title: string;
-            url: string;
-            content: string;
-            date: string;
-        }[];
+    type ExternalType = {
+      icon: string;
+      title: string;
+      url: string;
+      content: string;
+      date: string;
+    }[];
 
-        const rssLinks = {
-            zenn: {
-                link: 'https://zenn.dev/takurinton/feed',
-                icon: 'https://simpleicons.org/icons/zenn.svg'
-            },
-            plaid: {
-                link: 'https://tech.plaid.co.jp/author/takurinton/rss/',
-                icon: 'https://takurinton.dev/me.jpeg',
-            },
-        };
+    const rssLinks = {
+      zenn: {
+        link: "https://zenn.dev/takurinton/feed",
+        icon: "https://simpleicons.org/icons/zenn.svg",
+      },
+      // plaid: {
+      //     link: 'https://tech.plaid.co.jp/author/takurinton/rss/',
+      //     icon: 'https://takurinton.dev/me.jpeg',
+      // },
+    };
 
-        const parseRss = async () => {
-            const external: ExternalType = [];
-            for (const [_, link] of Object.entries(rssLinks)) {
-                const feed = await parser.parseURL(link.link);
-                feed.items.forEach(el => {
-                    external.push({
-                        icon: link.icon,
-                        title: el.title,
-                        url: el.link,
-                        content: el.content,
-                        date: el.pubDate
-                    })
-                });
-            }
-
-            external.sort((a, b) => {
-                const _a = new Date(a.date);
-                const _b = new Date(b.date);
-                return (_a < _b) ? 1 : -1;
-            });
-            return external;
-        };
-
-        res.setHeader('Content-Type', 'application/json')
-        const response = await parseRss();
-        res.json(response);
-    } catch (e) {
-        console.log(e)
-        res.setHeader('Content-Type', 'text/html')
-        res.send(e)
-    }
-});
-
-app.get('/about', async (req, res) => {
-    try {
-        const _renderd = await render({
-            url: '/about',
-            title: 'about | たくりんとんのブログ',
-            description: `about | たくりんとんのブログ`,
-            image: 'https://takurinton.dev/me.jpeg',
-            props: undefined,
+    const parseRss = async () => {
+      const external: ExternalType = [];
+      for (const [_, link] of Object.entries(rssLinks)) {
+        const feed = await parser.parseURL(link.link);
+        feed.items.forEach((el) => {
+          external.push({
+            icon: link.icon,
+            title: el.title,
+            url: el.link,
+            content: el.content,
+            date: el.pubDate,
+          });
         });
-        res.setHeader('Content-Type', 'text/html')
-        const renderd = '<!DOCTYPE html>' + _renderd;
-        res.send(renderd);
-    } catch (e) {
-        console.log(e)
-        res.setHeader('Content-Type', 'text/html')
-        res.send(e)
-    }
+      }
+
+      external.sort((a, b) => {
+        const _a = new Date(a.date);
+        const _b = new Date(b.date);
+        return _a < _b ? 1 : -1;
+      });
+      return external;
+    };
+
+    res.setHeader("Content-Type", "application/json");
+    const response = await parseRss();
+    res.json(response);
+  } catch (e) {
+    console.log(e);
+    res.setHeader("Content-Type", "text/html");
+    res.send(e);
+  }
 });
 
-app.get('/rss.xml', async (req, res) => {
-    try {
-        const rss = fetch('https://api.takurinton.com/blog/v1/rss').then((res) => {
-            return res.json().then((json) => (
-                `<?xml version="1.0" encoding="UTF-8"?>
+app.get("/about", async (req, res) => {
+  try {
+    const _renderd = await render({
+      url: "/about",
+      title: "about | たくりんとんのブログ",
+      description: `about | たくりんとんのブログ`,
+      image: "https://takurinton.dev/me.jpeg",
+      props: undefined,
+    });
+    res.setHeader("Content-Type", "text/html");
+    const renderd = "<!DOCTYPE html>" + _renderd;
+    res.send(renderd);
+  } catch (e) {
+    console.log(e);
+    res.setHeader("Content-Type", "text/html");
+    res.send(e);
+  }
+});
+
+app.get("/rss.xml", async (req, res) => {
+  try {
+    const rss = fetch("https://api.takurinton.com/blog/v1/rss").then((res) => {
+      return res.json().then(
+        (json) =>
+          `<?xml version="1.0" encoding="UTF-8"?>
         <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
         <channel>
         <atom:link href="https://blog.takurinton.dev/rss.xml" rel="self" type="application/rss+xml" />
@@ -261,24 +259,28 @@ app.get('/rss.xml', async (req, res) => {
             <width>32</width>
             <height>32</height>
         </image>
-        ${json.map((content) => `
+        ${json
+          .map(
+            (content) => `
             <item>
             <title>${content.title} | たくりんとんのブログ</title>
             <link>https://blog.takurinton.dev/post/${content.id}</link>
             <pubDate>${new Date(content.pub_date).toUTCString()}</pubDate>
             <description>${content.contents.slice(0, 200)}...</description>
             <guid>https://blog.takurinton.dev/post/${content.id}</guid>
-            </item>`).join('')}
+            </item>`
+          )
+          .join("")}
         </channel>
-        </rss>`)
-            );
-        });
-        res.setHeader('cache-control', 's-maxage=86400, stale-while-revalidate')
-        res.setHeader('Content-Type', 'pplication/xml;charset=UTF-8')
-        res.send(rss);
-    } catch (e) {
-        console.log(e)
-        res.setHeader('Content-Type', 'text/html')
-        res.send(e)
-    }
+        </rss>`
+      );
+    });
+    res.setHeader("cache-control", "s-maxage=86400, stale-while-revalidate");
+    res.setHeader("Content-Type", "pplication/xml;charset=UTF-8");
+    res.send(rss);
+  } catch (e) {
+    console.log(e);
+    res.setHeader("Content-Type", "text/html");
+    res.send(e);
+  }
 });
