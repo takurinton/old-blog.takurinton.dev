@@ -5,9 +5,9 @@ name: deploy
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
@@ -16,29 +16,29 @@ jobs:
       matrix:
         node-version: [12.x, 14.x, 16.x]
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'yarn'
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
 
-    run: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile
 
-    - name: login to aws
-      - uses: aws-actions/configure-aws-credentials@v1
-      - with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-northeast-1
-    - name: update client file
-      env: 
-        S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
-        run: | 
-          aws s3 rm s3://$S3_BUCKET_NAME/main.js
+      - name: login to aws
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+      - name: update client file
+        env:
+          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+        run: |
+          aws s3 rm s3://${{ secrets.S3_BUCKET_NAME }}/main.js
           yarn build/client
           aws s3 cp ./dist/main.js s3://$S3_BUCKET_NAME
-    - name: deploy
-      run: |
-        yarn build/server
-        npx vercel --prod
+      - name: deploy
+        run: |
+          yarn build/server
+          npx vercel --prod
