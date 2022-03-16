@@ -4,12 +4,16 @@ import { StaticRouter } from "react-router-dom/server";
 import { ServerStyleSheet } from "styled-components";
 import { App } from "../client/App";
 
-const STATIC_FILES = process.env.STATIC_FILES ?? 'http://localhost:3001';
+const S3_DOMAIN = process.env.S3_DOMAIN
+  ? "https://s3.ap-northeast-1.amazonaws.com/wip.blog.takurinton.dev"
+  : "http://localhost:3001";
+
 export const createTemplate = (props) => {
-    const json = JSON.stringify(props.props);
-    if (props.description == undefined) props.description = 'たくりんとんのポートフォリオです';
-    if (props.image == undefined) props.image = 'https://takurinton.dev/me.jpeg';
-    return (`<!DOCTYPE html>
+  const json = JSON.stringify(props.props);
+  if (props.description == undefined)
+    props.description = "たくりんとんのポートフォリオです";
+  if (props.image == undefined) props.image = "https://takurinton.dev/me.jpeg";
+  return `<!DOCTYPE html>
     <html lang="ja">
         <head>
             <link rel="preconnect" href="https://ssr-test.takurinton.vercel.app/" />
@@ -22,7 +26,7 @@ export const createTemplate = (props) => {
             <meta property="og:image" content=${props.image} />
             <meta property="og:site_name" content=${props.title} />
             <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:url" content=${''} />
+            <meta name="twitter:url" content=${""} />
             <meta name="twitter:title" content=${props.title} />
             <meta name="twitter:description" content=${props.description} />
             <meta name="twitter:image" content=${props.image} />
@@ -65,46 +69,46 @@ export const createTemplate = (props) => {
         <body>
             <div id="main">${props.htmlString}</div>
             <script id="__RINTON_DATA__" type="application/json">${json}</script>
-            <script async defer src="${STATIC_FILES}/main.js"></script>
+            <script async defer src="${S3_DOMAIN}/main.js"></script>
         </body>
     </html>
-    `)
-}
+    `;
+};
 
 export async function render({
+  url,
+  title,
+  description,
+  image,
+  props,
+}: {
+  url: string;
+  title: string;
+  description: string;
+  image: string;
+  props?: any;
+}) {
+  const sheet = new ServerStyleSheet();
+  const htmlString = ReactDOMServer.renderToString(
+    sheet.collectStyles(
+      <React.StrictMode>
+        <StaticRouter location={url}>
+          <App props={props} />
+        </StaticRouter>
+      </React.StrictMode>
+    )
+  );
+
+  const styleTags = sheet.getStyleTags();
+  const html = createTemplate({
     url,
     title,
     description,
     image,
     props,
-}: {
-    url: string;
-    title: string;
-    description: string;
-    image: string;
-    props?: any;
-}) {
-    const sheet = new ServerStyleSheet();
-    const htmlString = ReactDOMServer.renderToString(
-        sheet.collectStyles(
-            <React.StrictMode>
-                <StaticRouter location={url}>
-                    <App props={props} />
-                </StaticRouter>
-            </React.StrictMode>
-        )
-    );
+    styleTags,
+    htmlString,
+  });
 
-    const styleTags = sheet.getStyleTags();
-    const html = createTemplate({
-        url,
-        title,
-        description,
-        image,
-        props,
-        styleTags,
-        htmlString,
-    });
-
-    return html;
+  return html;
 }
