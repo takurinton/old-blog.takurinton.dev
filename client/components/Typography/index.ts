@@ -1,2 +1,2 @@
 // export { Typography } from './Typography';
-export { TypographyWrapper } from './TypographyWrapper';
+export { TypographyWrapper } from "./TypographyWrapper";

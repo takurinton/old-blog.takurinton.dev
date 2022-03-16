@@ -1,6 +1,10 @@
-import { DocumentNode } from 'graphql';
-import { useRef, useMemo } from 'react';
-import { TypedDocumentNode, GraphQLRequest, createRequest } from '@takurinton/urql';
+import { DocumentNode } from "graphql";
+import { useRef, useMemo } from "react";
+import {
+  TypedDocumentNode,
+  GraphQLRequest,
+  createRequest,
+} from "@takurinton/urql";
 
 /** Creates a request from a query and variables but preserves reference equality if the key isn't changing */
 export function useRequest<Data = any, Variables = object>(

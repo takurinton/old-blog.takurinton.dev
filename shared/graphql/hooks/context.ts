@@ -1,12 +1,12 @@
-import { createContext, useContext } from 'react';
-import { Client, createClient } from '@takurinton/urql';
+import { createContext, useContext } from "react";
+import { Client, createClient } from "@takurinton/urql";
 
 const defaultClient = createClient({});
 
 export const Context = createContext<Client>(defaultClient);
 export const Provider = Context.Provider;
 export const Consumer = Context.Consumer;
-Context.displayName = 'UrqlContext';
+Context.displayName = "UrqlContext";
 
 let hasWarnedAboutDefault = false;
 
@@ -14,7 +14,7 @@ export const useClient = (): Client => {
   const client = useContext(Context);
 
   if (
-    process.env.NODE_ENV !== 'production' &&
+    process.env.NODE_ENV !== "production" &&
     client === defaultClient &&
     !hasWarnedAboutDefault
   ) {
@@ -22,9 +22,9 @@ export const useClient = (): Client => {
 
     console.warn(
       "Default Client: No client has been specified using urql's Provider." +
-      'This means that urql will be falling back to defaults including making ' +
-      'requests to `/graphql`.\n' +
-      "If that's not what you want, please create a client and add a Provider."
+        "This means that urql will be falling back to defaults including making " +
+        "requests to `/graphql`.\n" +
+        "If that's not what you want, please create a client and add a Provider."
     );
   }
 

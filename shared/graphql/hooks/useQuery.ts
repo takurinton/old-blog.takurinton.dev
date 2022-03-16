@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DocumentNode } from 'graphql';
-import { Source, pipe, subscribe, takeWhile } from 'wonka';
-import { useCallback, useMemo, useState } from 'react';
-import { useSyncExternalStore } from 'use-sync-external-store/shim';
+import { DocumentNode } from "graphql";
+import { Source, pipe, subscribe, takeWhile } from "wonka";
+import { useCallback, useMemo, useState } from "react";
+import { useSyncExternalStore } from "use-sync-external-store/shim";
 import {
   Client,
   TypedDocumentNode,
@@ -11,13 +11,12 @@ import {
   RequestPolicy,
   OperationResult,
   Operation,
-} from '@takurinton/urql';
+} from "@takurinton/urql";
 
-import { useClient } from './context';
-import { useRequest } from './useRequest';
-import { hasDepsChanged, computeNextState, initialState } from './state';
-import { getCacheForClient } from './cache';
-
+import { useClient } from "./context";
+import { useRequest } from "./useRequest";
+import { hasDepsChanged, computeNextState, initialState } from "./state";
+import { getCacheForClient } from "./cache";
 
 export interface UseQueryArgs<Variables = object, Data = any> {
   query: string | DocumentNode | TypedDocumentNode<Data, Variables>;
@@ -71,9 +70,9 @@ export function useQuery<Data = any, Variables = object>(
     source: args.pause
       ? null
       : client.executeQuery(request, {
-        requestPolicy: args.requestPolicy,
-        ...args.context,
-      }),
+          requestPolicy: args.requestPolicy,
+          ...args.context,
+        }),
     prevValue: notFetching,
     deps: currDeps,
     suspense: isSuspense(client, args.context),
@@ -93,7 +92,7 @@ export function useQuery<Data = any, Variables = object>(
           | undefined;
 
         if (result == null && suspense) {
-          const promise = (result = new Promise(_resolve => {
+          const promise = (result = new Promise((_resolve) => {
             resolve = _resolve;
           }));
           cache.set(request.key, promise);
@@ -101,7 +100,7 @@ export function useQuery<Data = any, Variables = object>(
         } else {
           // 何もしない
         }
-      } else if (suspense && result != null && 'then' in result) {
+      } else if (suspense && result != null && "then" in result) {
         throw result;
       }
 
@@ -117,7 +116,7 @@ export function useQuery<Data = any, Variables = object>(
 
       const unsub = pipe(
         source,
-        subscribe(_result => {
+        subscribe((_result) => {
           result = _result;
           if (suspense) {
             cache.set(request.key, result);
@@ -143,7 +142,7 @@ export function useQuery<Data = any, Variables = object>(
         ...opts,
       };
 
-      setMeta(prev => ({
+      setMeta((prev) => ({
         prevValue: prev.prevValue,
         deps: prev.deps,
         source: client.executeQuery(request, context),
@@ -168,9 +167,9 @@ export function useQuery<Data = any, Variables = object>(
       source: args.pause
         ? null
         : client.executeQuery(request, {
-          requestPolicy: args.requestPolicy,
-          ...args.context,
-        }),
+            requestPolicy: args.requestPolicy,
+            ...args.context,
+          }),
       deps: currDeps,
       suspense: isSuspense(client, args.context),
     });

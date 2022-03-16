@@ -1,2 +1,2 @@
 // export { Category } from './Category';
-export { CategoryWrapper } from './CategoryWrapper';
+export { CategoryWrapper } from "./CategoryWrapper";

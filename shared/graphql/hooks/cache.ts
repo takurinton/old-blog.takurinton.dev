@@ -1,5 +1,5 @@
-import { pipe, subscribe } from 'wonka';
-import { Client, OperationResult } from '@takurinton/urql';
+import { pipe, subscribe } from "wonka";
+import { Client, OperationResult } from "@takurinton/urql";
 
 type CacheEntry = OperationResult | Promise<unknown> | undefined;
 
@@ -21,8 +21,8 @@ export const getCacheForClient = (client: Client): Cache => {
     if (client.operations$ /* not available in mocks */) {
       pipe(
         client.operations$,
-        subscribe(operation => {
-          if (operation.kind === 'teardown' && reclaim.has(operation.key)) {
+        subscribe((operation) => {
+          if (operation.kind === "teardown" && reclaim.has(operation.key)) {
             reclaim.delete(operation.key);
             map.delete(operation.key);
           }

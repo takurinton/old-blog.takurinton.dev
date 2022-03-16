@@ -29,7 +29,7 @@ export const Label = styled.span`
 
 export const PageContainer = styled.div`
   margin: 20px auto 10%;
-	position: relative;
+  position: relative;
 `;
 
 export const PrevButton = styled.span`

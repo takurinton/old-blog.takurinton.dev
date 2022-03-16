@@ -1,10 +1,10 @@
 export class Category extends HTMLElement {
-    constructor() {
-        super();
-        const shadow = document.createElement('span');
-        this.attachShadow({ mode: 'open' }).appendChild(shadow);
-        const text = this.getAttribute('text');
-        shadow.innerHTML = `
+  constructor() {
+    super();
+    const shadow = document.createElement("span");
+    this.attachShadow({ mode: "open" }).appendChild(shadow);
+    const text = this.getAttribute("text");
+    shadow.innerHTML = `
             <style>
                 span {
                     padding: 5px 10px 6px;
@@ -22,5 +22,5 @@ export class Category extends HTMLElement {
 
             <span>${text}</span>
         `;
-    }
+  }
 }
