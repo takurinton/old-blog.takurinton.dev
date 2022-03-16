@@ -36,6 +36,6 @@ jobs:
           aws-region: ap-northeast-1
     - name: update client file
         env: 
-          S3_UPLOAD_BUCKET: ${{ secrets.S3_BUCKET_NAME }}
+          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
         run: aws s3 rm s3://$S3_BUCKET_NAME/main.js
         run: aws s3 cp ./dist/main.js s3://$S3_BUCKET_NAME
