@@ -23,7 +23,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
+
     - run: yarn install --frozen-lockfile
+
     - name: login to aws
       - uses: aws-actions/configure-aws-credentials@v1
       - with:
@@ -33,8 +35,10 @@ jobs:
     - name: update client file
         - env: 
           S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
-        - run: aws s3 rm s3://$S3_BUCKET_NAME/main.js
-        - run: yarn build/client
-        - run: aws s3 cp ./dist/main.js s3://$S3_BUCKET_NAME
-    - run: yarn build/server
-    - run: npx vercel --prod
+        run: | 
+          aws s3 rm s3://$S3_BUCKET_NAME/main.js
+          yarn build/client
+          aws s3 cp ./dist/main.js s3://$S3_BUCKET_NAME
+    - run: |
+      yarn build/server
+      npx vercel --prod
