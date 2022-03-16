@@ -23,8 +23,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    - name: install
-      run: yarn install --frozen-lockfile
+
+    run: yarn install --frozen-lockfile
+    
     - name: login to aws
       - uses: aws-actions/configure-aws-credentials@v1
       - with:
