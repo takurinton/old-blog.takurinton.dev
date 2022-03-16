@@ -5,16 +5,12 @@ import { A, Link } from "../utils/styled";
 import { useRecoilState } from "recoil";
 import { externalLinksState, postsState } from "../../utils/recoil/atom";
 
-// S3_DOMAIN を IS_PROD のように使うな
-const SERVER_DOMAIN = process.env.S3_DOMAIN
-  ? "https://wip-blog-takurinton-dev.vercel.app/"
-  : "http://localhost:3001";
 export default function Header() {
   const [externalLinks, setExternalLinks] = useRecoilState(externalLinksState);
 
   const handleMouseEnterExternalLinks = useCallback(() => {
     if (externalLinks.length === 0) {
-      fetch(`${SERVER_DOMAIN}/external.json`)
+      fetch(`/external.json`)
         .then((res) => res.json())
         .then((json) => {
           setExternalLinks(json);
@@ -40,9 +36,10 @@ export default function Header() {
             <A href="/rss.xml">RSS</A>
           </HeaderNav>
           <Spacer pl={3} />
-          <HeaderNav onMouseEnter={handleMouseEnterExternalLinks}>
+          {/* 一旦なし */}
+          {/* <HeaderNav onMouseEnter={handleMouseEnterExternalLinks}>
             <Link to="/external">External</Link>
-          </HeaderNav>
+          </HeaderNav> */}
         </Flex>
       </Flex>
     </HeaderContainer>
