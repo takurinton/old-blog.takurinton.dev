@@ -24,6 +24,7 @@ jobs:
           cache: "yarn"
 
       - run: yarn install --frozen-lockfile
+      - run: cd ./shared/@takurinton/urql && yarn install --frozen-lockfile && yarn build
 
       - name: login to aws
         uses: aws-actions/configure-aws-credentials@v1
