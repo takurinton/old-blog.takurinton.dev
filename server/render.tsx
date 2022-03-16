@@ -18,18 +18,18 @@ export const createTemplate = (props) => {
         <head>
             <link rel="preconnect" href="https://ssr-test.takurinton.vercel.app/" />
             <title>${props.title}</title>
-            <meta name="description" content=${props.description} />
-            <meta property="og:title" content=${props.title} />
-            <meta property="og:description" content=${props.description} />
+            <meta name="description" content="${props.description}" />
+            <meta property="og:title" content="${props.title}" />
+            <meta property="og:description" content="${props.description}" />
             <meta property="og:type" content="blog" />
             <meta property="og:url" content="https://photo.takurinton.dev" />
-            <meta property="og:image" content=${props.image} />
-            <meta property="og:site_name" content=${props.title} />
+            <meta property="og:image" content="${props.image}" />
+            <meta property="og:site_name" content="${props.title}" />
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:url" content=${""} />
-            <meta name="twitter:title" content=${props.title} />
-            <meta name="twitter:description" content=${props.description} />
-            <meta name="twitter:image" content=${props.image} />
+            <meta name="twitter:title" content="${props.title}" />
+            <meta name="twitter:description" content="${props.description}" />
+            <meta name="twitter:image" content="${props.image}" />
             <link rel="shortcut icon" href=${"https://takurinton.dev/me.jpeg"} />
             <link rel="apple-touch-icon" href=${"https://takurinton.dev/me.jpeg"} />
             <link

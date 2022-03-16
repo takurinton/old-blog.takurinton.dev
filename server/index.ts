@@ -59,6 +59,7 @@ app.get("/", async (req, res) => {
       props: props,
     });
 
+    res.setHeader("cache-control", "s-maxage=86400, stale-while-revalidate");
     res.setHeader("Content-Type", "text/html");
     res.send(html);
   } catch (e) {
@@ -88,6 +89,8 @@ app.get("/post/:id", async (req, res) => {
       image: `https://res.cloudinary.com/dtapptgdd/image/upload/w_1000/l_text:Sawarabi Gothic_70_bold:${json.title}/v1624689828/blog.takurinton.com_r14tz5.png`,
       props,
     });
+
+    res.setHeader("cache-control", "s-maxage=86400, stale-while-revalidate");
     res.setHeader("Content-Type", "text/html");
     res.send(html);
   } catch (e) {
@@ -153,6 +156,8 @@ app.get("/external", async (req, res) => {
       image: "https://takurinton.dev/me.jpeg",
       props: response,
     });
+
+    res.setHeader("cache-control", "s-maxage=86400, stale-while-revalidate");
     res.setHeader("Content-Type", "text/html");
     res.send(html);
   } catch (e) {
