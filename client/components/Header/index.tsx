@@ -36,7 +36,6 @@ export default function Header() {
             <A href="/rss.xml">RSS</A>
           </HeaderNav>
           <Spacer pl={3} />
-          {/* 一旦なし */}
           <HeaderNav onMouseEnter={handleMouseEnterExternalLinks}>
             <Link to="/external">External</Link>
           </HeaderNav>
