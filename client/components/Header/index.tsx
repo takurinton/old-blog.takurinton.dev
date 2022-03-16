@@ -8,7 +8,7 @@ import { externalLinksState, postsState } from "../../utils/recoil/atom";
 export default function Header() {
   const [externalLinks, setExternalLinks] = useRecoilState(externalLinksState);
 
-  const handleMouseEnterExternalLinks = useCallback(() => {
+  const handleMouseEnterExternalLinks = () => {
     if (externalLinks.length === 0) {
       fetch(`/external.json`)
         .then((res) => res.json())
@@ -16,7 +16,7 @@ export default function Header() {
           setExternalLinks(json);
         });
     }
-  }, []);
+  };
 
   return (
     <HeaderContainer>
