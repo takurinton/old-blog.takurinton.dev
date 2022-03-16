@@ -67,7 +67,7 @@ export const createTemplate = (props) => {
             ${props.styleTags}
         </head >
         <body>
-            <div id="main">${props.htmlString}</div>
+            <div id="__rinton">${props.htmlString}</div>
             <script id="__RINTON_DATA__" type="application/json">${json}</script>
             <script async defer src="${S3_DOMAIN}/main.js"></script>
         </body>
