@@ -11,12 +11,12 @@ const S3_DOMAIN = process.env.S3_DOMAIN
 export const createTemplate = (props) => {
   const json = JSON.stringify(props.props);
   if (props.description == undefined)
-    props.description = "たくりんとんのポートフォリオです";
+    props.description = "たくりんとんのブログです。";
   if (props.image == undefined) props.image = "https://takurinton.dev/me.jpeg";
   return `<!DOCTYPE html>
     <html lang="ja">
         <head>
-            <link rel="preconnect" href="https://ssr-test.takurinton.vercel.app/" />
+            <link rel="preconnect" href="https://blog.takurinton.dev/" />
             <title>${props.title}</title>
             <meta name="description" content="${props.description}" />
             <meta property="og:title" content="${props.title}" />
