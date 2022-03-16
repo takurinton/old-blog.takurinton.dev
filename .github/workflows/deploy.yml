@@ -27,3 +27,15 @@ jobs:
     - run: yarn build/server
     - run: yarn build/client
     - run: npx vercel --prod
+
+    - name: login to aws
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+    - name: update client file
+        env: 
+          S3_UPLOAD_BUCKET: ${{ secrets.S3_BUCKET_NAME }}
+        run: aws s3 rm s3://$S3_BUCKET_NAME/main.js
+        run: aws s3 cp ./dist/main.js s3://$S3_BUCKET_NAME
