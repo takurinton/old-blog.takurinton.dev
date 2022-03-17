@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static("dist"));
 
-const ssrMiddleware = async ({
+const getServersideQueryResponse = async ({
   query,
   variables,
 }: {
@@ -46,7 +46,7 @@ app.get("/", async (req, res) => {
   try {
     const pages = req.query.page ?? 1;
     const category = req.query.category ?? "";
-    const props = await ssrMiddleware({
+    const props = await getServersideQueryResponse({
       query: POSTS_QUERY,
       variables: { pages, category },
     });
@@ -73,7 +73,7 @@ app.get("/post/:id", async (req, res) => {
   try {
     const id = req.params.id;
 
-    const props = await ssrMiddleware({
+    const props = await getServersideQueryResponse({
       query: POST_QUERY,
       variables: { id },
     });
