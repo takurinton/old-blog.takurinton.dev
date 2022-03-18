@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tooltip component testing Tooltip 1`] = `
+<DocumentFragment>
+  <div>
+    text
+  </div>
+  <div
+    class="sc-dkPtRN jMueqr fade-transition-appear fade-transition-appear-active"
+  >
+    <div
+      class="sc-gsDKAQ chwUAn"
+      style="position: absolute; left: 0px; top: 0px;"
+    >
+      tooltip text
+      <div
+        class="sc-bdvvtL bIjFMV"
+        data-popper-arrow="true"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

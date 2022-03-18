@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContextMenu component testing ContextMenu 1`] = `
+<DocumentFragment>
+  <button
+    class="sc-bdvvtL hTa-DxM sc-eCImPb dPSedI"
+    data-testid="icon-wrapper"
+  >
+    <div
+      class="sc-gsDKAQ hIeZob"
+    >
+      <div
+        class="sc-dkPtRN gozTXZ"
+        size="18"
+      >
+        <svg
+          viewBox="0 0 18 18"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 0h18v18H0z"
+            fill="none"
+          />
+          <path
+            d="M11.5,3A1.5,1.5,0,1,0,13,4.5,1.5,1.5,0,0,0,11.5,3Zm0,10.5A1.5,1.5,0,1,0,13,15,1.5,1.5,0,0,0,11.5,13.5Zm0-5.25A1.5,1.5,0,1,0,13,9.75,1.5,1.5,0,0,0,11.5,8.25Z"
+            fill="#0B82F4"
+            transform="translate(-2.5 -0.75)"
+          />
+        </svg>
+      </div>
+    </div>
+    <p
+      class="sc-hKwDye gxqPEs"
+      color="#0B82F4"
+      font-size="14px"
+    />
+  </button>
+  <div
+    class="sc-kDTinF cvlHxF"
+  >
+    <div
+      class="sc-crHmcD bXnuhj fade-transition-enter fade-transition-enter-active"
+    >
+      <div
+        class="sc-iqseJM bDSzMX"
+      />
+    </div>
+    <div
+      class="sc-jrQzAO jahegW"
+      data-popper-escaped="true"
+      data-popper-placement="bottom-start"
+      data-popper-reference-hidden="true"
+      style="position: absolute; left: 0px; top: 0px;"
+    >
+      <div
+        class="sc-jRQBWg hzzEuq"
+      >
+        <div
+          class="sc-furwcr cQXUQE"
+        >
+          <p
+            class="sc-hKwDye dATcrn sc-iCfMLu"
+            color="#041C33"
+            font-size="13px"
+          >
+            Save
+          </p>
+        </div>
+        <hr
+          class="sc-pVTFL fNLFDr"
+          color="#E2E8EA"
+          orientation="horizontal"
+        />
+        <div
+          class="sc-furwcr cQXUQE"
+        >
+          <p
+            class="sc-hKwDye dATcrn sc-iCfMLu"
+            color="#041C33"
+            font-size="13px"
+          >
+            Save and execute
+          </p>
+        </div>
+        <div
+          class="sc-furwcr cQXUQE"
+        >
+          <p
+            class="sc-hKwDye dATcrn sc-iCfMLu"
+            color="#041C33"
+            font-size="13px"
+          >
+            Save as draft
+          </p>
+        </div>
+        <hr
+          class="sc-pVTFL fNLFDr"
+          color="#E2E8EA"
+          orientation="horizontal"
+        />
+        <div
+          class="sc-furwcr cQXUQE"
+        >
+          <p
+            class="sc-hKwDye dATcrn sc-iCfMLu"
+            color="#041C33"
+            font-size="13px"
+          >
+            Delete
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -14,7 +14,7 @@ import { getPosts } from "./internal/getPosts";
 import { getHashByData } from "../../utils/getHashByData";
 import { useQuery } from "./internal/useQuery";
 import { useLocation } from "react-router";
-import { Typography } from "ingred-ui";
+import { Typography } from "@takurinton/ingred-ui";
 
 type Props = {
   current: number;

@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button component testing ButtonGroup 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-bdvvtL hfxIrv"
+  >
+    <button
+      class="sc-dkPtRN sc-hKwDye iYzoKV FiWGy"
+      font-size="14px"
+      font-weight="normal"
+    >
+      Edit
+    </button>
+    <button
+      class="sc-dkPtRN sc-hKwDye iYzoKV FiWGy"
+      font-size="14px"
+      font-weight="normal"
+    >
+      Save
+    </button>
+  </div>
+</DocumentFragment>
+`;

@@ -40,12 +40,12 @@
   "dependencies": {
     "@graphql-typed-document-node/core": "^3.1.1",
     "@takurinton/urql": "file:shared/@takurinton/urql/packages/core",
+    "@takurinton/ingred-ui": "file:shared/@takurinton/ingred-ui",
     "body-parser": "^1.19.1",
     "cors": "^2.8.5",
     "express": "^4.17.2",
     "graphql": "^16.3.0",
     "highlight.js": "^11.4.0",
-    "ingred-ui": "^9.3.2",
     "marked": "^4.0.10",
     "node-fetch": "^2.6.1",
     "react": "^17.0.2",

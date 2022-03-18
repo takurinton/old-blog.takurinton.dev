@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RadioButton component testing RadioButton 1`] = `
+<DocumentFragment>
+  <label
+    class="sc-bdvvtL kSfpce"
+  >
+    <input
+      type="radio"
+    />
+    <div
+      class="sc-gsDKAQ fyfwNU"
+    />
+    <span
+      class="sc-dkPtRN bgcwTO"
+    >
+      RadioButton
+    </span>
+  </label>
+</DocumentFragment>
+`;

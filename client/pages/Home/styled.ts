@@ -1,5 +1,3 @@
-import { Typography } from "ingred-ui";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -17,13 +15,13 @@ export const Heading = styled.div`
 
 export const Label = styled.span`
   padding: 5px 10px 6px;
-  background: #707070;
-  color: white;
+  background: ${({ theme }) => theme.palette.secoundary.main};
+  color: ${({ theme }) => theme.palette.colors.white};
   text-decoration: none;
   border-radius: 2px;
   font-weight: 800;
   &:hover {
-    background: #ff69b4;
+    background: ${({ theme }) => theme.palette.primary.main};
   }
 `;
 

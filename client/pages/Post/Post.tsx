@@ -1,4 +1,4 @@
-import { Typography } from "ingred-ui";
+import { Typography } from "@takurinton/ingred-ui";
 import { marked } from "marked";
 import React, { useEffect } from "react";
 import { useParams } from "react-router";

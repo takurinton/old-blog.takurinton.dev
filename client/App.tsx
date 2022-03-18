@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { ThemeProvider, createTheme } from "ingred-ui";
+import { ThemeProvider, createTheme } from "@takurinton/ingred-ui";
 import { RecoilRoot } from "recoil";
 import { About } from "./pages/About";
 import { Home } from "./pages/Home";
@@ -12,7 +12,20 @@ import { initUrqlClient } from "../shared/graphql/initUrqlClient";
 export const App: React.FC<{
   props: any;
 }> = ({ props }): JSX.Element => {
-  const theme = createTheme();
+  const theme = createTheme({
+    palette: {
+      colors: {
+        white: "white",
+        black: "#222222",
+      },
+      primary: {
+        main: "#ff69b4",
+      },
+      secoundary: {
+        main: "#707070",
+      },
+    },
+  });
   const client = initUrqlClient({});
 
   return (

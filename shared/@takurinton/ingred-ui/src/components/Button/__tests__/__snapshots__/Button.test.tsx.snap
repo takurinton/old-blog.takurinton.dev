@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button component testing Button 1`] = `
+<DocumentFragment>
+  <button
+    class="sc-gsDKAQ sc-dkPtRN iVvbbF klzIpQ"
+    font-size="14px"
+    font-weight="bold"
+  />
+</DocumentFragment>
+`;

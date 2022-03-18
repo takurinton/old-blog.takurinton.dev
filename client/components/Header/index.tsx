@@ -1,4 +1,4 @@
-import { Flex, Spacer } from "ingred-ui";
+import { Flex, Spacer } from "@takurinton/ingred-ui";
 import React, { useCallback } from "react";
 import { HeaderContainer, HeaderNav, HeaderTitle } from "./styled";
 import { A, Link } from "../utils/styled";

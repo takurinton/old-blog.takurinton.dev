@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Switch component testing Switch 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-bdvvtL bvyKru"
+  >
+    <div
+      class="sc-gsDKAQ dFzOKQ"
+    >
+      <div
+        class="sc-jRQBWg bhlQaL"
+        style="left: 0px; width: 0px;"
+      />
+      <div
+        class="sc-dkPtRN gAIaqV"
+      >
+        <div
+          class="sc-eCImPb VoreP"
+        >
+          <span
+            class="sc-iCfMLu eAWLJn"
+            color="#596978"
+            font-size="13px"
+          >
+            Hoge
+          </span>
+        </div>
+        <div
+          class="sc-eCImPb VoreP"
+        >
+          <span
+            class="sc-iCfMLu droGrB"
+            color="#596978"
+            font-size="13px"
+          >
+            Fuga
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
