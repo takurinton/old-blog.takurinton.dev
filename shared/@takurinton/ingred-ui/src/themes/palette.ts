@@ -2,15 +2,13 @@ import { colors } from "../styles/color";
 import { DeepPartial } from "../types";
 import { deepmerge } from "../utils/deepmerge";
 
-export type PaletteColor =
-  | {
-      deepDark?: string;
-      dark?: string;
-      main: string; // user から渡される想定
-      light?: string;
-      highlight?: string;
-    }
-  | string;
+export type PaletteColor = {
+  deepDark?: string;
+  dark?: string;
+  main: string; // user から渡される想定
+  light?: string;
+  highlight?: string;
+};
 
 export type PaletteText = {
   primary: string;
@@ -59,8 +57,12 @@ export type Palette = {
 
 export const palette: Palette = {
   colors: {
-    white: colors.basic[50] as string,
-    black: colors.basic[900],
+    white: {
+      main: colors.basic[50] as string,
+    },
+    black: {
+      main: colors.basic[900],
+    },
     gray: {
       deepDark: colors.basic[600],
       dark: colors.basic[500],

@@ -9,19 +9,19 @@ export const Heading = styled.div`
   text-align: center;
   width: 100%;
   font-size: 2rem;
-  color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.palette.primary.main};
   font-weight: 800;
 `;
 
 export const Label = styled.span`
   padding: 5px 10px 6px;
-  background: ${({ theme }) => theme.palette.secoundary.main};
-  color: ${({ theme }) => theme.palette.colors.white};
+  background: ${({ theme }) => theme.palette.secoundary.main}};
+  color: ${({ theme }) => theme.palette.colors.white}};
   text-decoration: none;
   border-radius: 2px;
   font-weight: 800;
   &:hover {
-    background: ${({ theme }) => theme.palette.primary.main};
+    background: ${({ theme }) => theme.palette.primary.main}};
   }
 `;
 

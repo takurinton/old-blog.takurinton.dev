@@ -1,6 +1,10 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { ThemeProvider, createTheme } from "@takurinton/ingred-ui";
+import {
+  ThemeProvider,
+  createTheme,
+} from "../shared/@takurinton/ingred-ui/src/themes";
+// import { ThemeProvider, createTheme } from "@takurinton/ingred-ui";
 import { RecoilRoot } from "recoil";
 import { About } from "./pages/About";
 import { Home } from "./pages/Home";
@@ -15,8 +19,12 @@ export const App: React.FC<{
   const theme = createTheme({
     palette: {
       colors: {
-        white: "white",
-        black: "#222222",
+        white: {
+          main: "white",
+        },
+        black: {
+          main: "#222222",
+        },
       },
       primary: {
         main: "#ff69b4",
