@@ -5,14 +5,6 @@ export const Container = styled.div`
   margin: 50px auto;
 `;
 
-export const Heading = styled.h1`
-  text-align: center;
-  width: 100%;
-  font-size: 2rem;
-  color: ${({ theme }) => theme.palette.colors.black.main};
-  font-weight: 800;
-`;
-
 export const Label = styled.span`
   padding: 5px 10px 6px;
   background: ${({ theme }) => theme.palette.secondary.main}};
@@ -33,9 +25,13 @@ export const PageContainer = styled.div`
 export const PrevButton = styled.span`
   position: absolute;
   left: 10px;
+  font-weight: 800;
+  color: ${({ theme }) => theme.palette.colors.white.main};
 `;
 
 export const NextButton = styled.span`
   position: absolute;
   right: 10px;
+  font-weight: 800;
+  color: ${({ theme }) => theme.palette.colors.white.main};
 `;
