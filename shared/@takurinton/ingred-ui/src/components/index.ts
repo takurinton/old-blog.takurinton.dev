@@ -14,4 +14,7 @@ export * from "./Typography";
 export { default as Spacer } from "./Spacer";
 export * from "./Spacer";
 
+export { default as Flex } from "./Flex";
+export * from "./Flex";
+
 /* eslint-enable import/export */
