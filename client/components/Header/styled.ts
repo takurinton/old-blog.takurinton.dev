@@ -5,7 +5,7 @@ export const HeaderContainer = styled.div`
   left: auto;
   right: 0;
   margin: auto;
-  z-index: ${({ theme }) => theme.depth.appBar};
+  z-index: 1100;
   width: 70%;
 `;
 

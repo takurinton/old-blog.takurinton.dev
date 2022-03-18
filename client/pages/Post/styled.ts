@@ -8,11 +8,11 @@ export const Container = styled.div`
 
 export const Category = styled(Link)`
   padding: 5px 10px 6px;
-  background: #707070;
+  background: ${({ theme }) => theme.palette.secondary.main};
   color: white;
   text-decoration: none;
   border-radius: 2px;
   &:hover {
-    background: #ff69b4;
+    background: ${({ theme }) => theme.palette.primary.main};
   }
 `;

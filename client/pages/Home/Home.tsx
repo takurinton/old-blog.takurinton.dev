@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Layout } from "../../Layout";
 import {
-  Heading,
   Container,
   PageContainer,
   PrevButton,
@@ -14,7 +13,7 @@ import { getPosts } from "./internal/getPosts";
 import { getHashByData } from "../../utils/getHashByData";
 import { useQuery } from "./internal/useQuery";
 import { useLocation } from "react-router";
-import { Typography } from "ingred-ui";
+import { Badge, Button, Flex, Typography } from "@takurinton/ingred-ui";
 
 type Props = {
   current: number;
@@ -50,21 +49,25 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
 
   return (
     <Container>
-      <Heading>全ての投稿一覧</Heading>
+      <Typography align="center" component="h1" weight="bold" size="xxxxxxl">
+        全ての投稿一覧
+      </Typography>
       {posts.results.map((p) => (
-        <div key={p.id}>
-          <h2>
+        <Flex key={p.id}>
+          <Typography weight="bold" component="h2" size="xxxxl">
             <Link to={`/post/${p.id}`}>{p.title}</Link>
-          </h2>
+          </Typography>
           <Link to={`/?category=${p.category}`}>
             <Label>{p.category}</Label>
           </Link>
-          <Typography weight="bold" component="p">
+          <Typography weight="bold" component="p" size="xl">
             {datetimeFormatter(p.pub_date)}
           </Typography>
-          <p>{p.contents}</p>
+          <Typography component="p" size="xl">
+            {p.contents}
+          </Typography>
           <hr />
-        </div>
+        </Flex>
       ))}
       <PageContainer>
         {posts.previous === posts.current ? (
@@ -78,7 +81,12 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
             }
           >
             <PrevButton>
-              <Label>prev</Label>
+              <Label>前へ</Label>
+              {/* <Button color="secondary">
+                <Typography weight="bold" size="xxl" color="white">
+                  前へ
+                </Typography>
+              </Button> */}
             </PrevButton>
           </Link>
         )}
@@ -93,7 +101,12 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
             }
           >
             <NextButton>
-              <Label>next</Label>
+              <Label>次へ</Label>
+              {/* <Button color="secondary">
+                <Typography weight="bold" size="xxl" color="white">
+                  次へ
+                </Typography>
+              </Button> */}
             </NextButton>
           </Link>
         )}

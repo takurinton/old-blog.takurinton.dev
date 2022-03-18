@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Typography } from "ingred-ui";
+import { Typography } from "@takurinton/ingred-ui";
 import { Layout } from "../../Layout";
 import { Container, Heading, Link } from "./styled";
 import { useRecoilState } from "recoil";

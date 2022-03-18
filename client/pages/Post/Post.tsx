@@ -1,4 +1,4 @@
-import { Typography } from "ingred-ui";
+import { Flex, Typography } from "@takurinton/ingred-ui";
 import { marked } from "marked";
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
@@ -42,7 +42,7 @@ export const Post: React.FC<{ props: Props }> = Layout(({ props }) => {
       <Typography size="xxl" weight="bold" align="right">
         {datetimeFormatter(p.pub_date)}
       </Typography>
-      <div>
+      <Flex>
         {StringToHtml(
           marked.parse(p.contents, {
             renderer: markdownStyle(),
@@ -51,7 +51,7 @@ export const Post: React.FC<{ props: Props }> = Layout(({ props }) => {
             },
           })
         )}
-      </div>
+      </Flex>
     </Container>
   );
 });

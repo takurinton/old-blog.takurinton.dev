@@ -11,10 +11,10 @@ export const Heading = styled.div`
 `;
 
 export const Link = styled.a`
-  color: #222222;
+  color: ${({ theme }) => theme.palette.secondary.main};
   text-decoration: none;
   font-weight: 800;
   &:hover {
-    color: #ff69b4;
+    color: ${({ theme }) => theme.palette.primary.main};
   }
 `;
