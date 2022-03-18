@@ -15,7 +15,7 @@ export const Heading = styled.div`
 
 export const Label = styled.span`
   padding: 5px 10px 6px;
-  background: ${({ theme }) => theme.palette.secoundary.main}};
+  background: ${({ theme }) => theme.palette.secondary.main}};
   color: ${({ theme }) => theme.palette.colors.white}};
   text-decoration: none;
   border-radius: 2px;

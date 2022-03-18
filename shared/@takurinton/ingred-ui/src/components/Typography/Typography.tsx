@@ -40,18 +40,9 @@ export const fontSize: { [key in FontSize]: number } = {
 
 const getColor = (key: ColorType | string, theme: Theme) => {
   switch (key) {
+    // TODO: text color 考える in palette.ts
     case "initial":
-      return theme.palette.black;
-    case "primary":
-      return theme.palette.text.primary;
-    case "secondary":
-      return theme.palette.text.secondary;
-    case "disabled":
-      return theme.palette.text.disabled;
-    case "hint":
-      return theme.palette.text.hint;
-    case "white":
-      return theme.palette.text.white;
+      return theme.palette.colors.black.main;
     default:
       return key;
   }
@@ -85,7 +76,7 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
       lineHeight = "1.4",
       className,
     },
-    ref,
+    ref
   ) => {
     const theme = useTheme();
     return (
@@ -102,7 +93,7 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
         {children}
       </Styled.Container>
     );
-  },
+  }
 );
 
 export default Typography;

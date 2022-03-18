@@ -8,7 +8,7 @@ export const Container = styled.div`
 
 export const Category = styled(Link)`
   padding: 5px 10px 6px;
-  background: ${({ theme }) => theme.palette.secoundary.main};
+  background: ${({ theme }) => theme.palette.secondary.main};
   color: white;
   text-decoration: none;
   border-radius: 2px;

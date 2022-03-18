@@ -32,11 +32,11 @@ export const addScrollbarProperties = ({
 
   &::-webkit-scrollbar-thumb {
     border: 5px solid transparent;
-    background-color: ${({ theme }) => theme.palette.gray.main};
+    background-color: ${({ theme }) => theme.palette.colors.gray.main};
     background-clip: padding-box;
     border-radius: 10rem;
     &:hover {
-      background-color: ${({ theme }) => theme.palette.gray.dark};
+      background-color: ${({ theme }) => theme.palette.colors.gray.dark};
     }
   }
 `;

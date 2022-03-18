@@ -1,1 +1,0 @@
-export { TableTabs } from "./TableTabs";

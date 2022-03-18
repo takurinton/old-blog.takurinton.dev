@@ -3,11 +3,11 @@ import { DeepPartial } from "../types";
 import { deepmerge } from "../utils/deepmerge";
 
 export type PaletteColor = {
-  deepDark?: string;
-  dark?: string;
+  deepDark: string;
+  dark: string;
   main: string; // user から渡される想定
-  light?: string;
-  highlight?: string;
+  light: string;
+  highlight: string;
 };
 
 export type PaletteText = {
@@ -32,9 +32,9 @@ export type PaletteIcon = {
 };
 
 export type Colors = {
-  white?: PaletteColor;
-  black?: PaletteColor;
-  gray?: PaletteColor;
+  white: PaletteColor;
+  black: PaletteColor;
+  gray: PaletteColor;
 } & ColorAny;
 
 type ColorAny = {
@@ -51,17 +51,28 @@ export type Palette = {
   colors: Colors;
   usecase: UseCase;
   primary: PaletteColor;
-  secoundary: PaletteColor;
+  secondary: PaletteColor;
   icon: PaletteIcon;
+  divider: string;
 };
 
 export const palette: Palette = {
   colors: {
+    // 一旦白は main だけ
+    // アンミカ「白って200色あんねん！」
     white: {
+      deepDark: "",
+      dark: "",
       main: colors.basic[50] as string,
+      light: "",
+      highlight: "",
     },
     black: {
+      deepDark: "",
+      dark: "",
       main: colors.basic[900],
+      light: "",
+      highlight: "",
     },
     gray: {
       deepDark: colors.basic[600],
@@ -106,7 +117,7 @@ export const palette: Palette = {
     light: colors.blue[200],
     highlight: colors.blue[100],
   },
-  secoundary: {
+  secondary: {
     deepDark: colors.blue[700],
     dark: colors.blue[600],
     main: colors.blue[500],
@@ -141,6 +152,7 @@ export const palette: Palette = {
     fill: colors.basic[700],
     line: colors.basic[600],
   },
+  divider: colors.basic[400],
 };
 
 export function createPalette(paletteInput: DeepPartial<Palette>): Palette {

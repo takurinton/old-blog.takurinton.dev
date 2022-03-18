@@ -28,18 +28,19 @@ export const ButtonContainer = styled(BaseButton)<ContainerProps>`
   border: ${({ normal, disabled, theme }) =>
     disabled ? `1px solid ${theme.palette.divider}` : normal.border};
   background: ${({ normal, disabled, theme }) =>
-    disabled ? theme.palette.gray.light : normal.background};
+    disabled ? theme.palette.colors.gray.light : normal.background};
   color: ${({ normal, disabled, theme }) =>
-    disabled ? theme.palette.text.disabled : normal.color};
+    // TODO: 直す
+    disabled ? theme.palette.colors.gray.light : normal.color};
   text-align: center;
   font-weight: ${({ fontWeight }) => fontWeight};
   font-size: ${({ fontSize }) => fontSize};
   box-shadow: ${({ normal, disabled, theme }) =>
     disabled
       ? `0px -2px ${hexToRgba(
-          theme.palette.black,
-          0.16,
-        )} inset, 0px 2px ${hexToRgba(theme.palette.black, 0.08)}`
+          theme.palette.colors.black.main,
+          0.16
+        )} inset, 0px 2px ${hexToRgba(theme.palette.colors.black.main, 0.08)}`
       : normal.boxShadow};
   transition: background 0.3s;
 

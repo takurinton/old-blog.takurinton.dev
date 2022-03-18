@@ -34,16 +34,16 @@ export type Padding = {
 };
 
 const getContainerColorStyles = (
-  theme: Theme,
+  theme: Theme
 ): { [P in ButtonColor]: ButtonColorStyle } => ({
   primary: {
     normal: {
       background: theme.palette.primary.main,
-      color: theme.palette.text.white,
+      color: theme.palette.colors?.white.main,
       boxShadow: `0px -2px ${hexToRgba(
-        theme.palette.black,
-        0.16,
-      )} inset, 0px 2px ${hexToRgba(theme.palette.black, 0.08)}`,
+        theme.palette.colors?.black.main,
+        0.16
+      )} inset, 0px 2px ${hexToRgba(theme.palette.colors.black.main, 0.08)}`,
       border: `1px solid ${theme.palette.primary.dark}`,
     },
     hover: {
@@ -52,63 +52,72 @@ const getContainerColorStyles = (
     },
     active: {
       background: theme.palette.primary.dark,
-      boxShadow: `inset 0 2px ${hexToRgba(theme.palette.black, 0.16)}`,
+      boxShadow: `inset 0 2px ${hexToRgba(
+        theme.palette.colors.black.main,
+        0.16
+      )}`,
       border: "none",
     },
   },
   secondary: {
     normal: {
-      background: theme.palette.background.default,
-      color: theme.palette.black,
+      background: theme.palette.secondary.main,
+      color: theme.palette.colors.black.main,
       boxShadow: `0px -2px ${hexToRgba(
-        theme.palette.black,
-        0.16,
-      )} inset, 0px 2px ${hexToRgba(theme.palette.black, 0.08)}`,
+        theme.palette.colors.black.main,
+        0.16
+      )} inset, 0px 2px ${hexToRgba(theme.palette.colors.black.main, 0.08)}`,
       border: `1px solid ${theme.palette.divider}`,
     },
     hover: {
-      background: theme.palette.gray.highlight,
+      background: theme.palette.colors.gray.highlight,
       border: `1px solid ${theme.palette.divider}`,
     },
     active: {
-      background: theme.palette.gray.highlight,
-      boxShadow: `inset 0 2px ${hexToRgba(theme.palette.black, 0.16)}`,
+      background: theme.palette.colors.gray.highlight,
+      boxShadow: `inset 0 2px ${hexToRgba(
+        theme.palette.colors.black.main,
+        0.16
+      )}`,
       border: `1px solid ${theme.palette.divider}`,
     },
   },
   danger: {
     normal: {
-      background: theme.palette.danger.main,
-      color: theme.palette.text.white,
+      background: theme.palette.usecase.danger.main,
+      color: theme.palette.colors.white.main,
       boxShadow: `0px -2px ${hexToRgba(
-        theme.palette.black,
-        0.16,
-      )} inset, 0px 2px ${hexToRgba(theme.palette.black, 0.08)}`,
-      border: `1px solid ${theme.palette.danger.dark}`,
+        theme.palette.colors.black.main,
+        0.16
+      )} inset, 0px 2px ${hexToRgba(theme.palette.colors.black.main, 0.08)}`,
+      border: `1px solid ${theme.palette.usecase.danger.dark}`,
     },
     hover: {
-      background: theme.palette.danger.dark,
+      background: theme.palette.usecase.danger.dark,
       border: "none",
     },
     active: {
-      background: theme.palette.danger.dark,
-      boxShadow: `inset 0 2px ${hexToRgba(theme.palette.black, 0.16)}`,
+      background: theme.palette.usecase.danger.dark,
+      boxShadow: `inset 0 2px ${hexToRgba(
+        theme.palette.colors.black.main,
+        0.16
+      )}`,
       border: "none",
     },
   },
   clear: {
     normal: {
       background: "none",
-      color: theme.palette.gray.deepDark,
+      color: theme.palette.colors.gray.deepDark,
       boxShadow: "none",
       border: "none",
     },
     hover: {
-      background: theme.palette.gray.light,
+      background: theme.palette.colors.gray.light,
       border: "none",
     },
     active: {
-      background: theme.palette.gray.main,
+      background: theme.palette.colors.gray.main,
       boxShadow: "none",
       border: "none",
     },
@@ -185,7 +194,7 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
       href,
       ...rest
     },
-    ref,
+    ref
   ) => {
     const theme = useTheme();
     const colorStyle = getContainerColorStyles(theme)[color];
@@ -231,7 +240,7 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
         {children}
       </Styled.ButtonContainer>
     );
-  },
+  }
 );
 
 export default Button;

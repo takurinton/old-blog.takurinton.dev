@@ -15,13 +15,13 @@ const getColor = (key: BadgeColor, theme: Theme) => {
     case "primary":
       return theme.palette.primary.main;
     case "secondary":
-      return theme.palette.gray.deepDark;
+      return theme.palette.secondary.main;
     case "success":
-      return theme.palette.success.main;
+      return theme.palette.usecase.success.main;
     case "warning":
-      return theme.palette.warning.main;
+      return theme.palette.usecase.warning.main;
     case "danger":
-      return theme.palette.danger.main;
+      return theme.palette.usecase.danger.main;
   }
 };
 
@@ -44,7 +44,7 @@ const Badge = React.forwardRef<HTMLSpanElement | HTMLAnchorElement, BadgeProps>(
       children,
       ...rest
     },
-    ref,
+    ref
   ) => {
     const theme = useTheme();
     return (
@@ -52,7 +52,7 @@ const Badge = React.forwardRef<HTMLSpanElement | HTMLAnchorElement, BadgeProps>(
         ref={ref}
         as={component}
         type={type}
-        color={theme.palette.text.white}
+        color={theme.palette.colors.white.main}
         backgroundColor={getColor(color, theme)}
         fontSize={fontSize}
         fontWeight={fontWeight}
@@ -61,7 +61,7 @@ const Badge = React.forwardRef<HTMLSpanElement | HTMLAnchorElement, BadgeProps>(
         {children}
       </Styled.Container>
     );
-  },
+  }
 );
 
 export default Badge;
