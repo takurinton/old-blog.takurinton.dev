@@ -24,6 +24,7 @@ jobs:
           cache: "yarn"
 
       - run: cd ./shared/@takurinton/urql && yarn install --frozen-lockfile && yarn build
+      - run: cd ./shared/@takurinton/ingred-ui && yarn install --frozen-lockfile && yarn build
       - run: yarn install --frozen-lockfile
 
       - name: login to aws
