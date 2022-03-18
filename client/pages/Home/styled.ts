@@ -5,18 +5,18 @@ export const Container = styled.div`
   margin: 50px auto;
 `;
 
-export const Heading = styled.div`
+export const Heading = styled.h1`
   text-align: center;
   width: 100%;
   font-size: 2rem;
-  color: ${({ theme }) => theme.palette.primary.main};
+  color: ${({ theme }) => theme.palette.colors.black.main};
   font-weight: 800;
 `;
 
 export const Label = styled.span`
   padding: 5px 10px 6px;
   background: ${({ theme }) => theme.palette.secondary.main}};
-  color: ${({ theme }) => theme.palette.colors.white}};
+  color: ${({ theme }) => theme.palette.colors.white.main}};
   text-decoration: none;
   border-radius: 2px;
   font-weight: 800;
