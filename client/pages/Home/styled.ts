@@ -9,7 +9,7 @@ export const Heading = styled.div`
   text-align: center;
   width: 100%;
   font-size: 2rem;
-  color: #222222;
+  color: ${({ theme }) => theme.colors.black};
   font-weight: 800;
 `;
 
