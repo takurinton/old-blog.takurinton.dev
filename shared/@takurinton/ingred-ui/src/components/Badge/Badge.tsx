@@ -44,7 +44,7 @@ const Badge = React.forwardRef<HTMLSpanElement | HTMLAnchorElement, BadgeProps>(
       children,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const theme = useTheme();
     return (
@@ -61,7 +61,7 @@ const Badge = React.forwardRef<HTMLSpanElement | HTMLAnchorElement, BadgeProps>(
         {children}
       </Styled.Container>
     );
-  }
+  },
 );
 
 export default Badge;

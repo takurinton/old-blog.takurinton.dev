@@ -39,7 +39,7 @@ export const ButtonContainer = styled(BaseButton)<ContainerProps>`
     disabled
       ? `0px -2px ${hexToRgba(
           theme.palette.colors.black.main,
-          0.16
+          0.16,
         )} inset, 0px 2px ${hexToRgba(theme.palette.colors.black.main, 0.08)}`
       : normal.boxShadow};
   transition: background 0.3s;

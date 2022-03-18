@@ -76,7 +76,7 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
       lineHeight = "1.4",
       className,
     },
-    ref
+    ref,
   ) => {
     const theme = useTheme();
     return (
@@ -93,7 +93,7 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
         {children}
       </Styled.Container>
     );
-  }
+  },
 );
 
 export default Typography;

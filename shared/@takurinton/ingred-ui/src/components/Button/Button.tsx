@@ -34,7 +34,7 @@ export type Padding = {
 };
 
 const getContainerColorStyles = (
-  theme: Theme
+  theme: Theme,
 ): { [P in ButtonColor]: ButtonColorStyle } => ({
   primary: {
     normal: {
@@ -42,7 +42,7 @@ const getContainerColorStyles = (
       color: theme.palette.colors?.white.main,
       boxShadow: `0px -2px ${hexToRgba(
         theme.palette.colors?.black.main,
-        0.16
+        0.16,
       )} inset, 0px 2px ${hexToRgba(theme.palette.colors.black.main, 0.08)}`,
       border: `1px solid ${theme.palette.primary.dark}`,
     },
@@ -54,7 +54,7 @@ const getContainerColorStyles = (
       background: theme.palette.primary.dark,
       boxShadow: `inset 0 2px ${hexToRgba(
         theme.palette.colors.black.main,
-        0.16
+        0.16,
       )}`,
       border: "none",
     },
@@ -65,7 +65,7 @@ const getContainerColorStyles = (
       color: theme.palette.colors.black.main,
       boxShadow: `0px -2px ${hexToRgba(
         theme.palette.colors.black.main,
-        0.16
+        0.16,
       )} inset, 0px 2px ${hexToRgba(theme.palette.colors.black.main, 0.08)}`,
       border: `1px solid ${theme.palette.divider}`,
     },
@@ -77,7 +77,7 @@ const getContainerColorStyles = (
       background: theme.palette.colors.gray.highlight,
       boxShadow: `inset 0 2px ${hexToRgba(
         theme.palette.colors.black.main,
-        0.16
+        0.16,
       )}`,
       border: `1px solid ${theme.palette.divider}`,
     },
@@ -88,7 +88,7 @@ const getContainerColorStyles = (
       color: theme.palette.colors.white.main,
       boxShadow: `0px -2px ${hexToRgba(
         theme.palette.colors.black.main,
-        0.16
+        0.16,
       )} inset, 0px 2px ${hexToRgba(theme.palette.colors.black.main, 0.08)}`,
       border: `1px solid ${theme.palette.usecase.danger.dark}`,
     },
@@ -100,7 +100,7 @@ const getContainerColorStyles = (
       background: theme.palette.usecase.danger.dark,
       boxShadow: `inset 0 2px ${hexToRgba(
         theme.palette.colors.black.main,
-        0.16
+        0.16,
       )}`,
       border: "none",
     },
@@ -194,7 +194,7 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
       href,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const theme = useTheme();
     const colorStyle = getContainerColorStyles(theme)[color];
@@ -240,7 +240,7 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(
         {children}
       </Styled.ButtonContainer>
     );
-  }
+  },
 );
 
 export default Button;
