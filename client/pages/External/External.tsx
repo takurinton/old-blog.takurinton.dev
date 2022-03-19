@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Typography } from "@takurinton/ingred-ui";
+import { Flex, Typography } from "@takurinton/ingred-ui";
 import { Layout } from "../../Layout";
 import { Container, Heading, Link } from "./styled";
 import { useRecoilState } from "recoil";
@@ -29,24 +29,24 @@ export const External: React.FC<any> = Layout(({ props }) => {
 
   return (
     <Container>
-      <Heading>
-        <Typography weight="bold" size="xxxxxxl" color="#222222">
-          外部に投稿した記事一覧
-        </Typography>
-      </Heading>
+      <Typography weight="bold" size="xxxxxxl" align="center">
+        外部に投稿した記事一覧
+      </Typography>
       {external.map((ex) => (
-        <div key={ex.url}>
-          <h2>
+        <Flex key={ex.url}>
+          <Typography weight="bold" component="h2" size="xxxxl">
             <Link href={ex.url} target="_blank">
               {ex.title}
             </Link>
-          </h2>
+          </Typography>
           <Typography weight="bold" size="xl">
             {formatDate(ex.date)}
           </Typography>
-          <p>{ex.content}</p>
+          <Typography component="p" size="xl">
+            {ex.content}
+          </Typography>
           <hr />
-        </div>
+        </Flex>
       ))}
     </Container>
   );
