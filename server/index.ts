@@ -114,28 +114,29 @@ app.get("/external", async (req, res) => {
       date: string;
     }[];
 
+    // TODO: 管理画面で取得する RSS を指定できるようにする
     const rssLinks = {
       zenn: {
         link: "https://zenn.dev/takurinton/feed",
         icon: "https://simpleicons.org/icons/zenn.svg",
       },
-      plaid: {
-        link: "https://tech.plaid.co.jp/author/takurinton/rss/",
-        icon: "https://takurinton.dev/me.jpeg",
-      },
+      // plaid: {
+      //   link: "https://tech.plaid.co.jp/author/takurinton/rss/",
+      //   icon: "https://takurinton.dev/me.jpeg",
+      // },
     };
 
     const parseRss = async () => {
       const external: ExternalType = [];
-      for (const [_, link] of Object.entries(rssLinks)) {
-        const feed = await parser.parseURL(link.link);
-        feed.items.forEach((el) => {
+      for (const [_, rssLink] of Object.entries(rssLinks)) {
+        const feed = await parser.parseURL(rssLink.link);
+        feed.items.forEach(({ title, link, content, pubDate }) => {
           external.push({
-            icon: link.icon,
-            title: el.title,
-            url: el.link,
-            content: el.content,
-            date: el.pubDate,
+            icon: rssLink.icon,
+            title,
+            content,
+            url: link,
+            date: pubDate,
           });
         });
       }
@@ -145,6 +146,7 @@ app.get("/external", async (req, res) => {
         const _b = new Date(b.date);
         return _a < _b ? 1 : -1;
       });
+
       return external;
     };
 
