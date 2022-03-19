@@ -19,8 +19,8 @@ export const External: React.FC<any> = Layout(({ props }) => {
       "外部に投稿した記事一覧 | たくりんとんのブログ";
   }, []);
 
-  const formatDate = (a) => {
-    const date = new Date(a);
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
     const y = date.getFullYear();
     const m = ("00" + (date.getMonth() + 1)).slice(-2);
     const d = ("00" + date.getDate()).slice(-2);
