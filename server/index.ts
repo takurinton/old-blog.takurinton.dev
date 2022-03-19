@@ -114,6 +114,7 @@ app.get("/external", async (req, res) => {
       date: string;
     }[];
 
+    // TODO: 管理画面で取得する RSS を指定できるようにする
     const rssLinks = {
       zenn: {
         link: "https://zenn.dev/takurinton/feed",
