@@ -151,7 +151,6 @@ app.get("/external", async (req, res) => {
     };
 
     const response = await parseRss();
-    console.log(response);
     const html = await render({
       url: "/external",
       title: "外部に投稿した記事一覧 | たくりんとんのブログ",
