@@ -19,7 +19,6 @@ const initialState = {
 
 export const getPosts = ({ variables, isServer, serverData }) => {
   if (isServer) {
-    console.log(serverData);
     // @ts-ignore
     return JSON.parse(Object.values(serverData)[0].data).getPosts;
   }
