@@ -38,8 +38,11 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
 
   const pages = query.get("page") ?? 1;
   const category = query.get("category") ?? "";
-  const data = getDataFromHash(props, isServer);
-  const posts = isServer ? data.getPosts : getPosts(data, { pages, category });
+  const posts = getPosts({
+    variables: { pages, category },
+    isServer,
+    serverData: props,
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
