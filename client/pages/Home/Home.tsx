@@ -82,11 +82,6 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
           >
             <PrevButton>
               <Label>前へ</Label>
-              {/* <Button color="secondary">
-                <Typography weight="bold" size="xxl" color="white">
-                  前へ
-                </Typography>
-              </Button> */}
             </PrevButton>
           </Link>
         )}
@@ -102,11 +97,6 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
           >
             <NextButton>
               <Label>次へ</Label>
-              {/* <Button color="secondary">
-                <Typography weight="bold" size="xxl" color="white">
-                  次へ
-                </Typography>
-              </Button> */}
             </NextButton>
           </Link>
         )}
