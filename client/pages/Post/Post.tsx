@@ -9,7 +9,7 @@ import { Container, Category } from "./styled";
 import { markdownStyle } from "./internal/syntaxHighlight";
 import { getPost } from "./internal/getPost";
 import { getState } from "./internal/getState";
-import { getHashByData } from "../../utils/getHashByData";
+import { getDataFromHash } from "../../utils/getHashByData";
 
 type Props = {
   __typename: string;
@@ -23,7 +23,7 @@ type Props = {
 export const Post: React.FC<{ props: Props }> = Layout(({ props }) => {
   const { id } = useParams();
   const isServer = typeof window === "undefined";
-  const data = getHashByData(props, isServer);
+  const data = getDataFromHash(props, isServer);
   const d = isServer ? data.getPost : getPost(data, id);
   const p = getState(data, d, id);
 

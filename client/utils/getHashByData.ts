@@ -1,5 +1,5 @@
 // 厳密には hash からとってるわけではない
-export const getHashByData = (obj, isServer) => {
+export const getDataFromHash = (obj: any, isServer: boolean) => {
   try {
     if (!isServer) {
       // @ts-ignore

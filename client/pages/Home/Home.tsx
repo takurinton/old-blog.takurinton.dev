@@ -10,10 +10,10 @@ import {
 import { Link } from "../../components/utils/styled";
 import { datetimeFormatter } from "../../../shared/utils/datetimeFormatter";
 import { getPosts } from "./internal/getPosts";
-import { getHashByData } from "../../utils/getHashByData";
+import { getDataFromHash } from "../../utils/getHashByData";
 import { useQuery } from "./internal/useQuery";
 import { useLocation } from "react-router";
-import { Badge, Button, Flex, Typography } from "@takurinton/ingred-ui";
+import { Flex, Typography } from "@takurinton/ingred-ui";
 
 type Props = {
   current: number;
@@ -38,7 +38,7 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
 
   const pages = query.get("page") ?? 1;
   const category = query.get("category") ?? "";
-  const data = getHashByData(props, isServer);
+  const data = getDataFromHash(props, isServer);
   const posts = isServer ? data.getPosts : getPosts(data, { pages, category });
 
   useEffect(() => {
