@@ -11,7 +11,7 @@ export const Heading = styled.div`
 `;
 
 export const Link = styled.a`
-  color: ${({ theme }) => theme.palette.secondary.main};
+  color: ${({ theme }) => theme.palette.colors.black.main};
   text-decoration: none;
   font-weight: 800;
   &:hover {
