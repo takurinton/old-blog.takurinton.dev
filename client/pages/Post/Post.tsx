@@ -8,8 +8,6 @@ import { datetimeFormatter } from "../../../shared/utils/datetimeFormatter";
 import { Container, Category } from "./styled";
 import { markdownStyle } from "./internal/syntaxHighlight";
 import { getPost } from "./internal/getPost";
-import { getState } from "./internal/getState";
-import { getDataFromHash } from "../../utils/getHashByData";
 
 type Props = {
   __typename: string;

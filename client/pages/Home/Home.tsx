@@ -10,7 +10,6 @@ import {
 import { Link } from "../../components/utils/styled";
 import { datetimeFormatter } from "../../../shared/utils/datetimeFormatter";
 import { getPosts } from "./internal/getPosts";
-import { getDataFromHash } from "../../utils/getHashByData";
 import { useQuery } from "./internal/useQuery";
 import { useLocation } from "react-router";
 import { Flex, Typography } from "@takurinton/ingred-ui";
