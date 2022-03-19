@@ -23,28 +23,30 @@ type Props = {
 export const Post: React.FC<{ props: Props }> = Layout(({ props }) => {
   const { id } = useParams();
   const isServer = typeof window === "undefined";
-  const data = getDataFromHash(props, isServer);
-  const d = isServer ? data.getPost : getPost(data, id);
-  const p = getState(data, d, id);
+  const post = getPost({
+    id,
+    isServer,
+    serverData: props,
+  });
 
   useEffect(() => {
-    if (!isServer) document.querySelector("title").innerText = p.title;
-  }, [p]);
+    if (!isServer) document.querySelector("title").innerText = post.title;
+  }, [post]);
 
   return (
     <Container>
       <Typography size="xxxxxl" weight="bold" align="center">
-        {p.title}
+        {post.title}
       </Typography>
       <Typography size="xl" weight="bold" align="right">
-        <Category to={`/?category=${p.category}`}>{p.category}</Category>
+        <Category to={`/?category=${post.category}`}>{post.category}</Category>
       </Typography>
       <Typography size="xxl" weight="bold" align="right">
-        {datetimeFormatter(p.pub_date)}
+        {datetimeFormatter(post.pub_date)}
       </Typography>
       <Flex>
         {StringToHtml(
-          marked.parse(p.contents, {
+          marked.parse(post.contents, {
             renderer: markdownStyle(),
             highlight: (code, lang) => {
               return highlightjs.highlightAuto(code, [lang]).value;
