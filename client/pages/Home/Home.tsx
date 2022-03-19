@@ -10,10 +10,9 @@ import {
 import { Link } from "../../components/utils/styled";
 import { datetimeFormatter } from "../../../shared/utils/datetimeFormatter";
 import { getPosts } from "./internal/getPosts";
-import { getHashByData } from "../../utils/getHashByData";
 import { useQuery } from "./internal/useQuery";
 import { useLocation } from "react-router";
-import { Badge, Button, Flex, Typography } from "@takurinton/ingred-ui";
+import { Flex, Typography } from "@takurinton/ingred-ui";
 
 type Props = {
   current: number;
@@ -38,8 +37,11 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
 
   const pages = query.get("page") ?? 1;
   const category = query.get("category") ?? "";
-  const data = getHashByData(props, isServer);
-  const posts = isServer ? data.getPosts : getPosts(data, { pages, category });
+  const posts = getPosts({
+    variables: { pages, category },
+    isServer,
+    serverData: props,
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -82,11 +84,6 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
           >
             <PrevButton>
               <Label>前へ</Label>
-              {/* <Button color="secondary">
-                <Typography weight="bold" size="xxl" color="white">
-                  前へ
-                </Typography>
-              </Button> */}
             </PrevButton>
           </Link>
         )}
@@ -102,11 +99,6 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
           >
             <NextButton>
               <Label>次へ</Label>
-              {/* <Button color="secondary">
-                <Typography weight="bold" size="xxl" color="white">
-                  次へ
-                </Typography>
-              </Button> */}
             </NextButton>
           </Link>
         )}

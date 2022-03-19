@@ -8,8 +8,6 @@ import { datetimeFormatter } from "../../../shared/utils/datetimeFormatter";
 import { Container, Category } from "./styled";
 import { markdownStyle } from "./internal/syntaxHighlight";
 import { getPost } from "./internal/getPost";
-import { getState } from "./internal/getState";
-import { getHashByData } from "../../utils/getHashByData";
 
 type Props = {
   __typename: string;
@@ -23,28 +21,30 @@ type Props = {
 export const Post: React.FC<{ props: Props }> = Layout(({ props }) => {
   const { id } = useParams();
   const isServer = typeof window === "undefined";
-  const data = getHashByData(props, isServer);
-  const d = isServer ? data.getPost : getPost(data, id);
-  const p = getState(data, d, id);
+  const post = getPost({
+    id,
+    isServer,
+    serverData: props,
+  });
 
   useEffect(() => {
-    if (!isServer) document.querySelector("title").innerText = p.title;
-  }, [p]);
+    if (!isServer) document.querySelector("title").innerText = post.title;
+  }, [post]);
 
   return (
     <Container>
       <Typography size="xxxxxl" weight="bold" align="center">
-        {p.title}
+        {post.title}
       </Typography>
       <Typography size="xl" weight="bold" align="right">
-        <Category to={`/?category=${p.category}`}>{p.category}</Category>
+        <Category to={`/?category=${post.category}`}>{post.category}</Category>
       </Typography>
       <Typography size="xxl" weight="bold" align="right">
-        {datetimeFormatter(p.pub_date)}
+        {datetimeFormatter(post.pub_date)}
       </Typography>
       <Flex>
         {StringToHtml(
-          marked.parse(p.contents, {
+          marked.parse(post.contents, {
             renderer: markdownStyle(),
             highlight: (code, lang) => {
               return highlightjs.highlightAuto(code, [lang]).value;

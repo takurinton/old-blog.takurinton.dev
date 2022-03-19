@@ -17,21 +17,17 @@ const initialState = {
   ],
 };
 
-export const getPosts = (data, variables) => {
+export const getPosts = ({ variables, isServer, serverData }) => {
+  if (isServer) {
+    console.log(serverData);
+    // @ts-ignore
+    return JSON.parse(Object.values(serverData)[0].data).getPosts;
+  }
+
   const [res] = useQuery({
     query: POSTS_QUERY,
     variables,
   });
-
-  if (data.getPosts) {
-    if (
-      variables.category !== data.getPosts.category ||
-      Number(variables.pages) !== data.getPosts.current
-    ) {
-      return res.data === undefined ? initialState : res.data.getPosts;
-    }
-    return data.getPosts;
-  }
 
   return res.data === undefined ? initialState : res.data.getPosts;
 };
