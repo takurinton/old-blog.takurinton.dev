@@ -34,13 +34,12 @@ jobs:
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 
-      - run: cat /home/runner/work/blog.takurinton.dev/blog.takurinton.dev/.lighthouseci/manifest.json
-
       - name: Slack Notification on Success
         if: ${{ success() }}
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_TITLE: 正常
+          SLACK_TITLE: message
+          SLACK_MESSAGE: sh /home/runner/work/blog.takurinton.dev/blog.takurinton.dev/.github/workflows/lighthouse.sh /home/runner/work/blog.takurinton.dev/blog.takurinton.dev/.lighthouseci/manifest.json
           SLACK_COLOR: good
 
       # 失敗
@@ -48,5 +47,6 @@ jobs:
         if: ${{ failure() }}
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_TITLE: 失敗
+          SLACK_TITLE: message
+          SLACK_MESSAGE: failed
           SLACK_COLOR: danger
