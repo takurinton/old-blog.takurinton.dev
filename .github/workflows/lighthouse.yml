@@ -1,0 +1,49 @@
+# ワークフロー名
+name: lighthouse
+on:
+  schedule:
+    - cron: "0 3 * * *"
+
+env:
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+  SLACK_USERNAME: lighthouse
+  SLACK_CHANNEL: github-actions-notification
+  SLACK_ICON: https://takurinton.dev/me.jpeg
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Audit URLs using Lighthouse
+        uses: treosh/lighthouse-ci-action@v9
+        with:
+          # post は適当なやつ
+          urls: |
+            https://blog.takurinton.dev/
+            https://blog.takurinton.dev/external/
+            https://blog.takurinton.dev/post/105
+          # budgetPath: ./budget.json # 今のままだと落ちまくりそうなのでコメントアウト
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          runs: 1
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+      - name: Slack Notification on Success
+        if: ${{ success() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_TITLE: message
+          # 保留
+          # SLACK_MESSAGE: sh /home/runner/work/blog.takurinton.dev/blog.takurinton.dev/.github/workflows/lighthouse.sh /home/runner/work/blog.takurinton.dev/blog.takurinton.dev/.lighthouseci/manifest.json
+          SLACK_COLOR: good
+
+      # 失敗
+      - name: Slack Notification on Failure
+        if: ${{ failure() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_TITLE: message
+          SLACK_MESSAGE: failed
+          SLACK_COLOR: danger
