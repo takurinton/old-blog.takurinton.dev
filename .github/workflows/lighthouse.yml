@@ -34,7 +34,7 @@ jobs:
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 
-      - run: echo /home/runner/work/blog.takurinton.dev/blog.takurinton.dev/.lighthouseci/manifest.json
+      - run: cat /home/runner/work/blog.takurinton.dev/blog.takurinton.dev/.lighthouseci/manifest.json
 
       - name: Slack Notification on Success
         if: ${{ success() }}
