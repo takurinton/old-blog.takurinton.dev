@@ -2,10 +2,7 @@
 name: lighthouse
 on:
   schedule:
-    - cron: '0 3 * * *'
-  pull_request:
-    branches:
-      - main
+    - cron: "0 3 * * *"
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
