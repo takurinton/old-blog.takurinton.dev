@@ -3,6 +3,17 @@ name: lighthouse
 on:
   schedule:
     - cron: "0 3 * * *"
+  # デバッグ
+  pull_request:
+    branches:
+      - main
+
+env:
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+  SLACK_USERNAME: lighthouse
+  SLACK_CHANNEL: github-actions-notification
+  SLACK_ICON: https://takurinton.dev/me.jpeg
+
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
@@ -22,3 +33,18 @@ jobs:
           runs: 1
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+      - name: Slack Notification on Success
+        if: ${{ success() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_TITLE: 正常
+          SLACK_COLOR: good
+
+      # 失敗
+      - name: Slack Notification on Failure
+        if: ${{ failure() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_TITLE: 失敗
+          SLACK_COLOR: danger
