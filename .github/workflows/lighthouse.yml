@@ -3,10 +3,6 @@ name: lighthouse
 on:
   schedule:
     - cron: "0 3 * * *"
-  # デバッグ
-  pull_request:
-    branches:
-      - main
 
 env:
   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -28,8 +24,8 @@ jobs:
             https://blog.takurinton.dev/external/
             https://blog.takurinton.dev/post/105
           # budgetPath: ./budget.json # 今のままだと落ちまくりそうなのでコメントアウト
-          uploadArtifacts: true # TODO: slack に通知
-          temporaryPublicStorage: true # TODO: slack に通知
+          uploadArtifacts: true
+          temporaryPublicStorage: true
           runs: 1
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
@@ -39,7 +35,8 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_TITLE: message
-          SLACK_MESSAGE: sh /home/runner/work/blog.takurinton.dev/blog.takurinton.dev/.github/workflows/lighthouse.sh /home/runner/work/blog.takurinton.dev/blog.takurinton.dev/.lighthouseci/manifest.json
+          # 保留
+          # SLACK_MESSAGE: sh /home/runner/work/blog.takurinton.dev/blog.takurinton.dev/.github/workflows/lighthouse.sh /home/runner/work/blog.takurinton.dev/blog.takurinton.dev/.lighthouseci/manifest.json
           SLACK_COLOR: good
 
       # 失敗
