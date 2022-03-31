@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { Flex, Typography } from "@takurinton/ingred-ui";
-import { Layout } from "../../Layout";
 import { Container, Heading, Link } from "./styled";
 import { useRecoilState } from "recoil";
 import { externalLinksState } from "../../utils/recoil/atom";
 
-export const External: React.FC<any> = Layout(({ props }) => {
+export const External: React.FC<any> = ({ props }) => {
   const [externalLinks, _] = useRecoilState(externalLinksState);
   const isServer = typeof window === "undefined";
   const external = isServer
@@ -50,4 +49,4 @@ export const External: React.FC<any> = Layout(({ props }) => {
       ))}
     </Container>
   );
-});
+};

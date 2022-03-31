@@ -12,6 +12,7 @@ import { Post } from "./pages/Post";
 import { External } from "./pages/External";
 import { Provider } from "../shared/graphql/hooks/context";
 import { initUrqlClient } from "../shared/graphql/initUrqlClient";
+import Header from "./components/Header";
 
 export const App: React.FC<{
   props: any;
@@ -41,6 +42,7 @@ export const App: React.FC<{
       <RecoilRoot>
         <Provider value={client}>
           <ThemeProvider theme={theme}>
+            <Header {...props} />
             <Routes>
               <Route path="/" element={<Home props={props} />} />
               <Route path="/post/:id" element={<Post props={props} />} />

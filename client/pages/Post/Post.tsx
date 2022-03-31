@@ -3,7 +3,6 @@ import { marked } from "marked";
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import highlightjs from "highlight.js";
-import { Layout } from "../../Layout";
 import { datetimeFormatter } from "../../../shared/utils/datetimeFormatter";
 import { Container, Category } from "./styled";
 import { markdownStyle } from "./internal/syntaxHighlight";
@@ -18,7 +17,7 @@ type Props = {
   pub_date: string;
 };
 
-export const Post: React.FC<{ props: Props }> = Layout(({ props }) => {
+export const Post: React.FC<{ props: Props }> = ({ props }) => {
   const { id } = useParams();
   const isServer = typeof window === "undefined";
   const post = getPost({
@@ -54,7 +53,7 @@ export const Post: React.FC<{ props: Props }> = Layout(({ props }) => {
       </Flex>
     </Container>
   );
-});
+};
 
 const StringToHtml = (content) => {
   return <span dangerouslySetInnerHTML={{ __html: content }}></span>;

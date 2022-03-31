@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Layout } from "../../Layout";
 import {
   Container,
   PageContainer,
@@ -30,7 +29,7 @@ type Post = {
   pub_date: string;
 };
 
-export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
+export const Home: React.FC<{ props: Props }> = ({ props }) => {
   const query = useQuery();
   const { pathname } = useLocation();
   const isServer = typeof window === "undefined";
@@ -105,4 +104,4 @@ export const Home: React.FC<{ props: Props }> = Layout(({ props }) => {
       </PageContainer>
     </Container>
   );
-});
+};
