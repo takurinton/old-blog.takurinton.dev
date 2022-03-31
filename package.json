@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "devDependencies": {
+    "@takurinton/eslint-plugin-limit-import-scope": "^0.0.4",
+    "@takurinton/tsserver-plugin-limit-import-scope": "^0.0.2",
     "@types/body-parser": "^1.19.2",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
@@ -14,7 +16,10 @@
     "@types/react-router-dom": "^5.3.2",
     "@types/recoil": "^0.0.9",
     "@types/styled-components": "^5.1.20",
-    "esbuild": "^0.14.11"
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
+    "esbuild": "^0.14.11",
+    "eslint": "^8.12.0"
   },
   "scripts": {
     "reinstall": "rm -rf node_modules && yarn",
@@ -26,7 +31,10 @@
     "build/server": "esbuild --bundle ./server/index.ts --outfile=./dist/server.js --platform=node --minify --tree-shaking=true",
     "build/client": "esbuild --minify --bundle ./client/main.tsx --outfile=./dist/main.js --tree-shaking=true",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "vercel": "yarn build/client && yarn build/server && vercel --prod"
+    "vercel": "yarn build/client && yarn build/server && vercel --prod",
+    "lint": "yarn lint:client && yarn lint:server",
+    "lint:client": "eslint './client/**/*.{ts,tsx}'",
+    "lint:server": "eslint './server/**/*.{ts,tsx}'"
   },
   "repository": {
     "type": "git",
@@ -39,8 +47,8 @@
   },
   "dependencies": {
     "@graphql-typed-document-node/core": "^3.1.1",
-    "@takurinton/urql": "file:shared/@takurinton/urql/packages/core",
     "@takurinton/ingred-ui": "file:shared/@takurinton/ingred-ui/dist",
+    "@takurinton/urql": "file:shared/@takurinton/urql/packages/core",
     "body-parser": "^1.19.1",
     "cors": "^2.8.5",
     "express": "^4.17.2",
