@@ -1,8 +1,7 @@
 import { Button, Flex, Typography } from "@takurinton/ingred-ui";
 import React, { useState } from "react";
-import { Layout } from "../Layout";
 
-export const About: React.FC = Layout(() => {
+export const About: React.FC = () => {
   const [count, setCount] = useState(0);
 
   return (
@@ -12,4 +11,4 @@ export const About: React.FC = Layout(() => {
       <Button onClick={() => setCount((c) => c + 1)}>click</Button>
     </Flex>
   );
-});
+};

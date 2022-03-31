@@ -10,7 +10,13 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "module": "commonjs",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "plugins": [
+      {
+        "name": "@takurinton/tsserver-plugin-limit-import-scope",
+        "patterns": ["shared", "components", "./**"]
+      }
+    ]
   },
   "compileOnSave": true,
   "include": ["./**/*"]

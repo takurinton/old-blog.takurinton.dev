@@ -1,7 +1,8 @@
-import React, { createElement } from "react";
+import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
 import { ServerStyleSheet } from "styled-components";
+/*eslint-disable @takurinton/limit-import-scope/ */
 import { App } from "../client/App";
 
 const S3_DOMAIN = process.env.S3_DOMAIN

@@ -128,7 +128,7 @@ app.get("/external", async (req, res) => {
 
     const parseRss = async () => {
       const external: ExternalType = [];
-      for (const [_, rssLink] of Object.entries(rssLinks)) {
+      for (const [, rssLink] of Object.entries(rssLinks)) {
         const feed = await parser.parseURL(rssLink.link);
         feed.items.forEach(({ title, link, content, pubDate }) => {
           external.push({
@@ -194,7 +194,7 @@ app.get("/external.json", async (req, res) => {
 
     const parseRss = async () => {
       const external: ExternalType = [];
-      for (const [_, link] of Object.entries(rssLinks)) {
+      for (const [, link] of Object.entries(rssLinks)) {
         const feed = await parser.parseURL(link.link);
         feed.items.forEach((el) => {
           external.push({
