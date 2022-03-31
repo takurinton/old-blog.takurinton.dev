@@ -217,7 +217,7 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@takurinton/eslint-plugin-limit-import-scope@^0.0.4":
+"@takurinton/eslint-plugin-limit-import-scope@latest":
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@takurinton/eslint-plugin-limit-import-scope/-/eslint-plugin-limit-import-scope-0.0.4.tgz#963da62031cd775b853283bf191239ba4a135359"
   integrity sha512-9yeV52H0ndXt+ZUEo7sPpf/u2FM5PUkWTfdy3Wqg5Pu0FqdI+TXLfpiM5fylAws4/n6Oc+8cwl6PG6XwBYBb/g==
@@ -228,7 +228,7 @@
 "@takurinton/ingred-ui@file:shared/@takurinton/ingred-ui/dist":
   version "0.0.0"
 
-"@takurinton/tsserver-plugin-limit-import-scope@^0.0.2":
+"@takurinton/tsserver-plugin-limit-import-scope@latest":
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/@takurinton/tsserver-plugin-limit-import-scope/-/tsserver-plugin-limit-import-scope-0.0.2.tgz#6896a61c56f3c351715b9dd294a81b4cbb9d7df2"
   integrity sha512-UGgHD+aLzJXnJT9WGsmFy0GpevBl3ykebLybuPTJ3lRp44V74hzVztShZwn+HP8ad8ypKGt38jtLWeJ4SC9Rtw==
