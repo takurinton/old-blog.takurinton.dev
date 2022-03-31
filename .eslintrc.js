@@ -13,7 +13,7 @@ module.exports = {
     "@takurinton/limit-import-scope/": [
       "error",
       {
-        patterns: ["./internal/**", "utils/", "./**", "./styled"],
+        patterns: ["shared", "components", "./**"],
       },
     ],
   },
