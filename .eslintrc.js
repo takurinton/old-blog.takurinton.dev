@@ -10,6 +10,9 @@ module.exports = {
   },
   plugins: ["@typescript-eslint", "@takurinton/limit-import-scope"],
   rules: {
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "@takurinton/limit-import-scope/": [
       "error",
       {

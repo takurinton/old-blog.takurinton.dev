@@ -1,17 +1,28 @@
 import React, { useEffect } from "react";
 import { Flex, Typography } from "@takurinton/ingred-ui";
-import { Container, Heading, Link } from "./styled";
+import { Container, Link } from "./styled";
 import { useRecoilState } from "recoil";
 import { externalLinksState } from "../../utils/recoil/atom";
 
-export const External: React.FC<any> = ({ props }) => {
-  const [externalLinks, _] = useRecoilState(externalLinksState);
+type ExternalType = {
+  url: string;
+  title: string;
+  date: string;
+  content: string;
+}[];
+
+export const External: React.FC<{ props: ExternalType | string }> = ({
+  props,
+}) => {
+  const [externalLinks] = useRecoilState(externalLinksState);
+  console.log(externalLinks);
   const isServer = typeof window === "undefined";
-  const external = isServer
-    ? props
-    : externalLinks.length === 0
-    ? JSON.parse(props)
-    : externalLinks;
+  const external =
+    isServer && typeof props !== "string"
+      ? props
+      : externalLinks.length === 0 && typeof props === "string"
+      ? (JSON.parse(props) as ExternalType)
+      : externalLinks;
 
   useEffect(() => {
     document.querySelector("title").innerText =

@@ -1,9 +1,5 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-// import {
-//   ThemeProvider,
-//   createTheme,
-// } from "../shared/@takurinton/ingred-ui/src/themes";
 import { ThemeProvider, createTheme } from "@takurinton/ingred-ui";
 import { RecoilRoot } from "recoil";
 import { About } from "./pages/About";

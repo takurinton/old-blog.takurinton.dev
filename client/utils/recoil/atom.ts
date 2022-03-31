@@ -16,15 +16,13 @@ const initialPostsState = {
   ],
 };
 
-const initialPostState = [];
-
-const initialExternalLinksState = [
+const initialPostState = [
   {
-    icon: "",
+    id: 0,
     title: "",
-    url: "",
-    content: "",
-    date: "",
+    contents: "",
+    category: "",
+    pub_date: "",
   },
 ];
 

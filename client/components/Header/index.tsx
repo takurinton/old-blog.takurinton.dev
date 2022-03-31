@@ -1,9 +1,9 @@
 import { Flex, Spacer } from "@takurinton/ingred-ui";
-import React, { useCallback } from "react";
+import React from "react";
 import { HeaderContainer, HeaderNav, HeaderTitle } from "./styled";
 import { A, Link } from "../utils/styled";
 import { useRecoilState } from "recoil";
-import { externalLinksState, postsState } from "../../utils/recoil/atom";
+import { externalLinksState } from "../../utils/recoil/atom";
 
 export default function Header() {
   const [externalLinks, setExternalLinks] = useRecoilState(externalLinksState);
