@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "devDependencies": {
-    "@takurinton/eslint-plugin-limit-import-scope": "^0.0.4",
-    "@takurinton/tsserver-plugin-limit-import-scope": "^0.0.2",
+    "@takurinton/eslint-plugin-limit-import-scope": "latest",
+    "@takurinton/tsserver-plugin-limit-import-scope": "latest",
     "@types/body-parser": "^1.19.2",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
