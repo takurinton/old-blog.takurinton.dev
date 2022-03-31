@@ -14,7 +14,7 @@
     "plugins": [
       {
         "name": "@takurinton/tsserver-plugin-limit-import-scope",
-        "patterns": ["shared", "components", "./**"]
+        "patterns": ["shared", "components", "./**", "utils"]
       }
     ]
   },
