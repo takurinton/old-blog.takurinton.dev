@@ -1,5 +1,6 @@
 import { useQuery } from "../../../../shared/graphql/hooks";
 import { POSTS_QUERY } from "../../../../shared/graphql/query/posts";
+import { getDataString } from "../../../../shared/graphql/getDataString";
 
 const initialState = {
   current: 0,
@@ -22,6 +23,9 @@ export const getPosts = ({ variables, isServer, serverData }) => {
     // @ts-ignore
     return JSON.parse(Object.values(serverData)[0].data).getPosts;
   }
+
+  const data = getDataString(serverData, "getPosts");
+  if (data !== undefined) return data;
 
   const [res] = useQuery({
     query: POSTS_QUERY,
