@@ -24,6 +24,8 @@ export const App: React.FC<{
         },
       },
       primary: {
+        highlight: "#F2F9FC",
+        light: "#ffbae0",
         main: "#ff69b4",
       },
       secondary: {

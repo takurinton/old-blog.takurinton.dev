@@ -7,31 +7,15 @@ export const Container = styled.div`
 
 export const Label = styled.span`
   padding: 5px 10px 6px;
-  background: ${({ theme }) => theme.palette.secondary.main}};
-  color: ${({ theme }) => theme.palette.colors.white.main}};
+  background-color: none;
+  color: ${({ theme }) => theme.palette.colors.black.main};
   text-decoration: none;
-  border-radius: 2px;
-  font-weight: 800;
+  border-radius: 20px;
+  border: 1px solid ${({ theme }) => theme.palette.primary.main};
+  font-weight: 200;
+  transition: all 0.2s ease-out;
   &:hover {
-    background: ${({ theme }) => theme.palette.primary.main}};
+    color: ${({ theme }) => theme.palette.colors.white.main};
+    background-color: ${({ theme }) => theme.palette.primary.main};
   }
-`;
-
-export const PageContainer = styled.div`
-  margin: 20px auto 10%;
-  position: relative;
-`;
-
-export const PrevButton = styled.span`
-  position: absolute;
-  left: 10px;
-  font-weight: 800;
-  color: ${({ theme }) => theme.palette.colors.white.main};
-`;
-
-export const NextButton = styled.span`
-  position: absolute;
-  right: 10px;
-  font-weight: 800;
-  color: ${({ theme }) => theme.palette.colors.white.main};
 `;

@@ -7,6 +7,7 @@ export const POSTS_QUERY = gql`
       next
       previous
       category
+      last
       results {
         id
         title

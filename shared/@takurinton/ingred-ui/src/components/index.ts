@@ -17,4 +17,8 @@ export * from "./Spacer";
 export { default as Flex } from "./Flex";
 export * from "./Flex";
 
+export type { FilterState, PagerProps } from "./Pager";
+export { default as Pager } from "./Pager";
+export * from "./Pager";
+
 /* eslint-enable import/export */

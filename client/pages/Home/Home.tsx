@@ -1,17 +1,12 @@
 import React, { useEffect } from "react";
-import {
-  Container,
-  PageContainer,
-  PrevButton,
-  NextButton,
-  Label,
-} from "./styled";
+import { useNavigate } from "react-router-dom";
+import { Container, Label } from "./styled";
 import { Link } from "../../components/utils/styled";
 import { datetimeFormatter } from "../../../shared/utils/datetimeFormatter";
 import { getPosts } from "./internal/getPosts";
 import { useQuery } from "./internal/useQuery";
 import { useLocation } from "react-router";
-import { Flex, Typography } from "@takurinton/ingred-ui";
+import { Flex, Typography, Pager } from "@takurinton/ingred-ui";
 
 type Props = {
   current: number;
@@ -31,11 +26,13 @@ type Post = {
 
 export const Home: React.FC<{ props: Props }> = ({ props }) => {
   const query = useQuery();
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const isServer = typeof window === "undefined";
 
   const pages = query.get("page") ?? 1;
   const category = query.get("category") ?? "";
+
   const posts = getPosts({
     variables: { pages, category },
     isServer,
@@ -67,7 +64,7 @@ export const Home: React.FC<{ props: Props }> = ({ props }) => {
             <Link to={`/post/${p.id}`}>{p.title}</Link>
           </Typography>
           <Link to={`/?category=${p.category}`}>
-            <Label>{p.category}</Label>
+            <Label>#{p.category}</Label>
           </Link>
           <Typography weight="bold" component="p" size="xl">
             {datetimeFormatter(p.pub_date)}
@@ -78,38 +75,20 @@ export const Home: React.FC<{ props: Props }> = ({ props }) => {
           <hr />
         </Flex>
       ))}
-      <PageContainer>
-        {posts.previous === posts.current ? (
-          <></>
-        ) : (
-          <Link
-            to={
-              posts.category === ""
-                ? `/?page=${posts.previous}`
-                : `/?page=${posts.previous}&category=${posts.category}`
-            }
-          >
-            <PrevButton>
-              <Label>前へ</Label>
-            </PrevButton>
-          </Link>
-        )}
-        {posts.next === posts.current ? (
-          <></>
-        ) : (
-          <Link
-            to={
-              posts.category === ""
-                ? `/?page=${posts.next}`
-                : `/?page=${posts.next}&category=${posts.category}`
-            }
-          >
-            <NextButton>
-              <Label>次へ</Label>
-            </NextButton>
-          </Link>
-        )}
-      </PageContainer>
+      <Flex
+        style={{ width: "fit-content", margin: "0 auto", padding: "20px 0 0" }}
+      >
+        <Pager
+          per={1}
+          total={posts.last}
+          index={Number(pages)}
+          onClick={(index) => {
+            posts.category === ""
+              ? navigate(`/?page=${index}`)
+              : navigate(`/?page=${index}&category=${posts.category}`);
+          }}
+        />
+      </Flex>
     </Container>
   );
 };
