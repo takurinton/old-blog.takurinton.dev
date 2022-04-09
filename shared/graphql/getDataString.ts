@@ -3,7 +3,7 @@ type QueryName = "getPosts" | "getPost";
 export const getDataString = (
   serverData: string,
   name: QueryName
-): string | undefined => {
+): any | undefined => {
   // @ts-ignore
   const data = Object.values(JSON.parse(serverData))[0].data;
 

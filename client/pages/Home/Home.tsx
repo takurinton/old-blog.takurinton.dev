@@ -44,14 +44,22 @@ export const Home: React.FC<{ props: Props }> = ({ props }) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (!isServer)
-      document.querySelector("title").innerText = "Home | たくりんとんのブログ";
+    if (!isServer) {
+      if (category !== "") {
+        document.querySelector(
+          "title"
+        ).innerText = `"${category}" の記事 | たくりんとんのブログ`;
+      } else {
+        document.querySelector("title").innerText =
+          "Home | たくりんとんのブログ";
+      }
+    }
   }, [pathname, query]);
 
   return (
     <Container>
       <Typography align="center" component="h1" weight="bold" size="xxxxxxl">
-        全ての投稿一覧
+        {category !== "" ? `"${category}" の記事` : "すべての記事"}
       </Typography>
       {posts.results.map((p) => (
         <Flex key={p.id}>

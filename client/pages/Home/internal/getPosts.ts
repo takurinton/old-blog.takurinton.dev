@@ -24,13 +24,21 @@ export const getPosts = ({ variables, isServer, serverData }) => {
     return JSON.parse(Object.values(serverData)[0].data).getPosts;
   }
 
-  const data = getDataString(serverData, "getPosts");
-  if (data !== undefined) return data;
-
   const [res] = useQuery({
     query: POSTS_QUERY,
     variables,
   });
+
+  const data = getDataString(serverData, "getPosts");
+  if (data !== undefined) {
+    if (
+      variables.category !== data.category ||
+      Number(variables.pages) !== data.current
+    ) {
+      return res.data === undefined ? initialState : res.data.getPosts;
+    }
+    return data;
+  }
 
   return res.data === undefined ? initialState : res.data.getPosts;
 };
