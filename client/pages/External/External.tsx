@@ -1,8 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Flex, Typography } from "@takurinton/ingred-ui";
 import { Container, Link } from "./styled";
-import { useRecoilState } from "recoil";
-import { externalLinksState } from "../../utils/recoil/atom";
 
 type ExternalType = {
   url: string;
@@ -14,19 +12,24 @@ type ExternalType = {
 export const External: React.FC<{ props: ExternalType | string }> = ({
   props,
 }) => {
-  const [externalLinks] = useRecoilState(externalLinksState);
-  console.log(externalLinks);
+  const [externalLinks, setExternalLinks] = useState([] as ExternalType);
   const isServer = typeof window === "undefined";
-  const external =
-    isServer && typeof props !== "string"
-      ? props
-      : externalLinks.length === 0 && typeof props === "string"
-      ? (JSON.parse(props) as ExternalType)
-      : externalLinks;
 
   useEffect(() => {
     document.querySelector("title").innerText =
       "外部に投稿した記事一覧 | たくりんとんのブログ";
+
+    if (isServer && typeof props !== "string") {
+      setExternalLinks(props);
+    } else {
+      (async () => {
+        await fetch("./external.json")
+          .then((res) => res.json())
+          .then((externalLinks) => {
+            setExternalLinks(externalLinks);
+          });
+      })();
+    }
   }, []);
 
   const formatDate = (dateString: string) => {
@@ -42,7 +45,7 @@ export const External: React.FC<{ props: ExternalType | string }> = ({
       <Typography weight="bold" size="xxxxxxl" align="center">
         外部に投稿した記事一覧
       </Typography>
-      {external.map((ex) => (
+      {externalLinks.map((ex) => (
         <Flex key={ex.url}>
           <Typography weight="bold" component="h2" size="xxxxl">
             <Link href={ex.url} target="_blank">
