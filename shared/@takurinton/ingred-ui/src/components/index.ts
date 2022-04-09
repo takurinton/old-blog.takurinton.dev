@@ -21,4 +21,7 @@ export type { FilterState, PagerProps } from "./Pager";
 export { default as Pager } from "./Pager";
 export * from "./Pager";
 
+export { default as Spinner } from "./Spinner";
+export * from "./Spinner";
+
 /* eslint-enable import/export */
