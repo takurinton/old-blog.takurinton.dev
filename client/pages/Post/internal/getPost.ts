@@ -1,3 +1,4 @@
+import { getDataString } from "../../../../shared/graphql/getDataString";
 import { useQuery } from "../../../../shared/graphql/hooks";
 import { POST_QUERY } from "../../../../shared/graphql/query/post";
 
@@ -15,16 +16,15 @@ export const getPost = ({ id, isServer, serverData }) => {
     return JSON.parse(Object.values(serverData)[0].data).getPost;
   }
 
-  const [res] = useQuery({
-    query: POST_QUERY,
-    variables: { id },
-  });
+  const data = getDataString(serverData, "getPost");
+  if (data === undefined || data.id !== Number(id)) {
+    // client side routing
+    const [res] = useQuery({
+      query: POST_QUERY,
+      variables: { id },
+    });
 
-  const { data, fetching } = res;
-  if (!fetching) {
-    if (data.getPost) {
-      return data.getPost;
-    }
+    return res.fetching ? initialState : res.data.getPost;
   }
-  return initialState;
+  return data;
 };
