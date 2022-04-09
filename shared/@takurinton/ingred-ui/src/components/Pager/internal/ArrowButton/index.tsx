@@ -17,7 +17,12 @@ export const ArrowButton: React.FunctionComponent<Props> = ({
 }) => {
   const theme = useTheme();
   return (
-    <Styled.ArrowButton disabled={disabled} type="button" onClick={onClick}>
+    <Styled.ArrowButton
+      disabled={disabled}
+      type="button"
+      onClick={onClick}
+      aria-label={isRight ? "next" : "preview"}
+    >
       <Icon
         name={isRight ? "arrow_right" : "arrow_left"}
         size="md"
