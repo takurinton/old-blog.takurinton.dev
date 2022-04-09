@@ -21,7 +21,7 @@ export const ArrowButton: React.FunctionComponent<Props> = ({
       disabled={disabled}
       type="button"
       onClick={onClick}
-      aria-label={isRight ? "next" : "preview"}
+      aria-label={isRight ? "arrow_right" : "arrow_left"}
     >
       <Icon
         name={isRight ? "arrow_right" : "arrow_left"}
