@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Flex, Typography, Spinner } from "@takurinton/ingred-ui";
 import { Container, Link } from "./styled";
+import { useRecoilState } from "recoil";
+import { externalLinksState, initialState } from "../../utils/recoil/atom";
 
 type ExternalType = {
   url: string;
@@ -13,25 +15,29 @@ export const External: React.FC<{ props: ExternalType | string }> = ({
   props,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [externalLinks, setExternalLinks] = useState([] as ExternalType);
+  const [externalLinks, setExternalLinks] = useRecoilState(externalLinksState);
   const isServer = typeof window === "undefined";
   useEffect(() => {
     document.querySelector("title").innerText =
       "外部に投稿した記事一覧 | たくりんとんのブログ";
+  }, []);
 
+  useEffect(() => {
     const p = JSON.parse(props as string);
     if (p[0]) {
       setExternalLinks(p);
     } else {
-      (async () => {
+      if (externalLinks === initialState) {
         setIsLoading(true);
-        await fetch("./external.json")
-          .then((res) => res.json())
-          .then((externalLinks) => {
-            setExternalLinks(externalLinks);
-            setIsLoading(false);
-          });
-      })();
+        (async () => {
+          await fetch("./external.json")
+            .then((res) => res.json())
+            .then((externalLinks) => {
+              setExternalLinks(externalLinks);
+              setIsLoading(false);
+            });
+        })();
+      }
     }
   }, []);
 

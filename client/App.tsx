@@ -8,6 +8,7 @@ import { External } from "./pages/External";
 import { Provider } from "../shared/graphql/hooks/context";
 import { initUrqlClient } from "../shared/graphql/initUrqlClient";
 import Header from "./components/Header";
+import { RecoilRoot } from "recoil";
 
 export const App: React.FC<{
   props: any;
@@ -35,7 +36,7 @@ export const App: React.FC<{
   const client = initUrqlClient({});
 
   return (
-    <>
+    <RecoilRoot>
       <Provider value={client}>
         <ThemeProvider theme={theme}>
           <Header {...props} />
@@ -47,6 +48,6 @@ export const App: React.FC<{
           </Routes>
         </ThemeProvider>
       </Provider>
-    </>
+    </RecoilRoot>
   );
 };
