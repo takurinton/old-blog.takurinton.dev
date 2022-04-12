@@ -1,14 +1,14 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { App } from "./App";
 
 (() => {
   const props = document.getElementById("__RINTON_DATA__").textContent;
-  ReactDOM.hydrate(
+  hydrateRoot(
+    document.getElementById("__rinton"),
     <BrowserRouter>
       <App props={props} />
-    </BrowserRouter>,
-    document.getElementById("__rinton")
+    </BrowserRouter>
   );
 })();
