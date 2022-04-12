@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Flex, Typography, Spinner } from "@takurinton/ingred-ui";
 import { Container, Link } from "./styled";
-import { useRecoilState } from "recoil";
-import { externalLinksState, initialState } from "../../utils/recoil/atom";
 
 type ExternalType = {
   url: string;
@@ -11,12 +9,24 @@ type ExternalType = {
   content: string;
 }[];
 
+const getExternalLinksFromSessionStorage = (isServer) => {
+  if (isServer) {
+    return [] as ExternalType;
+  }
+  return (
+    JSON.parse(sessionStorage.getItem("externalLinks")) ?? ([] as ExternalType)
+  );
+};
+
 export const External: React.FC<{ props: ExternalType | string }> = ({
   props,
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [externalLinks, setExternalLinks] = useRecoilState(externalLinksState);
   const isServer = typeof window === "undefined";
+  const [isLoading, setIsLoading] = useState(false);
+  const [externalLinks, setExternalLinks] = useState(
+    getExternalLinksFromSessionStorage(isServer)
+  );
+
   useEffect(() => {
     document.querySelector("title").innerText =
       "外部に投稿した記事一覧 | たくりんとんのブログ";
@@ -27,12 +37,20 @@ export const External: React.FC<{ props: ExternalType | string }> = ({
     if (p[0]) {
       setExternalLinks(p);
     } else {
-      if (externalLinks === initialState) {
+      const externalLinksInSessionStorage = JSON.parse(
+        sessionStorage.getItem("externalLinks")
+      );
+
+      if (externalLinksInSessionStorage === null) {
         setIsLoading(true);
         (async () => {
           await fetch("./external.json")
             .then((res) => res.json())
             .then((externalLinks) => {
+              sessionStorage.setItem(
+                "externalLinks",
+                JSON.stringify(externalLinks)
+              );
               setExternalLinks(externalLinks);
               setIsLoading(false);
             });
