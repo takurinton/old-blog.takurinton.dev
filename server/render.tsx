@@ -58,11 +58,18 @@ export const createTemplate = (props) => {
                     box-shadow: 2px 2px 6px rgb(255 255 255 / 25%);
                 }
 
-                code {
+                pre > code {
                     font-weight: 500;
                     color: #ffffff;
                     font-family: 'SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', monospace, 'Apple Color Emoji',
                     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+                }
+
+                 code {
+                  font-weight: 500;
+                  color: #222222;
+                  font-family: 'SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', monospace, 'Apple Color Emoji',
+                  'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
                 }
             </style>
             ${props.styleTags}
