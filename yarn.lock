@@ -217,10 +217,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@takurinton/eslint-plugin-limit-import-scope@latest":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@takurinton/eslint-plugin-limit-import-scope/-/eslint-plugin-limit-import-scope-0.0.4.tgz#963da62031cd775b853283bf191239ba4a135359"
-  integrity sha512-9yeV52H0ndXt+ZUEo7sPpf/u2FM5PUkWTfdy3Wqg5Pu0FqdI+TXLfpiM5fylAws4/n6Oc+8cwl6PG6XwBYBb/g==
+"@takurinton/eslint-plugin-limit-import-scope@0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@takurinton/eslint-plugin-limit-import-scope/-/eslint-plugin-limit-import-scope-0.0.6.tgz#f3ea3ed00d9cfe3e327f5c17578434e2f42c39d3"
+  integrity sha512-Vah8G/MOCW+kmCtj5rruyTMdVzHjaWQBR1LN7/nVMjZqrMZ+zUy/4+F8RqXgNp34lXZna2ENJ2cMSsPAhk94LA==
   dependencies:
     "@typescript-eslint/experimental-utils" "4.15.0"
     ignore "^5.2.0"
