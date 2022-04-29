@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Flex, Typography, Spinner } from "@takurinton/ingred-ui";
+import { Flex, Typography, Spinner, Icon, Spacer } from "@takurinton/ingred-ui";
 import { Container, Link } from "./styled";
 
 type ExternalType = {
@@ -82,6 +82,8 @@ export const External: React.FC<{ props: ExternalType | string }> = ({
             <Typography weight="bold" component="h2" size="xxxxl">
               <Link href={ex.url} target="_blank">
                 {ex.title}
+                <Spacer pl={0.5} />
+                <Icon name="external_link" />
               </Link>
             </Typography>
             <Typography weight="bold" size="xl">

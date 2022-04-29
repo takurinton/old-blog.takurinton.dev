@@ -14,6 +14,8 @@ export const Link = styled.a`
   color: ${({ theme }) => theme.palette.colors.black.main};
   text-decoration: none;
   font-weight: 800;
+  display: flex;
+  align-items: center;
   &:hover {
     color: ${({ theme }) => theme.palette.primary.main};
   }
