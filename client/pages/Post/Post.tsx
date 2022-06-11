@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import highlightjs from "highlight.js";
 import { datetimeFormatter } from "../../../shared/utils/datetimeFormatter";
-import { Container, Category } from "./styled";
+import { Container, Label } from "./styled";
 import { markdownStyle } from "./internal/syntaxHighlight";
 import { getPost } from "./internal/getPost";
 
@@ -36,7 +36,7 @@ export const Post: React.FC<{ props: Props }> = ({ props }) => {
         {post.title}
       </Typography>
       <Typography size="xl" weight="bold" align="right">
-        <Category to={`/?category=${post.category}`}>{post.category}</Category>
+        <Label to={`/?category=${post.category}`}>{post.category}</Label>
       </Typography>
       <Typography size="xxl" weight="bold" align="right">
         {datetimeFormatter(post.pub_date)}

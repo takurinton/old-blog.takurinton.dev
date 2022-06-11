@@ -6,13 +6,17 @@ export const Container = styled.div`
   margin: 50px auto;
 `;
 
-export const Category = styled(Link)`
+export const Label = styled(Link)`
   padding: 5px 10px 6px;
-  background: ${({ theme }) => theme.palette.secondary.main};
-  color: white;
+  background-color: none;
+  color: ${({ theme }) => theme.palette.colors.black.main};
   text-decoration: none;
-  border-radius: 2px;
+  border-radius: 20px;
+  border: 1px solid ${({ theme }) => theme.palette.primary.main};
+  font-weight: 200;
+  transition: all 0.2s ease-out;
   &:hover {
-    background: ${({ theme }) => theme.palette.primary.main};
+    color: ${({ theme }) => theme.palette.colors.white.main};
+    background-color: ${({ theme }) => theme.palette.primary.main};
   }
 `;
