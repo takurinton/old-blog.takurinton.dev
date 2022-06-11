@@ -24,7 +24,11 @@
     "typescript": "^4.5.4"
   },
   "scripts": {
+    "initial": "yarn install:urql && yarn build:urql && yarn install:ingred-ui && yarn build:ingred-ui && yarn",
     "reinstall": "rm -rf node_modules && yarn",
+    "install:all": "yarn install:urql && yarn install:ingred-ui && yarn",
+    "install:urql": "cd shared/@takurinton/urql && yarn",
+    "install:ingred-ui": "cd shared/@takurinton/ingred-ui && yarn",
     "urql/debug": "cd shared/@takurinton/urql && yarn fix && yarn build && cd - && yarn reinstall && yarn dev",
     "dev": "yarn dev/client & yarn dev/server",
     "build": "rm -rf ./dist && yarn build/server && yarn build/client",
@@ -32,6 +36,8 @@
     "dev/client": "esbuild --bundle ./client/main.tsx --outfile=./dist/main.js --watch",
     "build/server": "esbuild --bundle ./server/index.ts --outfile=./dist/server.js --platform=node --minify --tree-shaking=true",
     "build/client": "esbuild --minify --bundle ./client/main.tsx --outfile=./dist/main.js --tree-shaking=true",
+    "build:urql": "cd shared/@takurinton/urql && yarn build",
+    "build:ingred-ui": "cd shared/@takurinton/ingred-ui && yarn build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "vercel": "yarn build/client && yarn build/server && vercel --prod",
     "lint": "yarn lint:client && yarn lint:server",
